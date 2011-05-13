@@ -157,7 +157,7 @@ public interface Node extends Comparable<Node>
 	 * that the node refers to and establish the order on the basis of that, eg, 'Sample Treatment' come before 
 	 * 'Labeled Extract'. 
 	 * 
-	 * See also LayerBuilder TODO.
+	 * @see {@link LayersBuilder}.
 	 */
 	public int getOrder ();
 

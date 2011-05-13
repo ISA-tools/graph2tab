@@ -68,9 +68,9 @@ import au.com.bytecode.opencsv.CSVWriter;
  * experimental graph. This class invokes {@link ChainsBuilder} and produce a matrix of strings from the chains that
  * this class creates from the input graph.
  * <p/>
- * TODO: The columns are exported in no particular order, this occasionally screw the grouping of headers of the same
- * type (eg: factor value could fall between two characteristics column blocks). We will implement a solution to that in
- * future. For details about that, see inside {@link #addNode(int, Node)}.
+ * Columns belonging in different group types are exported in no particular order. This occasionally screw the grouping 
+ * of headers of the same type, eg, a factor value could fall between two characteristics[] column blocks. 
+ * We will implement a solution to that in future. For details about that, see inside {@link #addNode(int, Node)}.
  * <p/>
  * 
  * <dl>
@@ -271,10 +271,10 @@ public class TableBuilder
 
 			// if !isLanded => cell is already taken for this header, we must add it to the layer columns and add the value
 			// to the corresponding new position.
-			// TODO: This screw the grouping of headers of the same type (eg: factor value could fall between two
-			// characteristics
-			// column blocks). To sort it out, we have to completely change the way the result is stored: header groups must
-			// be stored explicitly, while currently we only store final headers, detached from their grouping.
+			// TODO: This screw the grouping of headers of the same type (eg, factor value could fall between two
+			// characteristics[] column blocks). To sort it out, we have to completely change the way the result is stored: 
+			// header groups must be stored explicitly, while currently we only store final headers, detached from their 
+			// grouping.
 			//
 			for ( int itb = 0; itb < tbgSz; itb++ )
 			{
