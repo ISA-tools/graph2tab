@@ -6,7 +6,7 @@
 
     <groupId>org.isatools</groupId>
     <artifactId>graph2tab</artifactId>
-    <version>2.0</version>
+    <version>2.0.1</version>
     <name>graph2tab - The graph-to-spreadsheet conversion algorithm</name>
     <description>
         This package is a generic implementation of a method for producing spreadsheets out of pipeline graph.
@@ -41,13 +41,23 @@
             <version>1.1</version>
         </dependency>
 
-
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+				<dependency>
+				  <groupId>commons-io</groupId>
+				  <artifactId>commons-io</artifactId>
+				  <version>2.0.1</version>
+				</dependency>
 
         <!-- TEST -->
 

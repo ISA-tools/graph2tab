@@ -48,9 +48,20 @@
 
 package org.isatools.tablib.export.graph_algorithm;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.*;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import au.com.bytecode.opencsv.CSVWriter;
 
 /**
  * The table builder. This is the thing to (possibly extend) and invoke to produce the table exported from the
@@ -126,8 +137,8 @@ public class TableBuilder
 	 */
 	public List<List<String>> getTable ()
 	{
-		if ( table != null )
-			return table;
+		if ( this.table != null )
+			return this.table;
 
 		if ( isLayeringRequired ) {
 			layersBuilder = new LayersBuilder ( nodes );
@@ -177,8 +188,7 @@ public class TableBuilder
 			}
 		} // for chain
 		
-		table = new LayersListView ( tableContents );
-		return table;
+		return this.table = new LayersListView ( tableContents );
 	}
 	
 	/**
@@ -186,7 +196,7 @@ public class TableBuilder
 	 * the pairs returned by {@link Node#getTabValues()}, values with the same header are merged.
 	 */
 	private void addNode ( int layer, Node node )
-	{
+	{		
 		List<String> layerHeaders = tableContents.getLayerHeaders ( layer );
 
 		int ncols = layerHeaders.size ();
@@ -313,6 +323,66 @@ public class TableBuilder
 		}
 		out.println ();
 		return sout.toString ();
+	}
+
+	/**
+	 * Writes the resulting table in CSV/TSV (table-separated values or other) format. Uses a CSVWriter from the OpenCSV
+	 * library, which will take care of many details, like quoting line returns etc. 
+	 * 
+	 * This version allows you to first define the writer (and trigger your options) and then pass it.
+	 * More abstract versions available below.
+	 */
+	public void reportTSV ( CSVWriter out ) throws IOException
+	{
+		for ( List<String> row: getTable () )
+			out.writeNext ( (String[]) row.toArray ( new String [0] ) );
+		out.flush ();
+	}
+	
+	/**
+	 * A wrapper of {@link #reportTSV(CSVWriter)}. Writes the resulting table in TSV format. 
+	 * 
+	 * This version receive a generic writer and sets up a CSVWriter that uses '\t' as separator and '"' as wrap/escape 
+	 * character.
+	 * 
+	 */
+	public void reportTSV ( Writer out ) throws IOException
+	{
+		reportTSV ( new CSVWriter ( out, '\t', '"' ) );
+	}
+	
+	/**
+	 * A wrapper of {@link #reportTSV(CSVWriter)}. Writes the resulting table in TSV format. 
+	 * 
+	 * This version uses '\t' as separator and '"' as wrap/escape character (invokes {@link #reportTSV(Writer)}) 
+	 * and returns the result as a string.
+	 * 
+	 */
+	public String reportTSV () throws IOException
+	{
+		StringWriter sout = new StringWriter ();
+		reportTSV ( new CSVWriter ( sout, '\t', '"' ) );
+		return sout.toString ();
+	}
+
+	/**
+	 * A wrapper of {@link #reportTSV(CSVWriter)}. Writes the resulting table in TSV format. 
+	 * 
+	 * This version receives a file and then sets up a CSVWriter that uses '\t' as separator and '"' as wrap/escape 
+	 * character (invoking {@link #reportTSV(Writer)}. 
+	 * 
+	 */
+	public void reportTSV ( File file ) throws IOException
+	{
+		reportTSV ( new FileWriter ( file ) );
+	}
+
+	/**
+	 * Reports the resulting table as a TSV file in the specified path. It's a wrapper of {@link #reportTSV(File)}.
+	 */
+	public void reportTSV ( String filePath ) throws IOException
+	{
+		reportTSV ( new File ( filePath ) );
 	}
 
 }

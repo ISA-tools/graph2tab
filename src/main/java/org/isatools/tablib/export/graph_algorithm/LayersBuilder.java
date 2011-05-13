@@ -12,6 +12,8 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  * <h2>The layer builder</h2>
@@ -189,7 +191,7 @@ public class LayersBuilder
 					if ( m == null ) continue;
 					
 					// Same type, they're OK, go ahead
-					if ( n.getType().equals ( m.getType () ) ) continue;
+					if ( StringUtils.trimToEmpty ( n.getType() ).equals ( StringUtils.trimToEmpty ( m.getType () ) ) ) continue;
 					
 					int no = n.getOrder (), mo = m.getOrder ();
 

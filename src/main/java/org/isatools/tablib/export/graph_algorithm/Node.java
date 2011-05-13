@@ -110,7 +110,7 @@ public interface Node extends Comparable<Node>
 	public SortedSet<Node> getOutputs ();
 
 	/**
-	 * Modifiers <b>must be symmetric</b>, when an input is added/removed, the corresponding output is added removed on
+	 * Modifiers <b>must be symmetric</b>, when an input is added/removed, the corresponding output is added/removed on
 	 * the other side.
 	 * <p>
 	 * As usually, they should return true if they made actual changes.
@@ -119,7 +119,7 @@ public interface Node extends Comparable<Node>
 	public boolean addOutput ( Node output );
 
 	/**
-	 * Modifiers <b>must be symmetric</b>, when an input is added/removed, the corresponding output is added removed on
+	 * Modifiers <b>must be symmetric</b>, when an input is added/removed, the corresponding output is added/removed on
 	 * the other side.
 	 * <p>
 	 * As usually, they should return true if actual changes was actually made.

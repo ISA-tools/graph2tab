@@ -249,7 +249,12 @@ public abstract class DefaultAbstractNode implements Node
 	 */
 	public String getType ()
 	{
-		return this.getTabValues ().get ( 0 ).getHeaders ().get ( 0 );
+		List<TabValueGroup> tabvals = getTabValues ();
+		// Null may occur here, eg, when there are protocol applications with 0 protocols, the graph has a node, but the 
+		// final result doesn't need to have anything.
+		//
+		if ( tabvals == null || tabvals.isEmpty () ) return null;
+		return tabvals.get ( 0 ).getHeaders ().get ( 0 );
 	}
 
 	/**
@@ -296,8 +301,8 @@ public abstract class DefaultAbstractNode implements Node
 		{
 			return "{Node " + id + "}";
 		}
+		String type = getType ();
 		TabValueGroup tbg = tbvs.get ( 0 );
-		return getType () + ": " + tbg.getValues ().get ( 0 );
+		return "{" + ( type == null ? "<null type>" : type )+ ": " + tbg.getValues ().get ( 0 ) + "}";
 	}
-
 }

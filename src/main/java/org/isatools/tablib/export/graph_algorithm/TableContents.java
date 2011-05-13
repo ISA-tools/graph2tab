@@ -284,7 +284,7 @@ class TableContents
 
 		if ( icol >= layerCont.headers.size () )
 		{
-			throw new IndexOutOfBoundsException ( "while setting '" + v + "' at " + layer + ", " + icol + "," + irow );
+			throw new IndexOutOfBoundsException ( "while setting '" + v + "' at " + layer + ", " + icol + ", " + irow );
 		}
 
 		table.put ( icol, irow, v );
@@ -300,7 +300,7 @@ class TableContents
 		TableLayerContent layerCont = getLayerContent ( layer );
 		if ( icol >= layerCont.headers.size () )
 		{
-			throw new IndexOutOfBoundsException ( "while getting " + layer + ", " + icol + "," + irow );
+			throw new IndexOutOfBoundsException ( "while getting " + layer + ", " + icol + ", " + irow );
 		}
 
 		return StringUtils.trimToNull ( layerCont.table.get ( icol, irow ) );

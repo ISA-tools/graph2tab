@@ -1,0 +1,6 @@
+REVISION CHANGE HISTORY
+- 2.0 
+    Moved out of the ISA project and made an independent pacakge. Layering added to the 1.0 version, some bug fixes
+
+- 2.1
+    exportTSV() methods added to TableBuilder, which exports the table into table-delimited format.

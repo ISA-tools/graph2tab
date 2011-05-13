@@ -62,7 +62,7 @@ import java.util.List;
  * empty or not. Otherwise you could get unexpected results. As an example, consider:</p>
  * <p/>
  * <table border = "1" cellspacing = "0">
- * <tr><td>sample name</td> 	<td>organism</td>  <td>term src</td>  <td>term acc</td>     <td>...</td></tr>
+ * <tr><th>sample name</th> 	<th>organism</th>  <th>term src</th>  <th>term acc</th>     <th>...</th></tr>
  * <tr><td>s1</td>            <td>mus-mus</td>   <td></td>          <td>123</td>          <td></td></tr>
  * <tr><td>s2</td>            <td>human</td>     <td>FMA</td>       <td></td>             <td></td></tr>
  * </table>
@@ -71,7 +71,7 @@ import java.util.List;
  * then the exported table will be:</p>
  * <p/>
  * <table border = "1" cellspacing = "0">
- * <tr><td>sample name</td> 	<td>organism</td>  <td>term acc</td>  <td>term src</td>     <td>...</td></tr>
+ * <tr><th>sample name</th> 	<th>organism</th>  <th>term acc</th>  <th>term src</th>     <th>...</th></tr>
  * <tr><td>s1</td>            <td>mus-mus</td>   <td>123</td>       <td></td>             <td></td></tr>
  * <tr><td>s2</td>            <td>human</td>     <td></td>          <td>FMA</td>          <td></td></tr>
  * </table>
@@ -81,13 +81,13 @@ import java.util.List;
  * like this:</p>
  * <p/>
  * <table border = "1" cellspacing = "0">
- * <tr><td>temperature</td> 	 <td>unit</td>  <td>term acc</td>  <td>term src</td>     <td>...</td></tr>
+ * <tr><th>temperature</th> 	 <th>unit</th>  <th>term acc</th>  <th>term src</th>     <th>...</th></tr>
  * <tr><td>120</td>            <td></td>      <td></td>          <td></td>             <td></td></tr>
  * <tr><td>240</td>            <td>C</td>     <td></td>         <td>UO</td>            <td></td></tr>
  * </table>
  * <p/>
- * <p>Here, you are free to report [unit, acc, src] only when you return the table group for the second temperature.
- * The important thing is that you provide all the three headers together. The exporter will add the unit columns to
+ * <p>Here, you are free to report [unit, acc, src] only when you actually return the table group for the second 
+ * temperature. The important thing is that you provide all the three headers together. The exporter will add the unit columns to
  * the temperature correctly in the second case. In other words, <b>headers that goes together must be always all
  * exported, even if they have empty values</b>. See the examples for details.</p>
  * <p/>
