@@ -303,6 +303,6 @@ public abstract class DefaultAbstractNode implements Node
 		}
 		String type = getType ();
 		TabValueGroup tbg = tbvs.get ( 0 );
-		return "{" + ( type == null ? "<null type>" : type )+ ": " + tbg.getValues ().get ( 0 ) + "}";
+		return "{" + ( type == null ? "<null type>" : type )+ ": " + tbg.getValues ().get ( 0 ) + " (" + id + ")}";
 	}
 }

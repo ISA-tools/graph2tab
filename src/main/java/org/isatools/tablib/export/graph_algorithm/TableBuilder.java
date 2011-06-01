@@ -164,7 +164,7 @@ public class TableBuilder
 				}
 
 				if ( node.getTabValues ().isEmpty () )
-					// Skip eg: processings not having at least one protocol
+					// Skip eg, processings not having at least one protocol
 					tableContents.addNullRow ( layer );
 				else
 					addNode ( layer, node );

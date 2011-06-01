@@ -73,7 +73,8 @@ class LayersListView extends AbstractList<List<String>> {
     private final List<String> rows[];
 
     /**
-     * Builds the table view. The result is sorted according to what it's returned by the {@link Node} interface.
+     * Builds the table view. The result is sorted according to what is returned by methods in {@link Node} 
+     * interface (getInput(), getOutput()).
      */
     @SuppressWarnings("unchecked")
     public LayersListView(TableContents layerContents) {

@@ -408,8 +408,8 @@ class ChainsBuilder
 			ids.put ( node, nodeid );
 			String bgcolor = node.equals ( currentNode ) ? "yellow" : "white";
 			String color = colors[nodeid % colors.length];
-			out.println ( "  " + nodeid + "[label = \"" + nodelbl + "\", style = filled, color = " + color + ", fillcolor = " + bgcolor
-					+ "];" );
+			out.println ( "  " + nodeid + 
+				"[label = \"" + nodelbl + "\", style = filled, color = " + color + ", fillcolor = " + bgcolor + "];" );
 		}
 
 		for ( Node nout: node.getOutputs () )
@@ -422,8 +422,8 @@ class ChainsBuilder
 				String outlbl = nout.toString ();
 				String bgcolor = nout.equals ( currentNode ) ? "yellow" : "white";
 				String color = colors[outid % colors.length];
-				out.println ( "  " + outid + "[label = \"" + outlbl + "\", style = filled, color = " + color + ", fillcolor = " + bgcolor
-						+ "];" );
+				out.println ( "  " + outid + 
+					"[label = \"" + outlbl + "\", style = filled, color = " + color + ", fillcolor = " + bgcolor + "];" );
 			}
 
 			String color = colors[ ( nodeid + outid ) % colors.length];

@@ -101,16 +101,18 @@ public class LayersBuilder
 	}
 	
 	/**
-	 * Set the layer for a node, wich means all the two internal structures used for that are updated.
+	 * Set the layer for a node, which means all the two internal structures used for that are updated.
 	 * 
 	 */
 	private void setLayer ( Node node, int layer ) 
 	{
 		// Remove from the old layer
 		Integer oldLayer = node2Layer.get ( node );
-		if ( oldLayer != null ) {
-			layer2Nodes.get ( oldLayer ).remove ( node );
-		}
+		if ( oldLayer != null 
+			   && layer2Nodes.get ( oldLayer ).remove ( node )
+			   && layer2Nodes.isEmpty () 
+			   && oldLayer == maxLayer ) 
+			maxLayer--;
 		
 		// Add to the new layer
 		SortedSet<Node> lnodes = layer2Nodes.get ( layer );
@@ -217,12 +219,12 @@ public class LayersBuilder
 						// The rationale is that nodes like "Protocol REF" shift closer to their output side, reflecting the fact
 						// that if one specifies a protocol omitting the input is more likely than omitting the output.
 						// 
-						// Note that when the node m is part of a chain of nodes having the same type (e.g.: sample1->sample2->sampl3
+						// Note that when the node m is part of a chain of nodes having the same type (e.g.: sample1->sample2->sample3
 						// in one path and sample4->protocol1->sample5 in the other, where m = sample2 and n = protocol1)
 						// it is that node (sample2), and not the other (protocol1), that is shifted. This is because likely
 						// there are paths that didn't need multiple processing to elements of the same type (sample5 was 
-						// likely obtained straight from sample4, without requiring an intermediate like sample2). Again, this is 
-						// euristics based on experience with real use cases.
+						// likely obtained straight from sample4, without requiring an intermediate node, like the case of sample2). 
+						// Again, this is euristics based on experience with real use cases.
 						//
 						if ( righto - mo <= mo - lefto )
 							shift2Right ( m, layerNodes, j );
@@ -266,6 +268,30 @@ public class LayersBuilder
 		isInitialized = true;
 	}
 
+//	private void postProcessTypedLayers ()
+//	{
+//		for ( int ilayer = 0; ilayer < maxLayer; ilayer++ ) 
+//		{
+//			Node ni0 = layer2Nodes.get ( ilayer ).first ();
+//			int ni0o = ni0.getOrder ();
+//			
+//			if ( ni0o == -1 ) continue; 
+//			
+//			for ( int jlayer = ilayer + 1; jlayer < maxLayer; jlayer++ ) 
+//			{
+//				Node nj0 = layer2Nodes.get ( jlayer ).first ();
+//				int nj0o = nj0.getOrder ();
+//				if ( nj0o == -1 || ni0o > nj0o ) continue;
+//				
+//				// We have to shift all the nodes in this layer, cause their order (they've all the same order at this point)
+//				// is incorrect (according to what is wanted and expressed by getOrder()
+//				for ( )
+//			}
+//			
+//		}
+//	}
+	
+	
 	/**
 	 * Shifts the node to the right (i.e.: increase its layer index) and starts the propagation of that on the right side, 
 	 * by invoking {@link #shift2Right(Node, List, int) shift2Right ( n, null, -1 )}.
@@ -289,11 +315,11 @@ public class LayersBuilder
 	 * visitedNodes allows it to stop the propagation on nodes that were already touched by this recursion. 
 
 	 * @param n the node to be shifted, the method will recurse over n.getOutputs()
-	 * @param prevNewLayer is the layer index that was computed by the previous recursive call (initially it is -1)
+	 * @param prevNewLayer is the layer index that was computed by the previous recursive call (initially it is -1). This
+	 * method recurse until the node is moved in a empty layer
 	 * @param visitedNodes allows it to stop the propagation on nodes that were already touched by this recursion
 	 * @param layerNodes is the initial layer where the node is, if it is not null, the node will be removed from there. This
-	 * parameter is sent here, cause {@link #computeTypedLayers()} needs to maintain an updated list of the nodes in the 
-	 * layer it is being processing.
+	 * parameter is sent here, cause {@link #computeTypedLayers()} needs to maintain a cache of the layer nodes being processed.
 	 * @param nodeIdx is the initial layer index the node has i.e., this.layer2Nodes.get(nodeIdx) = n and it is used to
 	 * remove the node from its original layer (if layerNodes != null). 
 	 */
