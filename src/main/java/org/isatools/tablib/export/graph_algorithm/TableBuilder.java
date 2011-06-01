@@ -342,7 +342,7 @@ public class TableBuilder
 	/**
 	 * A wrapper of {@link #reportTSV(CSVWriter)}. Writes the resulting table in TSV format. 
 	 * 
-	 * This version receive a generic writer and sets up a CSVWriter that uses '\t' as separator and '"' as wrap/escape 
+	 * This version receives a generic writer and sets up a CSVWriter that uses '\t' as separator and '"' as wrap/escape 
 	 * character.
 	 * 
 	 */
