@@ -296,13 +296,15 @@ public abstract class DefaultAbstractNode implements Node
 	@Override
 	public String toString ()
 	{
-		List<TabValueGroup> tbvs = getTabValues ();
-		if ( tbvs.isEmpty () )
-		{
-			return "{Node " + id + "}";
-		}
 		String type = getType ();
-		TabValueGroup tbg = tbvs.get ( 0 );
-		return "{" + ( type == null ? "<null type>" : type )+ ": " + tbg.getValues ().get ( 0 ) + " (" + id + ")}";
+		String result = type == null ? "<null type>" : type;
+		
+		List<TabValueGroup> tbvs = getTabValues ();
+		if ( !tbvs.isEmpty () )
+		{
+			TabValueGroup tbg = tbvs.get ( 0 );
+			result += ": " + tbg.getValues ().get ( 0 );
+		}
+		return "{" + result + " (#" + hashCode () + ")}";
 	}
 }
