@@ -2,5 +2,9 @@ REVISION CHANGE HISTORY
 - 2.0 
     Moved out of the ISA project and made an independent pacakge. Layering added to the 1.0 version, some bug fixes
 
-- 2.1
+- 2.0.1
     exportTSV() methods added to TableBuilder, which exports the table into table-delimited format.
+
+- 2.0.2
+    temporary patch to allow the insertion of Unit[Type](Qualifier). The way header groups are represented will be channged
+    and made simpler.

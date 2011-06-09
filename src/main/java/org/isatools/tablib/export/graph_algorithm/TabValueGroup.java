@@ -86,10 +86,16 @@ import java.util.List;
  * <tr><td>240</td>            <td>C</td>     <td></td>         <td>UO</td>            <td></td></tr>
  * </table>
  * <p/>
- * <p>Here, you are free to report [unit, acc, src] only when you actually return the table group for the second 
- * temperature. The important thing is that you provide all the three headers together. The exporter will add the unit columns to
- * the temperature correctly in the second case. In other words, <b>headers that goes together must be always all
+ * <p>Here, you are free to omit [unit, acc, src] if all the values for this combination are empty. 
+ * The important thing is that you provide all the three headers together. The exporter will add the unit columns to
+ * the temperature correctly in the second case. In other words, <b>headers that goes together should be always all
  * exported, even if they have empty values</b>. See the examples for details.</p>
+ * 
+ * <p>TODO: For the moment, we have added a patch that allows to add/omit combinations of different headers attached to
+ * two table groups of the same type. Eg, you can have temperature = 120, and temp=150, unit(temp)=C, the unit will be
+ * correctly appended to the resulting table. This only works if the headers are at least reported always in the same
+ * order (ie, you can omit ontology term before temperature, but never swap the order). This will completely change soon, 
+ * by introducing nested table groups.</p>
  * <p/>
  * <p/>
  * <dl><dt>date</dt><dd>May 10, 2010</dd></dl>

@@ -211,14 +211,11 @@ public class TableBuilder
 			String header = layerHeaders.get ( icol );
 			SortedSet<Integer> hidx = headerIndexes.get ( header );
 			if ( hidx == null )
-			{
-				hidx = new TreeSet<Integer> ();
-				headerIndexes.put ( header, hidx );
-			}
+				headerIndexes.put ( header, hidx = new TreeSet<Integer> () );
 			hidx.add ( icol );
 		}
 
-		// Work over all tab value groups
+		// Now work over all tab value groups
 		//
 		for ( TabValueGroup tbg: node.getTabValues () )
 		{
@@ -238,9 +235,8 @@ public class TableBuilder
 					String header = headers.get ( itb );
 					String value = values.get ( itb );
 					int jcol = tableContents.addHeader ( layer, header ) - 1;
-					// Only the first header in the group
-					if ( itb == 0 )
-						hidx.add ( jcol );
+					// First header in the group added to the index 
+					if ( itb == 0 ) hidx.add ( jcol );
 					tableContents.set ( layer, nrows, jcol, value );
 				}
 				continue;
@@ -259,6 +255,26 @@ public class TableBuilder
 				// go ahead
 				for ( int itb = 0; itb < tbgSz; itb++ )
 				{
+					String header = headers.get ( itb );
+					if ( jcol >= layerHeaders.size () || !header.equals ( layerHeaders.get ( jcol ) ) )
+					{
+						// The current table group appears in the layer, but the current value has additional headers.
+						// Can happen, e.g., when a node without a unit was added before and now we have a unit instead
+						// So, we need to insert a slot and update the header indexes
+						
+						// TODO: factorise this mess
+						tableContents.addHeader ( layer, jcol, header );
+						for ( String toBeUpdatedHeader: headerIndexes.keySet () )
+						{
+							SortedSet<Integer> toBeUpdatedHix = headerIndexes.get ( toBeUpdatedHeader );
+							SortedSet<Integer> newHix = new TreeSet<Integer> ();
+							for ( int toBeUpdatedIdx: toBeUpdatedHix )
+								newHix.add ( toBeUpdatedIdx < jcol ? toBeUpdatedIdx : toBeUpdatedIdx + 1);
+							headerIndexes.put ( toBeUpdatedHeader, newHix );
+						}
+						layerHeaders = tableContents.getLayerHeaders ( layer );
+					} // if ( there's a new sub-header )
+					
 					String value = values.get ( itb );
 					tableContents.set ( layer, nrows, jcol++, value );
 				}
@@ -284,7 +300,8 @@ public class TableBuilder
 				int jcol = tableContents.addHeader ( layer, header ) - 1;
 				tableContents.set ( layer, nrows, jcol, value );
 
-				// Only the first header in the group, increment all the old headers on its left
+				// Index the the first header in the group (only), increment all the old headers on its left
+				//
 				if ( itb == 0 )
 				{
 					for ( String idxh: headerIndexes.keySet () )

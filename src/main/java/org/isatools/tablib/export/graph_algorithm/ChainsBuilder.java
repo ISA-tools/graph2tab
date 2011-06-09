@@ -243,16 +243,19 @@ class ChainsBuilder
 			//
 			Iterator<Node> outItr = outs.iterator ();
 
-			// Let's recycle this node for the first splitting
-			outItr.next ();
-
-			while ( outItr.hasNext () )
-				split ( node, null, outItr.next () );
-
-			if ( isTowardRight )
+			if ( nouts > 0 ) // rare case of isolated node (no in, no out)
 			{
-				for ( Node out: outs )
-					normalize ( out, true );
+				// Let's recycle this node for the first splitting
+				outItr.next ();
+	
+				while ( outItr.hasNext () )
+					split ( node, null, outItr.next () );
+	
+				if ( isTowardRight )
+				{
+					for ( Node out: outs )
+						normalize ( out, true );
+				}
 			}
 		} 
 		else if ( nouts == 0 )
@@ -261,11 +264,14 @@ class ChainsBuilder
 			//
 			Iterator<Node> inItr = ins.iterator ();
 
-			// Let's recycle this node for the first splitting
-			inItr.next ();
-
-			while ( inItr.hasNext () )
-				split ( node, inItr.next (), null );
+			if ( nins > 0 ) // rare case of isolated node (no in, no out)
+			{
+				// Let's recycle this node for the first splitting
+				inItr.next ();
+	
+				while ( inItr.hasNext () )
+					split ( node, inItr.next (), null );
+			}
 		}
 		else if ( nins == 1 && nouts == 1 )
 		{
