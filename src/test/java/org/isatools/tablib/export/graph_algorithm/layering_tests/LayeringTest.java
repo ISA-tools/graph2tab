@@ -97,7 +97,7 @@ public class LayeringTest
 	 * </p>
 	 */
 	@Test
-	public void testUnevenGraph1 ()
+	public void testUnevenGraph1 () throws Exception
 	{
 		out.println ( "_______ TEST UNEVEN GRAPH 1 ________ " );
 
@@ -148,6 +148,7 @@ public class LayeringTest
 
 		TableBuilder tb = new LayeringModelTableBuilder ( nodes );
 		out.println ( tb.report () );
+		tb.reportTSV ( "target/uneven_graph_1.csv" );
 	}
 	
 	@Test
