@@ -54,12 +54,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
@@ -84,10 +81,6 @@ public class TableBuilder
 {
 	protected Set<Node> nodes;
 	protected final boolean isLayeringRequired; 
-
-	private LayersBuilder layersBuilder;
-	private ChainsBuilder chainsBuilder;
-	private TableContents tableContents;
 	protected List<List<String>> table = null;
 
 	/**
@@ -137,8 +130,11 @@ public class TableBuilder
 	 */
 	public List<List<String>> getTable ()
 	{
+
 		if ( this.table != null )
 			return this.table;
+
+		LayersBuilder layersBuilder = null;
 
 		if ( isLayeringRequired ) {
 			layersBuilder = new LayersBuilder ( nodes );
@@ -146,181 +142,49 @@ public class TableBuilder
 			nodes = layersBuilder.getStartNodes ();
 		}
 		
-		chainsBuilder = new ChainsBuilder ( nodes, layersBuilder );
-		tableContents = new TableContents ();
-
+		ChainsBuilder chainsBuilder = new ChainsBuilder ( nodes, layersBuilder );
+		TableContents tableContents = new TableContents ();
+		int nrows = 1; 
+		
 		for ( Node node: chainsBuilder.getStartNodes () )
 		{
-			int layer = 0, prevLayer = -1;
+			int layer = 0, prevLayer = -1; 
 			while ( true )
 			{
 				if ( isLayeringRequired ) 
 				{
 					layer = layersBuilder.getLayer ( node );
-					// Start from the previous'node layer and fill-in-the-blanks until you reach the current layer 
+					// Start from the previous'node layer and fill-in-the-blanks until you reach the current layer
 					for ( int layeri = prevLayer + 1; layeri < layer; layeri++ )
-						tableContents.addNullRow ( layeri );
+						tableContents.mergeNode ( layeri, null, nrows ); 
 					prevLayer = layer;
 				}
-
-				if ( node.getTabValues ().isEmpty () )
-					// Skip eg, processings not having at least one protocol
-					tableContents.addNullRow ( layer );
-				else
-					addNode ( layer, node );
+				
+				tableContents.mergeNode ( layer, node, nrows );
 				
 				SortedSet<Node> outs = node.getOutputs ();
 				if ( outs.isEmpty () ) break;
-				
+	
 				node = outs.first ();
-				
+	
 				// This flag is final, so javac optimises a bit here
 				if ( !isLayeringRequired ) layer++;
 				
-			} // while on chain nodes
+			} // while on node chain 
 
 			if ( isLayeringRequired )
 			{
 				// Fill-in-the-blanks until the last layer
 				int maxLayer = layersBuilder.getMaxLayer ();
 				for ( int layeri = prevLayer + 1; layeri <= maxLayer; layeri++ )
-					tableContents.addNullRow ( layeri );
+					tableContents.mergeNode ( layeri, null, nrows ); 
 			}
+			
+			nrows++;
 		} // for chain
 		
-		return this.table = new LayersListView ( tableContents );
+		return this.table = tableContents.getTable ();
 	}
-	
-	/**
-	 * This add a node of the chains prepared by {@link ChainsBuilder} to the exported table. This is done by considering
-	 * the pairs returned by {@link Node#getTabValues()}, values with the same header are merged.
-	 */
-	private void addNode ( int layer, Node node )
-	{		
-		List<String> layerHeaders = tableContents.getLayerHeaders ( layer );
-
-		int ncols = layerHeaders.size ();
-		int nrows = tableContents.colsMaxSize ( layer );
-
-		// First header of the group => indexes of columns where the header is
-		Map<String, SortedSet<Integer>> headerIndexes = new HashMap<String, SortedSet<Integer>> ();
-
-		// Initially it is like the layer contents
-		for ( int icol = 0; icol < ncols; icol++ )
-		{
-			String header = layerHeaders.get ( icol );
-			SortedSet<Integer> hidx = headerIndexes.get ( header );
-			if ( hidx == null )
-				headerIndexes.put ( header, hidx = new TreeSet<Integer> () );
-			hidx.add ( icol );
-		}
-
-		// Now work over all tab value groups
-		//
-		for ( TabValueGroup tbg: node.getTabValues () )
-		{
-			List<String> headers = tbg.getHeaders (), values = tbg.getValues ();
-			int tbgSz = headers.size ();
-
-			String header0 = headers.get ( 0 );
-			SortedSet<Integer> hidx = headerIndexes.get ( header0 );
-
-			if ( hidx == null )
-			{
-				// Header not appearing in current layer yet, to be added.
-				//
-				hidx = new TreeSet<Integer> ();
-				for ( int itb = 0; itb < tbgSz; itb++ )
-				{
-					String header = headers.get ( itb );
-					String value = values.get ( itb );
-					int jcol = tableContents.addHeader ( layer, header ) - 1;
-					// First header in the group added to the index 
-					if ( itb == 0 ) hidx.add ( jcol );
-					tableContents.set ( layer, nrows, jcol, value );
-				}
-				continue;
-			}
-
-			// Header already used somewhere in the table being built.
-			// Do we have a free cell in the existing columns for this header?
-			//
-			boolean isLanded = false;
-			for ( int jcol: hidx )
-			{
-				if ( tableContents.get ( layer, nrows, jcol ) != null )
-					continue;
-
-				// There is a free cell for the current header, let's fill it with the corresponding object value and
-				// go ahead
-				for ( int itb = 0; itb < tbgSz; itb++ )
-				{
-					String header = headers.get ( itb );
-					if ( jcol >= layerHeaders.size () || !header.equals ( layerHeaders.get ( jcol ) ) )
-					{
-						// The current table group appears in the layer, but the current value has additional headers.
-						// Can happen, e.g., when a node without a unit was added before and now we have a unit instead
-						// So, we need to insert a slot and update the header indexes
-						
-						// TODO: factorise this mess
-						tableContents.addHeader ( layer, jcol, header );
-						for ( String toBeUpdatedHeader: headerIndexes.keySet () )
-						{
-							SortedSet<Integer> toBeUpdatedHix = headerIndexes.get ( toBeUpdatedHeader );
-							SortedSet<Integer> newHix = new TreeSet<Integer> ();
-							for ( int toBeUpdatedIdx: toBeUpdatedHix )
-								newHix.add ( toBeUpdatedIdx < jcol ? toBeUpdatedIdx : toBeUpdatedIdx + 1);
-							headerIndexes.put ( toBeUpdatedHeader, newHix );
-						}
-						layerHeaders = tableContents.getLayerHeaders ( layer );
-					} // if ( there's a new sub-header )
-					
-					String value = values.get ( itb );
-					tableContents.set ( layer, nrows, jcol++, value );
-				}
-				isLanded = true;
-				break;
-			}
-
-			if ( isLanded )
-				continue;
-
-			// if !isLanded => cell is already taken for this header, we must add it to the layer columns and add the value
-			// to the corresponding new position.
-			// TODO: This screw the grouping of headers of the same type (eg, factor value could fall between two
-			// characteristics[] column blocks). To sort it out, we have to completely change the way the result is stored: 
-			// header groups must be stored explicitly, while currently we only store final headers, detached from their 
-			// grouping.
-			//
-			for ( int itb = 0; itb < tbgSz; itb++ )
-			{
-				String header = headers.get ( itb );
-				String value = values.get ( itb );
-
-				int jcol = tableContents.addHeader ( layer, header ) - 1;
-				tableContents.set ( layer, nrows, jcol, value );
-
-				// Index the the first header in the group (only), increment all the old headers on its left
-				//
-				if ( itb == 0 )
-				{
-					for ( String idxh: headerIndexes.keySet () )
-					{
-						SortedSet<Integer> hidxNew = new TreeSet<Integer> ();
-						if ( header0.equals ( idxh ) ) 
-						{
-							hidx = hidxNew;
-							hidxNew.add ( jcol );
-						}
-						for ( int idxCol: headerIndexes.get ( idxh ) )
-							hidxNew.add ( idxCol < jcol ? idxCol : idxCol + 1 );
-						headerIndexes.put ( idxh, hidxNew );
-					}
-				}
-			}
-		}
-	}
-
 	
 	/**
 	 * @return A string representation of {@link #getTable()}, to be used for debugging purposes.

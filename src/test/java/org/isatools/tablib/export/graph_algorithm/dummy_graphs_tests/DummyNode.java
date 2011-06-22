@@ -46,7 +46,7 @@
 package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
 
 import org.isatools.tablib.export.graph_algorithm.DefaultAbstractNode;
-import org.isatools.tablib.export.graph_algorithm.DefaultTabValueGroup;
+import org.isatools.tablib.export.graph_algorithm.DefaultTableGroup;
 import org.isatools.tablib.export.graph_algorithm.Node;
 import org.isatools.tablib.export.graph_algorithm.TabValueGroup;
 
@@ -136,12 +136,11 @@ public class DummyNode extends DefaultAbstractNode {
 	}
 
 	/**
-	 * @return a single {@link TabValueGroup} with a single pair in it, where header = "Foo Header " + {@link #getColumn()}
-	 *         and value is {@link #getValue()}.
+	 * @return a list of {@link TabValueGroup}, representing the contribute of this node to the final table.  
 	 */
-	public List<TabValueGroup> getTabValues() {
+	public List<TabValueGroup> getTabValues () {
 		List<TabValueGroup> result = new ArrayList<TabValueGroup>();
-		result.add(new DefaultTabValueGroup("Foo Header " + column, value));
+		result.add ( new DefaultTableGroup ( "Foo Header "+ column, value ) );
 		return result;
 	}
 
