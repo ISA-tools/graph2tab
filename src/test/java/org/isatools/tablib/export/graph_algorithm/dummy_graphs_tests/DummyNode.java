@@ -46,7 +46,7 @@
 package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
 
 import org.isatools.tablib.export.graph_algorithm.DefaultAbstractNode;
-import org.isatools.tablib.export.graph_algorithm.DefaultTableGroup;
+import org.isatools.tablib.export.graph_algorithm.DefaultTabValueGroup;
 import org.isatools.tablib.export.graph_algorithm.Node;
 import org.isatools.tablib.export.graph_algorithm.TabValueGroup;
 
@@ -140,7 +140,7 @@ public class DummyNode extends DefaultAbstractNode {
 	 */
 	public List<TabValueGroup> getTabValues () {
 		List<TabValueGroup> result = new ArrayList<TabValueGroup>();
-		result.add ( new DefaultTableGroup ( "Foo Header "+ column, value ) );
+		result.add ( new DefaultTabValueGroup ( "Foo Header "+ column, value ) );
 		return result;
 	}
 

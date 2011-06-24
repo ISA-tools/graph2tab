@@ -46,7 +46,7 @@
 package org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.node_wrappers;
 
 import org.isatools.tablib.export.graph_algorithm.DefaultAbstractNode;
-import org.isatools.tablib.export.graph_algorithm.DefaultTableGroup;
+import org.isatools.tablib.export.graph_algorithm.DefaultTabValueGroup;
 import org.isatools.tablib.export.graph_algorithm.Node;
 import org.isatools.tablib.export.graph_algorithm.TabValueGroup;
 import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.Annotation;
@@ -136,18 +136,18 @@ public abstract class ExpNodeWrapper extends DefaultAbstractNode
 	protected List<TabValueGroup> getTabValues ( String nameHeader, String annHeaderPrefix )
 	{
 		List<TabValueGroup> result = new ArrayList<TabValueGroup> ();
-		result.add ( new DefaultTableGroup ( nameHeader, base.getName () ) );
+		result.add ( new DefaultTabValueGroup ( nameHeader, base.getName () ) );
 
 		for ( Annotation annotation: base.getAnnotations () )
 		{
-			DefaultTableGroup tbg = new DefaultTableGroup ( annHeaderPrefix + " [ " + annotation.getType () + " ]",
+			DefaultTabValueGroup tbg = new DefaultTabValueGroup ( annHeaderPrefix + " [ " + annotation.getType () + " ]",
 					annotation.getValue () );
 			OntoTerm ot = annotation.getOntoTerm ();
 			if ( ot != null )
 			{
 				tbg.append ( 
-					new DefaultTableGroup ( "Term Accession Number", ot.getAcc (),
-						new DefaultTableGroup ( "Term Source REF", ot.getSource () )
+					new DefaultTabValueGroup ( "Term Accession Number", ot.getAcc (),
+						new DefaultTabValueGroup ( "Term Source REF", ot.getSource () )
 				));
 			}
 			result.add ( tbg );

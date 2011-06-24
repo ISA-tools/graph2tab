@@ -150,6 +150,22 @@ public class LayeringTest
 		out.println ( tb.report () );
 	}
 	
+	/**
+	 * Tests the case:
+	 * <pre> 
+	 *  |  Sample1  |  Sample2  |  Extract1  |
+	 *  |  Sample1  |  Proto1   |  Sample4   |
+	 * </pre>
+	 * 
+	 * which should yeld: 
+	 * 
+	 * <pre>
+	 *  |  Sample1  |           |  Sample2  |  Extract1  |
+	 *  |  Sample1  |  Proto1   |  Sample4  |            |
+	 * </pre>
+	 * 
+	 * It's the sample that is shifted, because it's semantic closeness to what we have on the right layer. 
+	 */
 	@Test
 	public void testCloseSameTypes ()
 	{

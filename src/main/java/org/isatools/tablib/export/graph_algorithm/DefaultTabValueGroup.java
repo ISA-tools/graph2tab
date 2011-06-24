@@ -11,19 +11,19 @@ import java.util.List;
  * @author brandizi
  *
  */
-public class DefaultTableGroup implements TabValueGroup
+public class DefaultTabValueGroup implements TabValueGroup
 {
 
 	private final String header, value;
 	private final List<TabValueGroup> tail = new ArrayList<TabValueGroup> ();
 
-	public DefaultTableGroup ( String header, String value )
+	public DefaultTabValueGroup ( String header, String value )
 	{
 		this.header = header;
 		this.value = value;
 	}
 
-	public DefaultTableGroup ( String header, String value, TabValueGroup parentGroup )
+	public DefaultTabValueGroup ( String header, String value, TabValueGroup parentGroup )
 	{
 		this.header = header;
 		this.value = value;
