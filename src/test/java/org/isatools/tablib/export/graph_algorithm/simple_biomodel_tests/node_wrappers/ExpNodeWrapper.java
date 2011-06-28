@@ -145,8 +145,10 @@ public abstract class ExpNodeWrapper extends DefaultAbstractNode
 			OntoTerm ot = annotation.getOntoTerm ();
 			if ( ot != null )
 			{
-				tbg.add ( "Term Accession Number", ot.getAcc () );
-				tbg.add ( "Term Source REF", ot.getSource () );
+				tbg.append ( 
+					new DefaultTabValueGroup ( "Term Accession Number", ot.getAcc (),
+						new DefaultTabValueGroup ( "Term Source REF", ot.getSource () )
+				));
 			}
 			result.add ( tbg );
 		}

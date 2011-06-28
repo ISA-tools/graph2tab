@@ -136,12 +136,11 @@ public class DummyNode extends DefaultAbstractNode {
 	}
 
 	/**
-	 * @return a single {@link TabValueGroup} with a single pair in it, where header = "Foo Header " + {@link #getColumn()}
-	 *         and value is {@link #getValue()}.
+	 * @return a list of {@link TabValueGroup}, representing the contribute of this node to the final table.  
 	 */
-	public List<TabValueGroup> getTabValues() {
+	public List<TabValueGroup> getTabValues () {
 		List<TabValueGroup> result = new ArrayList<TabValueGroup>();
-		result.add(new DefaultTabValueGroup("Foo Header " + column, value));
+		result.add ( new DefaultTabValueGroup ( "Foo Header "+ column, value ) );
 		return result;
 	}
 

@@ -68,12 +68,11 @@ public class ProtocolRefWrapper extends ExpNodeWrapper {
 	/**
 	 * @return getTabValues ( "Protocol REF", "Parameter Value" )
 	 */
-	public List<TabValueGroup> getTabValues() {
-		return getTabValues("Protocol REF", "Parameter Value");
+	public List<TabValueGroup> getTabValues () {
+		return getTabValues ("Protocol REF", "Parameter Value");
 	}
 
 	public Node createIsolatedClone() {
 		return new ProtocolRefWrapper(this);
 	}
-
 }

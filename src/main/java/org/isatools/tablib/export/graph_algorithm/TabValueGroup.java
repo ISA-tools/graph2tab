@@ -50,60 +50,44 @@ package org.isatools.tablib.export.graph_algorithm;
 
 import java.util.List;
 
+
 /**
- * <p>A group of header/value pairs that are exported for a particular element in the experimental graph. Eg:
+ * <p>A group of header/value pairs that are exported for a particular element in the experimental graph. Eg,
  * Characteristic + its value and the fields about the term source and accession are an example of
  * tab value group.</p>
  * <p/>
- * <p><b>WARNING</b>: The <b>implementor has full responsibility in returning headers in a consistent way</b>.
- * We cannot control the exported order of header groups of the same type that have different tails for
- * different objects. Eg: if you have "organism" and you plan to add "Term Source REF" and "Term Accession",
- * it's far better that you <b>always</b> return these 3 headers, no matter that the respective values for them are
- * empty or not. Otherwise you could get unexpected results. As an example, consider:</p>
- * <p/>
- * <table border = "1" cellspacing = "0">
- * <tr><th>sample name</th> 	<th>organism</th>  <th>term src</th>  <th>term acc</th>     <th>...</th></tr>
- * <tr><td>s1</td>            <td>mus-mus</td>   <td></td>          <td>123</td>          <td></td></tr>
- * <tr><td>s2</td>            <td>human</td>     <td>FMA</td>       <td></td>             <td></td></tr>
- * </table>
- * <p/>
- * <p>if s1 returns only the non empty headers (sample name, term acc) and s2 does the same (sample name, term src),
- * then the exported table will be:</p>
- * <p/>
- * <table border = "1" cellspacing = "0">
- * <tr><th>sample name</th> 	<th>organism</th>  <th>term acc</th>  <th>term src</th>     <th>...</th></tr>
- * <tr><td>s1</td>            <td>mus-mus</td>   <td>123</td>       <td></td>             <td></td></tr>
- * <tr><td>s2</td>            <td>human</td>     <td></td>          <td>FMA</td>          <td></td></tr>
- * </table>
- * <p/>
- * <p>which is wrong if the column order is meaningful for you. This is due to the way table values are inserted in the
- * exported table and at the moment we don't know how to overcome this problem. Good news is it doesn't occur in a case
- * like this:</p>
- * <p/>
- * <table border = "1" cellspacing = "0">
- * <tr><th>temperature</th> 	 <th>unit</th>  <th>term acc</th>  <th>term src</th>     <th>...</th></tr>
- * <tr><td>120</td>            <td></td>      <td></td>          <td></td>             <td></td></tr>
- * <tr><td>240</td>            <td>C</td>     <td></td>         <td>UO</td>            <td></td></tr>
- * </table>
- * <p/>
- * <p>Here, you are free to omit [unit, acc, src] if all the values for this combination are empty. 
- * The important thing is that you provide all the three headers together. The exporter will add the unit columns to
- * the temperature correctly in the second case. In other words, <b>headers that goes together should be always all
- * exported, even if they have empty values</b>. See the examples for details.</p>
  * 
- * <p>TODO: For the moment, we have added a patch that allows to add/omit combinations of different headers attached to
- * two table groups of the same type. Eg, you can have temperature = 120, and temp=150, unit(temp)=C, the unit will be
- * correctly appended to the resulting table. This only works if the headers are at least reported always in the same
- * order (ie, you can omit ontology term before temperature, but never swap the order). This will completely change soon, 
- * by introducing nested table groups.</p>
+ * This header/value pairs can be nested, so that it is possible to let the graph2tab library know how the headers 
+ * are to be grouped and need to stay together in the final result. For instance, if you have 
+ * "Characteristics[Type]=value1" followed by Term Source REF and Term Accession, a good coding would be:
+ * <pre>
+ *   TabValueGroup ( 
+ *     header = "Characteristics [ Type ]" 
+ *     value = "value1"
+ *     tail = ( 
+ *       TabValueGroup (
+ *         header = "Term Source REF"
+ *         value = "source1"
+ *         tail = (
+ *           TabValueGroup (
+ *             header = "Term Accession"
+ *             value = "acc1"
+ *           )
+ *         )
+ *       )
+ *     )
+ *   )
+ * </pre>
+ * 
  * <p/>
  * <p/>
- * <dl><dt>date</dt><dd>May 10, 2010</dd></dl>
+ * <dl><dt>date</dt><dd>Jun 27, 2011</dd></dl>
  *
  * @author brandizi
  */
-public interface TabValueGroup {
-    public List<String> getHeaders();
-
-    public List<String> getValues();
+public interface TabValueGroup
+{
+	public String getHeader();
+	public String getValue();
+	public List<TabValueGroup> getTail ();
 }

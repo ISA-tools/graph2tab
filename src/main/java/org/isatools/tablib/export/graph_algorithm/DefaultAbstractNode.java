@@ -202,16 +202,12 @@ public abstract class DefaultAbstractNode implements Node
 		String label = null;
 		List<TabValueGroup> tbvs = getTabValues ();
 		if ( !tbvs.isEmpty () )
-		{
-			label = tbvs.get ( 0 ).getValues ().get ( 0 );
-		}
+			label = tbvs.get ( 0 ).getValue ();
 
 		String olabel = null;
-		List<TabValueGroup> otbvs = o.getTabValues ();
-		if ( !otbvs.isEmpty () )
-		{
-			olabel = otbvs.get ( 0 ).getValues ().get ( 0 );
-		}
+		List<TabValueGroup> orow = o.getTabValues ();
+		if ( !orow.isEmpty () )
+			olabel = orow.get ( 0 ).getValue ();
 
 		if ( label != null )
 		{
@@ -241,20 +237,19 @@ public abstract class DefaultAbstractNode implements Node
 	}
 	
 	/**
-	 * The default is getTabValues ().get ( 0 ).getHeaders ().get ( 0 ), i.e.: the first header, 
-	 * something like 'Source Name' or 'Protocol REF'. There might be cases where the type is a different string, 
-	 * e.g.: there might be two nodes both having 'Protocol REF' as first header but having the types 
-	 * 'Sampling Protocol' and 'Extraction Protocol'.
+	 * The default is tabvals.get ( 0 ).getHeader (), i.e.: the first header, something like 'Source Name' or 
+	 * 'Protocol REF'. There might be cases where the type is a different string, e.g.: there might be two nodes both 
+	 * having 'Protocol REF' as first header but having the types 'Sampling Protocol' and 'Extraction Protocol'.
 	 * 
 	 */
 	public String getType ()
 	{
-		List<TabValueGroup> tabvals = getTabValues ();
+		List<TabValueGroup> tbvs = getTabValues ();
 		// Null may occur here, eg, when there are protocol applications with 0 protocols, the graph has a node, but the 
 		// final result doesn't need to have anything.
 		//
-		if ( tabvals == null || tabvals.isEmpty () ) return null;
-		return tabvals.get ( 0 ).getHeaders ().get ( 0 );
+		if ( tbvs == null || tbvs.isEmpty () ) return null;
+		return tbvs.get ( 0 ).getHeader ();
 	}
 
 	/**
@@ -302,8 +297,8 @@ public abstract class DefaultAbstractNode implements Node
 		List<TabValueGroup> tbvs = getTabValues ();
 		if ( !tbvs.isEmpty () )
 		{
-			TabValueGroup tbg = tbvs.get ( 0 );
-			result += ": " + tbg.getValues ().get ( 0 );
+			TabValueGroup tbvs0 = tbvs.get ( 0 );
+			result += ": " + tbvs0.getValue ();
 		}
 		return "{" + result + " (#" + hashCode () + ")}";
 	}

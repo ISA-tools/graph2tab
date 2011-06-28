@@ -69,8 +69,8 @@ public class DataWrapper extends ExpNodeWrapper {
 	/**
 	 * @return getTabValues ( "Data File Name", "Annotation" )
 	 */
-	public List<TabValueGroup> getTabValues() {
-		return getTabValues("Data File Name", "Annotation");
+	public List<TabValueGroup> getTabValues () {
+		return getTabValues ( "Data File Name", "Annotation");
 	}
 
 	public Node createIsolatedClone() {

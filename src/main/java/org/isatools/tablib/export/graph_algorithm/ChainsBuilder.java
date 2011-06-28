@@ -215,9 +215,6 @@ class ChainsBuilder
 			{
 				e.printStackTrace ();
 			}
-
-			// if ( nlabel.contains ( "Sample Name: AG Culture (B)" ) )
-			// System.out.println ( "Working with the target assay " + nlabel + " at graph " + dotFileNoCounter );
 		}
 
 		List<Node> ins = new LinkedList<Node> ( node.getInputs () );

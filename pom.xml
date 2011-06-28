@@ -6,7 +6,7 @@
 
     <groupId>org.isatools</groupId>
     <artifactId>graph2tab</artifactId>
-    <version>2.0.2</version>
+    <version>3.0</version>
     <name>graph2tab - The graph-to-spreadsheet conversion algorithm</name>
     <description>
         This package is a generic implementation of a method for producing spreadsheets out of pipeline graph.
@@ -122,28 +122,29 @@
     </build>
 
     <repositories>
+
 			<repository>
-				<id>ebi-repo</id>
-				<name>EBI repo</name>
-				<url>http://www.ebi.ac.uk/~maven/m2repo</url>
-			</repository>
+			    <id>oerc</id>
+			    <name>Oxford e-Research Center</name>
+			    <url>http://frog.oerc.ox.ac.uk:8080/artifactory/repo/</url>
+			</repository>			
+
     </repositories>
     
     <distributionManagement>
 
-			<repository>
-				<id>ebi-repo</id>
-				<name>EBI Repository</name>
-				<url>scp://parrot.ebi.ac.uk/homes/maven/public_html/m2repo</url>
-			</repository>
+	    <repository>
+	        <id>oerc</id>
+			    <name>Oxford e-Research Center</name>
+	        <url>http://frog.oerc.ox.ac.uk:8080/artifactory/libs-release-local</url>
+	    </repository>
 	
 			<snapshotRepository>
-				<uniqueVersion>false</uniqueVersion>
-				<id>ebi-repo-snapshots</id>
-				<name>EBI Snapshots Repository</name>
-				<url>scp://parrot.ebi.ac.uk/homes/maven/public_html/m2repo_snapshots</url>
-			</snapshotRepository>
-	
+		    <id>oerc</id>
+		    <name>frog.oerc.ox.ac.uk-snapshots</name>
+		    <url>http://frog.oerc.ox.ac.uk:8080/artifactory/libs-snapshot-local</url>
+	    </snapshotRepository>
+    	
 		</distributionManagement>
     
 </project>
