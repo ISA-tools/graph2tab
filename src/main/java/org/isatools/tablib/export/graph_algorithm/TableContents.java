@@ -57,12 +57,16 @@ import uk.ac.ebi.utils.collections.ListUtils;
 /**
  * Provides a table-like representation of the layers in the graph. A layer is a set of homogeneous nodes having the 
  * same distance from the sources (eg: the initial column of sources or all the samples after the source column).
+ * 
  * <p/>
- * Basically we allow to represent the structure &lt;layer no., row, column (in the header)&gt; =&gt; value
+ * Basically we allow to represent the structure &lt;layer no.&gt; =&gt; List&lt;{@link StructuredTable}&gt;. That is, 
+ * the piece of table corresponding to a given layer is represented by a list of nested columns. This class is used by
+ * {@link TableBuilder#getTable()} to create the final result table from the layered graph of node chains that was 
+ * obtained from the initial input experimental work flow.  
  * <p/>
  * <dl>
  * <dt>date</dt>
- * <dd>May 5, 2010</dd>
+ * <dd>Jun 27, 2011</dd>
  * </dl>
  * 
  * @author brandizi
@@ -83,6 +87,11 @@ class TableContents
 		return layerContents.keySet ();
 	}
 
+	/**
+	 * The the contents of this layer, in the form of a list of nested columns (ie, {@link StructuredTable}). 
+	 * Creates an empty structure if noting exists yet.
+	 *  
+	 */
 	public List<StructuredTable> getLayerContent ( int layer )
 	{
 		List<StructuredTable> layerCont = layerContents.get ( layer );
@@ -95,6 +104,15 @@ class TableContents
 		return layerCont;
 	}
 
+	/**
+	 * This merges a new node into one of the layers that are being built, ie, builds a piece of the final result table. 
+	 * See {@link StructuredTable#mergeTabValues(List, int, List)} for details.
+	 * 
+	 * The node is supposed to belong in this layer (ie, is put under it by the {@link LayersBuilder} and therfore it has
+	 * the same {@link Node#getType() type} of the existing added nodes. newRowsSize tells us which row we are filling, this
+	 * is some information that the caller (ie, {@link TableBuilder#getTable()}) knows.
+	 *  
+	 */
 	public void mergeNode ( int layer, Node node, int newRowsSize )
 	{
 		StructuredTable.mergeTabValues ( getLayerContent ( layer ), newRowsSize, node == null ? null : node.getTabValues () );
@@ -134,6 +152,11 @@ class TableContents
 		return sb.toString ();
 	}
 	
+	/**
+	 * Used by {@link #toString()} to report all the headers in the nested structure inside a list of structured tables.
+	 * It does that by going through the recursive structure of {@link StructuredTable}. 
+	 * 
+	 */
 	private void toStringHeaders ( StringBuilder sb, List<StructuredTable> tables )
 	{
 		if ( tables == null || tables.isEmpty () ) return;
@@ -146,6 +169,11 @@ class TableContents
 		}
 	}
 
+	/**
+	 * Used by {@link #toString()} to report all the row values in the nested structure inside a list of structured tables.
+	 * It does that by going through the recursive structure of {@link StructuredTable}. 
+	 *  
+	 */
 	private void toStringRows ( StringBuilder sb, List<StructuredTable> tables, int irow )
 	{
 		if ( tables == null || tables.isEmpty () ) return;
@@ -158,24 +186,42 @@ class TableContents
 		}
 	}
 
+	/**
+	 * Reports all the headers inside the nested structures (ie, list of {@link StructuredTable}) that are associated to 
+	 * the layers. That is, the headers for the final result. The result is computed at every call no caching.
+	 * 
+	 */
 	public List<String> getHeaders ()
 	{
 		List<String> result = new LinkedList<String> ();
 		for ( int layer: getLayers () )
 			for ( StructuredTable table: getLayerContent ( layer ) )
-				table.addAllHeaders ( result );
+				table.exportAllHeaders ( result );
 		return result;
 	}
 
+	/**
+	 * Reports all the row values inside the nested structures (ie, list of {@link StructuredTable}) that are associated to 
+	 * the layers, for a given row index. That is, the row for the final result. 
+	 * It does that by going through the recursive structure of {@link StructuredTable}. 
+	 * The result is computed at every call no caching.
+	 * 
+	 */
 	private List<String> getRow ( int irow )
 	{
 		List<String> result = new LinkedList<String> ();
 		for ( int layer: getLayers () )
 			for ( StructuredTable table: getLayerContent ( layer ) )
-				table.addAllRows ( result, irow );
+				table.exportAllRows ( result, irow );
 		return result;
 	}
 	
+	/**
+	 * Reports all the row values inside the nested structures (ie, list of {@link StructuredTable}) that are associated to 
+	 * the layers. That is, the rows for the final result. 
+	 * It does that by going through the recursive structure of {@link StructuredTable}. 
+	 * The result is computed at every call no caching.
+	 */
 	public List<List<String>> getRows ()
 	{
 		List<List<String>> result = new LinkedList<List<String>> ();
@@ -184,6 +230,14 @@ class TableContents
 		return result;
 	}
 	
+	
+	/**
+	 * Reports all the row values inside the nested structures (ie, list of {@link StructuredTable}) that are associated to 
+	 * the layers. That is, the rows for the final result. 
+	 * It does that by going through the recursive structure of {@link StructuredTable}. Note that it doesn't call
+	 * {@link #getRows()} but redo a loop over {@link #getRow(int)}, in order to save a bit of memory. 
+	 * The result is computed at every call no caching.
+	 */
 	public List<List<String>> getTable ()
 	{
 		List<List<String>> result = new LinkedList<List<String>> ();

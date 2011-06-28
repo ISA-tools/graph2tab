@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * 
- * TODO: Comment me!
+ * A default implementation for {@link TabValueGroup}. This simply keeps in memory an header, value and tail.
  *
  * <dl><dt>date</dt><dd>Jun 21, 2011</dd></dl>
  * @author brandizi
@@ -23,11 +23,16 @@ public class DefaultTabValueGroup implements TabValueGroup
 		this.value = value;
 	}
 
-	public DefaultTabValueGroup ( String header, String value, TabValueGroup parentGroup )
+	/**
+	 * Defines pair of header/value and append an existing one to it. This allows top-down definitions of nested groups
+	 * (see examples).
+	 * 
+	 */
+	public DefaultTabValueGroup ( String header, String value, TabValueGroup tailValueGroup )
 	{
 		this.header = header;
 		this.value = value;
-		this.append ( parentGroup );
+		this.append ( tailValueGroup );
 	}
 
 	public String getHeader ()
@@ -45,9 +50,9 @@ public class DefaultTabValueGroup implements TabValueGroup
 		return tail;
 	}
 
-	public void append ( TabValueGroup row )
+	public void append ( TabValueGroup tail )
 	{
-		this.tail.add ( row );
+		this.tail.add ( tail );
 	}
 
 }
