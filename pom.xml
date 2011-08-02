@@ -13,8 +13,10 @@
         It is based on the node splitting metod: all the nodes in the input pipeline are reduced to *normalized* nodes,
         i.e.: nodes that have at most one input and at most one output. This is done by taking those nodes having
         splitting or pooling, creating copies of them and distributing the excessive inputs or outputs over the copies.
+        
+        The project originated in the ISA-Tools project (http://isa-tools.org).
     </description>
-    <url>http://isatab.sf.net/</url>
+    <url>https://github.com/ISA-tools/graph2tab/</url>
 
 	  <!-- Developer Listing -->
 	  <developers>
