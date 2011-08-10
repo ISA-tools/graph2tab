@@ -47,6 +47,7 @@ package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
 
 import org.isatools.tablib.export.graph_algorithm.Node;
 import org.isatools.tablib.export.graph_algorithm.TableBuilder;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -100,6 +101,7 @@ public class DummyGraphsTest {
 	 * <p/>
 	 * <img src = "exp_graph1.png">
 	 */
+	@Ignore
 	@Test
 	public void testG1() {
 		out.println("_______ PATHS TEST 1 __________ ");
@@ -139,6 +141,7 @@ public class DummyGraphsTest {
 	 * <p/>
 	 * <img src = "exp_graph2.png">
 	 */
+	@Ignore
 	@Test
 	public void testG2() {
 		out.println("_______ PATHS TEST 2 __________ ");
@@ -173,7 +176,50 @@ public class DummyGraphsTest {
 
 	}
 
-	/* TODO: G3, G4, G5 (see attached images)
+	/**
+	 * <p>Tests This example graph:</p>
+	 * <p/>
+	 * <img src = "exp_graph3.png">
+	 * 
+	 * This DOES NOT WORK and a major revision of graph2tab is planned.
+	 */
+	@Ignore
+	@Test
+	public void testG3 () {
+		out.println("_______ PATHS TEST 3 __________ ");
+
+		Set<Node> nodes = new HashSet<Node>();
+
+		DummyGraph g = new DummyGraph();
+
+		nodes.add ( g.addChain ( 0, "ACGIKMQR" ) );
+		g.addChain ( 0, "ADGIKNQT" );
+		nodes.add ( g.addChain ( 0, "BEHILOSU" ) );
+		g.addChain ( 0, "BFHILPS" );
+
+		TableBuilder tb = new TableBuilder ( nodes );
+		out.println(tb.report());
+
+		List<List<String>> paths = tb.getTable();
+
+		assertEquals ( "N. rows Error!", 5, paths.size () );
+		assertEquals ( "N. cols Error!", 8, paths.get(2).size() );
+
+		assertContains ( paths, "L", "O" );
+		assertContains ( paths, "Q", "T" );
+		assertContains ( paths, "H", "I" );
+		assertContains ( paths, "I", "K" );
+		assertContains ( paths, "A", "D" );
+		assertContains ( paths, "Q", "T" );
+		assertContains ( paths, "N", "Q" );
+		
+		assertDoesntContain ( paths, "Q", "U" );
+		assertDoesntContain ( paths, "G", "K" );
+		assertDoesntContain ( paths, "L", "M" );
+		assertDoesntContain ( paths, "K", "O" );
+	}
+	
+	/* TODO: G4, G5 (see attached images)
 		 * I've already tested these cases in an old version of this library and they work. I've to
 		 * migrate the code here.
 		 *
