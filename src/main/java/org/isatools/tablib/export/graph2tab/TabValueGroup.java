@@ -46,7 +46,7 @@
 
  */
 
-package org.isatools.tablib.export.graph_algorithm;
+package org.isatools.tablib.export.graph2tab;
 
 import java.util.List;
 

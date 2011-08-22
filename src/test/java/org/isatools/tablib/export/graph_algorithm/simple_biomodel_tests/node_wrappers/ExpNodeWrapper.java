@@ -45,10 +45,10 @@
 
 package org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.node_wrappers;
 
-import org.isatools.tablib.export.graph_algorithm.DefaultAbstractNode;
-import org.isatools.tablib.export.graph_algorithm.DefaultTabValueGroup;
-import org.isatools.tablib.export.graph_algorithm.Node;
-import org.isatools.tablib.export.graph_algorithm.TabValueGroup;
+import org.isatools.tablib.export.graph2tab.DefaultAbstractNode;
+import org.isatools.tablib.export.graph2tab.DefaultTabValueGroup;
+import org.isatools.tablib.export.graph2tab.Node;
+import org.isatools.tablib.export.graph2tab.TabValueGroup;
 import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.Annotation;
 import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.ExperimentNode;
 import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.OntoTerm;
@@ -74,7 +74,7 @@ import java.util.TreeSet;
 public abstract class ExpNodeWrapper extends DefaultAbstractNode
 {
 	/**
-	 * We use either this model or an extension of it (see package org.isatools.tablib.export.graph_algorithm.layering_tests.model), 
+	 * We use either this model or an extension of it (see package org.isatools.tablib.export.graph2tab.layering_tests.model), 
 	 * A different factory is needed for either case. This is not a typical case, probably it will be more common to get the
 	 * factory via some static getInstance() method.
 	 *  

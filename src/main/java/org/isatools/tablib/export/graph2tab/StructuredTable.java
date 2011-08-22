@@ -1,4 +1,4 @@
-package org.isatools.tablib.export.graph_algorithm;
+package org.isatools.tablib.export.graph2tab;
 /*
 
 The ISAconverter, ISAvalidator & BII Management Tool are components of the ISA software suite (http://www.isa-tools.org)

@@ -45,8 +45,8 @@
 
 package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
 
-import org.isatools.tablib.export.graph_algorithm.Node;
-import org.isatools.tablib.export.graph_algorithm.TableBuilder;
+import org.isatools.tablib.export.graph2tab.Node;
+import org.isatools.tablib.export.graph2tab.TableBuilder;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -97,9 +97,7 @@ public class DummyGraphsTest {
 	}
 
 	/**
-	 * <p> Tests This example graph:</p>
-	 * <p/>
-	 * <img src = "exp_graph1.png">
+	 * <p> Tests {@link DummyGraph#getG1()}</p>
 	 */
 	@Ignore
 	@Test
@@ -107,13 +105,8 @@ public class DummyGraphsTest {
 		out.println("_______ PATHS TEST 1 __________ ");
 
 		Set<Node> nodes = new HashSet<Node>();
-
-		DummyGraph g = new DummyGraph();
-
-		g.addChain(0, "ACDEF");
-		g.addChain(0, "BC");
-		nodes.add(g.addChain(2, "DGH"));
-		g.addChain(3, "GI");
+		DummyGraph g = DummyGraph.getG1 ();
+		nodes.add ( g.getNode ( 2, "D" ) );
 
 		TableBuilder tb = new TableBuilder ( nodes );
 		out.println(tb.report());
@@ -147,13 +140,7 @@ public class DummyGraphsTest {
 		out.println("_______ PATHS TEST 2 __________ ");
 
 		Set<Node> nodes = new HashSet<Node>();
-
-		DummyGraph g = new DummyGraph();
-
-		g.addChain(0, "FEDCA");
-		g.addChain(0, "HGDCB");
-		g.addChain(0, "IGD");
-
+		DummyGraph g = DummyGraph.getG2 ();
 		nodes.add(g.getNode(2, "D"));
 
 		TableBuilder tb = new TableBuilder ( nodes );
@@ -189,13 +176,9 @@ public class DummyGraphsTest {
 		out.println("_______ PATHS TEST 3 __________ ");
 
 		Set<Node> nodes = new HashSet<Node>();
-
-		DummyGraph g = new DummyGraph();
-
-		nodes.add ( g.addChain ( 0, "ACGIKMQR" ) );
-		g.addChain ( 0, "ADGIKNQT" );
-		nodes.add ( g.addChain ( 0, "BEHILOSU" ) );
-		g.addChain ( 0, "BFHILPS" );
+		DummyGraph g = DummyGraph.getG3 ();
+		nodes.add ( g.getNode ( 0, "A" ) );
+		nodes.add ( g.getNode ( 0, "B" ) );
 
 		TableBuilder tb = new TableBuilder ( nodes );
 		out.println(tb.report());
@@ -220,9 +203,6 @@ public class DummyGraphsTest {
 	}
 	
 	/* TODO: G4, G5 (see attached images)
-		 * I've already tested these cases in an old version of this library and they work. I've to
-		 * migrate the code here.
-		 *
-		 */
+	*/
 
 }

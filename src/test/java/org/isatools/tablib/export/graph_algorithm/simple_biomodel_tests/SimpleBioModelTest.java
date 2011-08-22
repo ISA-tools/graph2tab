@@ -45,7 +45,7 @@
 
 package org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests;
 
-import org.isatools.tablib.export.graph_algorithm.TableBuilder;
+import org.isatools.tablib.export.graph2tab.TableBuilder;
 import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.BioMaterial;
 import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.Data;
 import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.ExperimentNode;

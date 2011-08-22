@@ -45,8 +45,8 @@
 
 package org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.node_wrappers;
 
-import org.isatools.tablib.export.graph_algorithm.Node;
-import org.isatools.tablib.export.graph_algorithm.TableBuilder;
+import org.isatools.tablib.export.graph2tab.Node;
+import org.isatools.tablib.export.graph2tab.TableBuilder;
 import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.ExperimentNode;
 
 import java.util.HashSet;

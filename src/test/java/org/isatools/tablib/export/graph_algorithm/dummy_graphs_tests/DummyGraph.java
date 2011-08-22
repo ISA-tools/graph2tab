@@ -46,7 +46,11 @@
 package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
+import org.isatools.tablib.export.graph2tab.Node;
 
 /**
  * This is used by the tests, mainly to have a quick way to generate graphs from their topology
@@ -89,6 +93,63 @@ public class DummyGraph {
 			}
 		}
 		return result;
+	}
+
+	private static DummyGraph g1 = null;
+	
+	/** <p>Example Graph G1.</p>
+	 * <p><img src = "exp_graph1.png"></p>
+	 */
+	public static DummyGraph getG1 ()
+	{
+		if ( g1 != null ) return g1;
+		
+		DummyGraph g = new DummyGraph();
+
+		g.addChain(0, "ACDEF");
+		g.addChain(0, "BC");
+		g.addChain(2, "DGH");
+		g.addChain(3, "GI");
+		
+		return g1 = g;
+	}
+
+	private static DummyGraph g2 = null;
+	
+	/** <p>Example Graph G2.</p>
+	 * <p><img src = "exp_graph2.png"></p>
+	 */
+	public static DummyGraph getG2 ()
+	{
+		if ( g2 != null ) return g2;
+
+		DummyGraph g = new DummyGraph();
+
+		g.addChain(0, "FEDCA");
+		g.addChain(0, "HGDCB");
+		g.addChain(0, "IGD");
+		
+		return g2 = g;
+	}
+
+	private static DummyGraph g3 = null;
+
+	
+	/** <p>Example Graph G3.</p>
+	 * <p><img src = "exp_graph3.png"></p>
+	 */
+	public static DummyGraph getG3 ()
+	{
+		if ( g3!= null ) return g3;
+
+		DummyGraph g = new DummyGraph();
+
+		g.addChain ( 0, "ACGIKMQR" );
+		g.addChain ( 0, "ADGIKNQT" );
+		g.addChain ( 0, "BEHILOSU" );
+		g.addChain ( 0, "BFHILPS" );
+		
+		return g3 = g;
 	}
 
 }

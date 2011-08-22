@@ -1,4 +1,4 @@
-package org.isatools.tablib.export.graph_algorithm;
+package org.isatools.tablib.export.graph2tab;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
+import org.isatools.tablib.export.graph2tab.minflow.FlowManager;
 
 
 /**
@@ -46,10 +47,8 @@ import org.apache.commons.lang.StringUtils;
 public class LayersBuilder
 {
 	private boolean isInitialized = false;
-	
-	private Set<Node> nodes;
-	private Set<Node> endNodes = null;
-	private SortedSet<Node> startNodes = new TreeSet<Node> ();
+
+	private final FlowManager flowManager;
 	
 	/**
 	 * Allows to know all the nodes in a given layer, which is needed for completing the layering computation.
@@ -71,34 +70,9 @@ public class LayersBuilder
 	 */
 	public LayersBuilder ( Set<Node> nodes )
 	{
-		this.nodes = nodes;
+		this.flowManager = new FlowManager ( nodes );
 	}
 
-	/**
-	 * Compute the end nodes by walking the graph.
-	 */
-	private void initEndNodes () 
-	{
-		endNodes = new HashSet<Node> ();
-		for ( Node n: nodes ) initEndNodes ( n, endNodes );
-	}
-	
-	/**
-	 * recursion for {@link #initEndNodes()}.
-	 *
-	 */
-	private void initEndNodes ( Node node, Set<Node> result ) 
-	{
-		if ( node.getOutputs ().isEmpty () ) {
-			result.add ( node );
-			return;
-		}
-		
-		for ( Node out: node.getOutputs () ) 
-			initEndNodes ( out, result );
-		
-		return;
-	}
 	
 	/**
 	 * Set the layer for a node, which means all the two internal structures used for that are updated.
@@ -138,14 +112,13 @@ public class LayersBuilder
 		result = -1;
 		SortedSet<Node> ins = node.getInputs ();
 		
-		if ( ins.isEmpty () ) 
-			startNodes.add ( node );
-		else
+		if ( !ins.isEmpty () ) 
 			for ( Node in: ins )
 			{
 				int il = computeUntypedLayer ( in );
 				if ( result < il ) result = il;
-			}
+		}
+		
 		setLayer ( node, ++result );
 		return result;
 	}
@@ -157,8 +130,7 @@ public class LayersBuilder
 	 */
 	private void computeUntypedLayers ()
 	{
-		initEndNodes ();
-		for ( Node sink: endNodes )
+		for ( Node sink: flowManager.getEndNodes () )
 			computeUntypedLayer ( sink );
 	}
 
@@ -431,22 +403,12 @@ public class LayersBuilder
 		return maxLayer;
 	}
 
-	/**
-	 * Exposes the computed initial nodes to the world, they are passed to {@link ChainsBuilder}, faster than passing all 
-	 * the graph. 
-	 * 
-	 */
-	public SortedSet<Node> getStartNodes ()
-	{
-		if ( !isInitialized ) computeTypedLayers ();
-		return Collections.unmodifiableSortedSet ( startNodes );
-	}
 	
 	/**
 	 * This is used by {@link ChainsBuilder}, that class transform the graph into a set of chains, by duplicating nodes and
 	 * splitting their initial set of edges. This means that we need to save here the layering information for these 
 	 * new nodes, which can be done via this method.
-	 *   
+	 * 
 	 */
 	public void addSplittedNode ( Node original, Node newn ) 
 	{
@@ -459,7 +421,9 @@ public class LayersBuilder
 	}
 	
 	/**
-	 * A representation of the current graph layering, useful for debugging. 
+	 * A representation of the current graph layering, useful for debugging.
+	 * TODO: Move somewhere else?
+	 *  
 	 */
 	@Override
 	public String toString ()

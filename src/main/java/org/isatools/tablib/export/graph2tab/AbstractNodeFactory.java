@@ -45,7 +45,7 @@
  (http://nebc.nerc.ac.uk) and in part by the EU NuGO consortium (http://www.nugo.org/everyone).
 
  */
-package org.isatools.tablib.export.graph_algorithm;
+package org.isatools.tablib.export.graph2tab;
 
 import java.util.HashMap;
 import java.util.Map;

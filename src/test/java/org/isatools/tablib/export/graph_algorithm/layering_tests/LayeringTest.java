@@ -5,8 +5,8 @@ import static java.lang.System.out;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.isatools.tablib.export.graph_algorithm.LayersBuilder;
-import org.isatools.tablib.export.graph_algorithm.TableBuilder;
+import org.isatools.tablib.export.graph2tab.LayersBuilder;
+import org.isatools.tablib.export.graph2tab.TableBuilder;
 import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioExtract;
 import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioSample;
 import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioSource;

@@ -45,10 +45,10 @@
 
 package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
 
-import org.isatools.tablib.export.graph_algorithm.DefaultAbstractNode;
-import org.isatools.tablib.export.graph_algorithm.DefaultTabValueGroup;
-import org.isatools.tablib.export.graph_algorithm.Node;
-import org.isatools.tablib.export.graph_algorithm.TabValueGroup;
+import org.isatools.tablib.export.graph2tab.DefaultAbstractNode;
+import org.isatools.tablib.export.graph2tab.DefaultTabValueGroup;
+import org.isatools.tablib.export.graph2tab.Node;
+import org.isatools.tablib.export.graph2tab.TabValueGroup;
 
 import java.util.ArrayList;
 import java.util.List;
