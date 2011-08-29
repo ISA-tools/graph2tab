@@ -56,13 +56,14 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
+
+import org.isatools.tablib.export.graph2tab.minflow.MinFlowCalculator;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
 /**
  * The table builder. This is the thing to (possibly extend) and invoke to produce the table exported from the
- * experimental graph. This class invokes {@link ChainsBuilder} and produce a matrix of strings from the chains that
+ * experimental graph. This class uses {@link ChainsBuilder} and produce a matrix of strings from the chains that
  * this class creates from the input graph.
  * <p/>
  * Columns belonging in different group types are exported in no particular order. This occasionally screw the grouping 
@@ -130,26 +131,23 @@ public class TableBuilder
 	 */
 	public List<List<String>> getTable ()
 	{
-
 		if ( this.table != null )
 			return this.table;
 
 		LayersBuilder layersBuilder = null;
-
-		if ( isLayeringRequired ) {
-			layersBuilder = new LayersBuilder ( nodes );
-			// It has the start nodes, so let's speed up things this way
-			nodes = layersBuilder.getStartNodes ();
-		}
+		MinFlowCalculator minFlowCalc = new MinFlowCalculator ( this.nodes );
 		
-		ChainsBuilder chainsBuilder = new ChainsBuilder ( nodes, layersBuilder );
+		if ( isLayeringRequired )
+			layersBuilder = new LayersBuilder ( minFlowCalc.getEndNodes () );
+
 		TableContents tableContents = new TableContents ();
 		int nrows = 1; 
 		
-		for ( Node node: chainsBuilder.getStartNodes () )
+		for ( List<Node> path: minFlowCalc.getMinPathCover () )
 		{
 			int layer = 0, prevLayer = -1; 
-			while ( true )
+
+			for ( Node node: path )
 			{
 				if ( isLayeringRequired ) 
 				{
@@ -161,17 +159,12 @@ public class TableBuilder
 				}
 				
 				tableContents.mergeNode ( layer, node, nrows );
-				
-				SortedSet<Node> outs = node.getOutputs ();
-				if ( outs.isEmpty () ) break;
 	
-				node = outs.first ();
-	
-				// This flag is final, so javac optimises a bit here
+				// Hopefully a minimum of optimisation
 				if ( !isLayeringRequired ) layer++;
-				
-			} // while on node chain 
-
+					
+			} // for each node in the path
+			
 			if ( isLayeringRequired )
 			{
 				// Fill-in-the-blanks until the last layer
@@ -181,7 +174,8 @@ public class TableBuilder
 			}
 			
 			nrows++;
-		} // for chain
+			
+		} // for each path
 		
 		return this.table = tableContents.getTable ();
 	}

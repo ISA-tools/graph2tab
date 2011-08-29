@@ -99,10 +99,9 @@ public class DummyGraphsTest {
 	/**
 	 * <p> Tests {@link DummyGraph#getG1()}</p>
 	 */
-	@Ignore
 	@Test
 	public void testG1() {
-		out.println("_______ PATHS TEST 1 __________ ");
+		out.println("_______ PATH COVER TEST 1 __________ ");
 
 		Set<Node> nodes = new HashSet<Node>();
 		DummyGraph g = DummyGraph.getG1 ();
@@ -134,10 +133,9 @@ public class DummyGraphsTest {
 	 * <p/>
 	 * <img src = "exp_graph2.png">
 	 */
-	@Ignore
 	@Test
 	public void testG2() {
-		out.println("_______ PATHS TEST 2 __________ ");
+		out.println("_______ PATHS COVER TEST 2 __________ ");
 
 		Set<Node> nodes = new HashSet<Node>();
 		DummyGraph g = DummyGraph.getG2 ();
@@ -168,12 +166,10 @@ public class DummyGraphsTest {
 	 * <p/>
 	 * <img src = "exp_graph3.png">
 	 * 
-	 * This DOES NOT WORK and a major revision of graph2tab is planned.
 	 */
-	@Ignore
 	@Test
 	public void testG3 () {
-		out.println("_______ PATHS TEST 3 __________ ");
+		out.println("_______ PATH COVER TEST 3 __________ ");
 
 		Set<Node> nodes = new HashSet<Node>();
 		DummyGraph g = DummyGraph.getG3 ();

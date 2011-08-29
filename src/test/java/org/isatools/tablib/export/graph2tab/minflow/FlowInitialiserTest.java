@@ -1,4 +1,4 @@
-package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
+package org.isatools.tablib.export.graph2tab.minflow;
 
 import static java.lang.System.out;
 
@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.isatools.tablib.export.graph2tab.Node;
-import org.isatools.tablib.export.graph2tab.minflow.FlowManager;
+import org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests.DummyGraph;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -19,9 +19,13 @@ import static org.junit.Assert.*;
  * @author brandizi
  *
  */
-public class FlowManagerTest
+public class FlowInitialiserTest
 {
 	@Test
+	
+	/**
+	 * <p> Tests {@link DummyGraph#getG1()}</p>
+	 */
 	public void testInitialFlowG1 ()
 	{
 		out.println("\n\n_______ INIT FLOW  ON G1 __________ ");
@@ -31,17 +35,19 @@ public class FlowManagerTest
 		DummyGraph g = DummyGraph.getG1 ();
 		nodes.add ( g.getNode ( 2, "D" ) );
 		
-		FlowManager flowMgr = new FlowManager ( nodes );
+		FlowInitialiser flowInitialiser = new FlowInitialiser ( nodes );
+		FlowManager flowMgr = flowInitialiser.getFlowManager ();
+		
 		assertEquals ( "Wrong flow in (A, C) + (B, C)!", 3, 
 				flowMgr.getFlow ( g.getNode ( 0, "B" ), g.getNode ( 1, "C" ) ) 
 				+ flowMgr.getFlow ( g.getNode ( 0, "A" ), g.getNode ( 1, "C" ) ) );
 		
-		assertEquals ( "Wrong flow in (C, D)!", 3, flowMgr.getFlow ( g.getNode ( 1, "C" ), g.getNode ( 2, "D" ) ) );
-		assertEquals ( "Wrong flow in (D, G)!", 2, flowMgr.getFlow ( g.getNode ( 2, "D" ), g.getNode ( 3, "G" ) ) );
+		assertEquals ( "Wrong flow in (C, D)!", 3, (int) flowMgr.getFlow ( g.getNode ( 1, "C" ), g.getNode ( 2, "D" ) ) );
+		assertEquals ( "Wrong flow in (D, G)!", 2, (int) flowMgr.getFlow ( g.getNode ( 2, "D" ), g.getNode ( 3, "G" ) ) );
 
-		assertEquals ( "Wrong flow in (G, H)!", 1, flowMgr.getFlow ( g.getNode ( 3, "G" ), g.getNode ( 4, "H" ) ) );
-		assertEquals ( "Wrong flow in (G, I)!", 1, flowMgr.getFlow ( g.getNode ( 3, "G" ), g.getNode ( 4, "I" ) ) );
-		assertEquals ( "Wrong flow in (E, F)!", 1, flowMgr.getFlow ( g.getNode ( 3, "E" ), g.getNode ( 4, "F" ) ) );
+		assertEquals ( "Wrong flow in (G, H)!", 1, (int) flowMgr.getFlow ( g.getNode ( 3, "G" ), g.getNode ( 4, "H" ) ) );
+		assertEquals ( "Wrong flow in (G, I)!", 1, (int) flowMgr.getFlow ( g.getNode ( 3, "G" ), g.getNode ( 4, "I" ) ) );
+		assertEquals ( "Wrong flow in (E, F)!", 1, (int) flowMgr.getFlow ( g.getNode ( 3, "E" ), g.getNode ( 4, "F" ) ) );
 	}
 	
 	@Test
@@ -54,17 +60,19 @@ public class FlowManagerTest
 		DummyGraph g = DummyGraph.getG2 ();
 		nodes.add ( g.getNode ( 2, "D" ) );
 		
-		FlowManager flowMgr = new FlowManager ( nodes );
+		FlowInitialiser flowInitialiser = new FlowInitialiser ( nodes );
+		FlowManager flowMgr = flowInitialiser.getFlowManager ();
+
 		assertEquals ( "Wrong flow in (C, A) + (C, B)!", 3, 
 				flowMgr.getFlow ( g.getNode ( 3, "C" ), g.getNode ( 4, "A" ) ) 
 				+ flowMgr.getFlow ( g.getNode ( 3, "C" ), g.getNode ( 4, "B" ) ) );
 		
-		assertEquals ( "Wrong flow in (D, C)!", 3, flowMgr.getFlow ( g.getNode ( 2, "D" ), g.getNode ( 3, "C" ) ) );
-		assertEquals ( "Wrong flow in (G, D)!", 2, flowMgr.getFlow ( g.getNode ( 1, "G" ), g.getNode ( 2, "D" ) ) );
+		assertEquals ( "Wrong flow in (D, C)!", 3, (int) flowMgr.getFlow ( g.getNode ( 2, "D" ), g.getNode ( 3, "C" ) ) );
+		assertEquals ( "Wrong flow in (G, D)!", 2, (int) flowMgr.getFlow ( g.getNode ( 1, "G" ), g.getNode ( 2, "D" ) ) );
 
-		assertEquals ( "Wrong flow in (H, G)!", 1, flowMgr.getFlow ( g.getNode ( 0, "H" ), g.getNode ( 1, "G" ) ) );
-		assertEquals ( "Wrong flow in (I, G)!", 1, flowMgr.getFlow ( g.getNode ( 0, "I" ), g.getNode ( 1, "G" ) ) );
-		assertEquals ( "Wrong flow in (F, E)!", 1, flowMgr.getFlow ( g.getNode ( 0, "F" ), g.getNode ( 1, "E" ) ) );
+		assertEquals ( "Wrong flow in (H, G)!", 1, (int) flowMgr.getFlow ( g.getNode ( 0, "H" ), g.getNode ( 1, "G" ) ) );
+		assertEquals ( "Wrong flow in (I, G)!", 1, (int) flowMgr.getFlow ( g.getNode ( 0, "I" ), g.getNode ( 1, "G" ) ) );
+		assertEquals ( "Wrong flow in (F, E)!", 1, (int) flowMgr.getFlow ( g.getNode ( 0, "F" ), g.getNode ( 1, "E" ) ) );
 	}
 	
 	@Test
@@ -77,7 +85,8 @@ public class FlowManagerTest
 		nodes.add ( g.getNode ( 0, "A" ) );
 		nodes.add ( g.getNode ( 0, "B" ) );
 		
-		FlowManager flowMgr = new FlowManager ( nodes );
+		FlowInitialiser flowInitialiser = new FlowInitialiser ( nodes );
+		FlowManager flowMgr = flowInitialiser.getFlowManager ();
 		
 		int fHI = flowMgr.getFlow ( g.getNode ( 2, "H" ), g.getNode ( 3, "I" ) );
 		int fGI = flowMgr.getFlow ( g.getNode ( 2, "G" ), g.getNode ( 3, "I" ) );

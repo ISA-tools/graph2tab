@@ -13,7 +13,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
-import org.isatools.tablib.export.graph2tab.minflow.FlowManager;
+import org.isatools.tablib.export.graph2tab.minflow.MinFlowCalculator;
 
 
 /**
@@ -44,11 +44,11 @@ import org.isatools.tablib.export.graph2tab.minflow.FlowManager;
  * @author brandizi
  *
  */
-public class LayersBuilder
+class LayersBuilder
 {
 	private boolean isInitialized = false;
 
-	private final FlowManager flowManager;
+	private final Set<Node> endNodes;
 	
 	/**
 	 * Allows to know all the nodes in a given layer, which is needed for completing the layering computation.
@@ -66,11 +66,12 @@ public class LayersBuilder
 	private int maxLayer = -1;
 	
 	/**
-	 * You can pass any set of nodes that allow one to reach the sinks, i.e. the rightmost end nodes.
+	 * It expects the end nodes (sinks) of the graph to be layered. This is computed via inside {@link MinFlowCalculator}.
+	 * 
 	 */
-	public LayersBuilder ( Set<Node> nodes )
+	public LayersBuilder ( Set<Node> endNodes )
 	{
-		this.flowManager = new FlowManager ( nodes );
+		this.endNodes = endNodes;
 	}
 
 	
@@ -130,7 +131,7 @@ public class LayersBuilder
 	 */
 	private void computeUntypedLayers ()
 	{
-		for ( Node sink: flowManager.getEndNodes () )
+		for ( Node sink: endNodes )
 			computeUntypedLayer ( sink );
 	}
 
@@ -403,23 +404,7 @@ public class LayersBuilder
 		return maxLayer;
 	}
 
-	
-	/**
-	 * This is used by {@link ChainsBuilder}, that class transform the graph into a set of chains, by duplicating nodes and
-	 * splitting their initial set of edges. This means that we need to save here the layering information for these 
-	 * new nodes, which can be done via this method.
-	 * 
-	 */
-	public void addSplittedNode ( Node original, Node newn ) 
-	{
-		Integer layer = node2Layer.get ( original );
-		if ( layer == null ) throw new RuntimeException ( 
-			"Internal Error: cannot insert a non-duped node in the layer builder, node: " + newn 
-		);
-		node2Layer.put ( newn, layer );
-		layer2Nodes.get ( layer ).add ( newn );
-	}
-	
+		
 	/**
 	 * A representation of the current graph layering, useful for debugging.
 	 * TODO: Move somewhere else?

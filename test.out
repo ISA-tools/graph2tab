@@ -1,0 +1,302 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.isatools:graph2tab:jar:4.0
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-compiler-plugin is missing. @ line 100, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-source-plugin is missing. @ line 109, column 21
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building graph2tab - The graph-to-spreadsheet conversion algorithm 4.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ graph2tab ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /Users/brandizi/Documents/Work/ebi/biomap/git/graph2tab/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ graph2tab ---
+[INFO] Compiling 2 source files to /Users/brandizi/Documents/Work/ebi/biomap/git/graph2tab/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ graph2tab ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ graph2tab ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.7.2:test (default-test) @ graph2tab ---
+[INFO] Surefire report directory: /Users/brandizi/Documents/Work/ebi/biomap/git/graph2tab/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests.DummyGraphsTest
+_______ PATH COVER TEST 1 __________ 
+17:10:33.117 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: E (#3)}' => '{Foo Header 4: F (#4)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.120 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 3: E (#3)}'
+17:10:33.120 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#2)}' => '{Foo Header 3: E (#3)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.120 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 3: E (#3)}'
+17:10:33.121 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 2: D (#2)}'
+17:10:33.121 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: C (#1)}' => '{Foo Header 2: D (#2)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.121 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 2: D (#2)}'
+17:10:33.121 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: C (#1)}'
+17:10:33.121 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: A (#0)}' => '{Foo Header 1: C (#1)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.121 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: B (#5)}' => '{Foo Header 1: C (#1)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.121 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of -1 for '{Foo Header 1: C (#1)}'
+17:10:33.122 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: G (#6)}' => '{Foo Header 4: H (#7)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.122 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 3: G (#6)}'
+17:10:33.122 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#2)}' => '{Foo Header 3: G (#6)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.122 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 3: G (#6)}'
+17:10:33.122 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 2: D (#2)}'
+17:10:33.122 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 1 for '{Foo Header 2: D (#2)}'
+17:10:33.123 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of output for '{Foo Header 2: D (#2)}'
+17:10:33.123 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: C (#1)}' => '{Foo Header 2: D (#2)}' increased to 2 (def1 = 0, def2 = 0)
+17:10:33.123 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: C (#1)}'
+17:10:33.123 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 1: C (#1)}'
+17:10:33.123 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: G (#6)}' => '{Foo Header 4: I (#8)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.123 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 3: G (#6)}'
+17:10:33.124 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 1 for '{Foo Header 3: G (#6)}'
+17:10:33.124 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of output for '{Foo Header 3: G (#6)}'
+17:10:33.124 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#2)}' => '{Foo Header 3: G (#6)}' increased to 2 (def1 = 1, def2 = 0)
+17:10:33.124 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 2: D (#2)}'
+17:10:33.124 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 1 for '{Foo Header 2: D (#2)}'
+17:10:33.124 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of output for '{Foo Header 2: D (#2)}'
+17:10:33.124 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: C (#1)}' => '{Foo Header 2: D (#2)}' increased to 3 (def1 = 1, def2 = 0)
+17:10:33.125 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: C (#1)}'
+17:10:33.125 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 1 for '{Foo Header 1: C (#1)}'
+17:10:33.125 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of output for '{Foo Header 1: C (#1)}'
+17:10:33.125 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: A (#0)}' => '{Foo Header 1: C (#1)}' increased to 2 (def1 = 2, def2 = 0)
+17:10:33.127 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: A (#0)}' => '{Foo Header 1: C (#1)}' increased to 1 (def1 = 1, def2 = 1)
+17:10:33.127 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: C (#1)}' => '{Foo Header 2: D (#2)}' increased to 2 (def1 = 0, def2 = 1)
+17:10:33.127 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#2)}' => '{Foo Header 3: E (#3)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.127 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: E (#3)}' => '{Foo Header 4: F (#4)}' increased to 0 (def1 = 0, def2 = 0)
+17:10:33.128 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: A (#0)}' => '{Foo Header 1: C (#1)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.128 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: C (#1)}' => '{Foo Header 2: D (#2)}' increased to 1 (def1 = 0, def2 = 1)
+17:10:33.128 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#2)}' => '{Foo Header 3: G (#6)}' increased to 1 (def1 = 0, def2 = 1)
+17:10:33.128 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: G (#6)}' => '{Foo Header 4: H (#7)}' increased to 0 (def1 = 0, def2 = 0)
+17:10:33.128 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: B (#5)}' => '{Foo Header 1: C (#1)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.128 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: C (#1)}' => '{Foo Header 2: D (#2)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.129 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#2)}' => '{Foo Header 3: G (#6)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.129 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: G (#6)}' => '{Foo Header 4: I (#8)}' increased to 0 (def1 = 0, def2 = 0)
+                  Foo Header 0 |                   Foo Header 1 |                   Foo Header 2 |                   Foo Header 3 |                   Foo Header 4 | 
+                             A |                              C |                              D |                              E |                              F | 
+                             A |                              C |                              D |                              G |                              H | 
+                             B |                              C |                              D |                              G |                              I | 
+
+
+_______ PATHS COVER TEST 2 __________ 
+17:10:33.142 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: C (#12)}' => '{Foo Header 4: B (#16)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.142 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 3: C (#12)}'
+17:10:33.143 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#11)}' => '{Foo Header 3: C (#12)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.143 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 3: C (#12)}'
+17:10:33.143 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 2: D (#11)}'
+17:10:33.143 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: E (#10)}' => '{Foo Header 2: D (#11)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.143 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: G (#15)}' => '{Foo Header 2: D (#11)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.143 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of -1 for '{Foo Header 2: D (#11)}'
+17:10:33.143 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: E (#10)}'
+17:10:33.143 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: F (#9)}' => '{Foo Header 1: E (#10)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.144 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 1: E (#10)}'
+17:10:33.144 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: G (#15)}'
+17:10:33.144 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: H (#14)}' => '{Foo Header 1: G (#15)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.144 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: I (#17)}' => '{Foo Header 1: G (#15)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.144 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of -1 for '{Foo Header 1: G (#15)}'
+17:10:33.144 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: C (#12)}' => '{Foo Header 4: A (#13)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.144 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 3: C (#12)}'
+17:10:33.144 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 1 for '{Foo Header 3: C (#12)}'
+17:10:33.145 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of output for '{Foo Header 3: C (#12)}'
+17:10:33.145 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#11)}' => '{Foo Header 3: C (#12)}' increased to 2 (def1 = 0, def2 = 0)
+17:10:33.145 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 2: D (#11)}'
+17:10:33.145 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 2: D (#11)}'
+17:10:33.145 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of input 1 for '{Foo Header 1: G (#15)}'
+17:10:33.145 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: G (#15)}' => '{Foo Header 2: D (#11)}' increased to 2 (def1 = 0, def2 = -1)
+17:10:33.145 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of input 1 for '{Foo Header 2: D (#11)}'
+17:10:33.145 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#11)}' => '{Foo Header 3: C (#12)}' increased to 3 (def1 = 0, def2 = -1)
+17:10:33.146 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of input 1 for '{Foo Header 3: C (#12)}'
+17:10:33.146 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: C (#12)}' => '{Foo Header 4: A (#13)}' increased to 2 (def1 = 0, def2 = -2)
+17:10:33.146 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: F (#9)}' => '{Foo Header 1: E (#10)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.146 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: E (#10)}' => '{Foo Header 2: D (#11)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.146 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#11)}' => '{Foo Header 3: C (#12)}' increased to 2 (def1 = 0, def2 = 1)
+17:10:33.146 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: C (#12)}' => '{Foo Header 4: A (#13)}' increased to 1 (def1 = 0, def2 = -1)
+17:10:33.147 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: H (#14)}' => '{Foo Header 1: G (#15)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.147 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: G (#15)}' => '{Foo Header 2: D (#11)}' increased to 1 (def1 = 0, def2 = 1)
+17:10:33.147 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#11)}' => '{Foo Header 3: C (#12)}' increased to 1 (def1 = 0, def2 = 1)
+17:10:33.147 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: C (#12)}' => '{Foo Header 4: A (#13)}' increased to 0 (def1 = 0, def2 = 0)
+17:10:33.147 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: I (#17)}' => '{Foo Header 1: G (#15)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.147 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: G (#15)}' => '{Foo Header 2: D (#11)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.147 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: D (#11)}' => '{Foo Header 3: C (#12)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.148 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: C (#12)}' => '{Foo Header 4: B (#16)}' increased to 0 (def1 = 0, def2 = 0)
+                  Foo Header 0 |                   Foo Header 1 |                   Foo Header 2 |                   Foo Header 3 |                   Foo Header 4 | 
+                             F |                              E |                              D |                              C |                              A | 
+                             H |                              G |                              D |                              C |                              A | 
+                             I |                              G |                              D |                              C |                              B | 
+
+
+_______ PATH COVER TEST 3 __________ 
+17:10:33.152 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 6: S (#34)}' => '{Foo Header 7: U (#35)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.152 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 6: S (#34)}'
+17:10:33.152 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 5: O (#33)}' => '{Foo Header 6: S (#34)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.152 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 5: P (#37)}' => '{Foo Header 6: S (#34)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.165 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of -1 for '{Foo Header 6: S (#34)}'
+17:10:33.165 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 5: O (#33)}'
+17:10:33.165 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 4: L (#32)}' => '{Foo Header 5: O (#33)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.165 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 5: O (#33)}'
+17:10:33.166 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 4: L (#32)}'
+17:10:33.166 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: I (#21)}' => '{Foo Header 4: L (#32)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.166 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 4: L (#32)}'
+17:10:33.166 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 3: I (#21)}'
+17:10:33.166 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: G (#20)}' => '{Foo Header 3: I (#21)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.166 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: H (#31)}' => '{Foo Header 3: I (#21)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.166 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of -1 for '{Foo Header 3: I (#21)}'
+17:10:33.166 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 2: G (#20)}'
+17:10:33.167 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: C (#19)}' => '{Foo Header 2: G (#20)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.167 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: D (#26)}' => '{Foo Header 2: G (#20)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.167 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of -1 for '{Foo Header 2: G (#20)}'
+17:10:33.167 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: C (#19)}'
+17:10:33.167 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: A (#18)}' => '{Foo Header 1: C (#19)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.167 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 1: C (#19)}'
+17:10:33.167 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: D (#26)}'
+17:10:33.168 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: A (#18)}' => '{Foo Header 1: D (#26)}' set to 1 (def1 = 2, def2 = 0)
+17:10:33.168 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 1: D (#26)}'
+17:10:33.168 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 2: H (#31)}'
+17:10:33.168 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: E (#30)}' => '{Foo Header 2: H (#31)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.168 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: F (#36)}' => '{Foo Header 2: H (#31)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.168 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of -1 for '{Foo Header 2: H (#31)}'
+17:10:33.168 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: E (#30)}'
+17:10:33.169 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: B (#29)}' => '{Foo Header 1: E (#30)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.169 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 1: E (#30)}'
+17:10:33.169 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: F (#36)}'
+17:10:33.169 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: B (#29)}' => '{Foo Header 1: F (#36)}' set to 1 (def1 = 2, def2 = 0)
+17:10:33.169 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 1: F (#36)}'
+17:10:33.169 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 5: P (#37)}'
+17:10:33.169 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 4: L (#32)}' => '{Foo Header 5: P (#37)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.170 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 5: P (#37)}'
+17:10:33.170 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 4: L (#32)}'
+17:10:33.170 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 1 for '{Foo Header 4: L (#32)}'
+17:10:33.170 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of output for '{Foo Header 4: L (#32)}'
+17:10:33.170 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: I (#21)}' => '{Foo Header 4: L (#32)}' increased to 2 (def1 = 0, def2 = 0)
+17:10:33.170 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 3: I (#21)}'
+17:10:33.170 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 3: I (#21)}'
+17:10:33.171 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 6: Q (#24)}' => '{Foo Header 7: R (#25)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.171 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 6: Q (#24)}'
+17:10:33.171 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 5: M (#23)}' => '{Foo Header 6: Q (#24)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.171 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 5: N (#27)}' => '{Foo Header 6: Q (#24)}' set to 1 (def1 = 1, def2 = -1)
+17:10:33.171 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of -1 for '{Foo Header 6: Q (#24)}'
+17:10:33.171 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 5: M (#23)}'
+17:10:33.172 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 4: K (#22)}' => '{Foo Header 5: M (#23)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.172 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 5: M (#23)}'
+17:10:33.172 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 4: K (#22)}'
+17:10:33.172 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: I (#21)}' => '{Foo Header 4: K (#22)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.172 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 4: K (#22)}'
+17:10:33.172 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 3: I (#21)}'
+17:10:33.172 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 1 for '{Foo Header 3: I (#21)}'
+17:10:33.172 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of output for '{Foo Header 3: I (#21)}'
+17:10:33.173 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: G (#20)}' => '{Foo Header 3: I (#21)}' increased to 2 (def1 = 0, def2 = 0)
+17:10:33.173 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 2: G (#20)}'
+17:10:33.173 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 2: G (#20)}'
+17:10:33.173 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 2: H (#31)}'
+17:10:33.173 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of -1 for '{Foo Header 2: H (#31)}'
+17:10:33.173 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: E (#30)}'
+17:10:33.173 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 1: E (#30)}'
+17:10:33.174 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: F (#36)}'
+17:10:33.174 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 1: F (#36)}'
+17:10:33.174 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 5: N (#27)}'
+17:10:33.174 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 4: K (#22)}' => '{Foo Header 5: N (#27)}' set to 1 (def1 = 1, def2 = 0)
+17:10:33.174 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 5: N (#27)}'
+17:10:33.174 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 4: K (#22)}'
+17:10:33.174 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 1 for '{Foo Header 4: K (#22)}'
+17:10:33.174 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of output for '{Foo Header 4: K (#22)}'
+17:10:33.175 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: I (#21)}' => '{Foo Header 4: K (#22)}' increased to 2 (def1 = 1, def2 = 0)
+17:10:33.175 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 3: I (#21)}'
+17:10:33.175 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 1 for '{Foo Header 3: I (#21)}'
+17:10:33.175 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of output for '{Foo Header 3: I (#21)}'
+17:10:33.175 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: G (#20)}' => '{Foo Header 3: I (#21)}' increased to 3 (def1 = 1, def2 = 0)
+17:10:33.175 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 2: G (#20)}'
+17:10:33.176 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 1 for '{Foo Header 2: G (#20)}'
+17:10:33.176 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of output for '{Foo Header 2: G (#20)}'
+17:10:33.176 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: C (#19)}' => '{Foo Header 2: G (#20)}' increased to 2 (def1 = 1, def2 = 0)
+17:10:33.176 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: C (#19)}'
+17:10:33.176 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 1 for '{Foo Header 1: C (#19)}'
+17:10:33.176 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of output for '{Foo Header 1: C (#19)}'
+17:10:33.176 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: A (#18)}' => '{Foo Header 1: C (#19)}' increased to 2 (def1 = 3, def2 = 0)
+17:10:33.176 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: D (#26)}'
+17:10:33.176 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 1: D (#26)}'
+17:10:33.176 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 2: H (#31)}'
+17:10:33.177 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of -1 for '{Foo Header 2: H (#31)}'
+17:10:33.177 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: E (#30)}'
+17:10:33.177 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 1: E (#30)}'
+17:10:33.177 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 1: F (#36)}'
+17:10:33.177 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 1: F (#36)}'
+17:10:33.177 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 6: Q (#24)}' => '{Foo Header 7: T (#28)}' set to 1 (def1 = 0, def2 = -1)
+17:10:33.177 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Loading Inputs for '{Foo Header 6: Q (#24)}'
+17:10:33.177 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Working deficit of 0 for '{Foo Header 6: Q (#24)}'
+17:10:33.177 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of input 1 for '{Foo Header 2: H (#31)}'
+17:10:33.177 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: H (#31)}' => '{Foo Header 3: I (#21)}' increased to 2 (def1 = 0, def2 = -1)
+17:10:33.178 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of input 1 for '{Foo Header 3: I (#21)}'
+17:10:33.178 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: I (#21)}' => '{Foo Header 4: K (#22)}' increased to 3 (def1 = 0, def2 = -1)
+17:10:33.178 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of input 1 for '{Foo Header 4: K (#22)}'
+17:10:33.178 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 4: K (#22)}' => '{Foo Header 5: M (#23)}' increased to 2 (def1 = 0, def2 = -1)
+17:10:33.178 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of input 1 for '{Foo Header 5: M (#23)}'
+17:10:33.178 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 5: M (#23)}' => '{Foo Header 6: Q (#24)}' increased to 2 (def1 = 0, def2 = -1)
+17:10:33.178 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of input 1 for '{Foo Header 6: Q (#24)}'
+17:10:33.178 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 6: Q (#24)}' => '{Foo Header 7: R (#25)}' increased to 2 (def1 = 0, def2 = -2)
+17:10:33.178 [TRACE] o.i.t.e.g.minflow.FlowInitialiser - Distributing excess of input 1 for '{Foo Header 6: S (#34)}'
+17:10:33.179 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 6: S (#34)}' => '{Foo Header 7: U (#35)}' increased to 2 (def1 = 0, def2 = -2)
+17:10:33.179 [TRACE] o.i.t.e.g.minflow.MinFlowCalculator - Returng residual path of value 1: [{Foo Header 0: A (#18)}, {Foo Header 1: C (#19)}, {Foo Header 2: G (#20)}, {Foo Header 3: I (#21)}, {Foo Header 4: K (#22)}, {Foo Header 5: M (#23)}, {Foo Header 6: Q (#24)}, {Foo Header 7: R (#25)}]
+17:10:33.179 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: A (#18)}' => '{Foo Header 1: C (#19)}' increased to 1 (def1 = 2, def2 = 1)
+17:10:33.179 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: C (#19)}' => '{Foo Header 2: G (#20)}' increased to 1 (def1 = 0, def2 = 1)
+17:10:33.179 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: G (#20)}' => '{Foo Header 3: I (#21)}' increased to 2 (def1 = 0, def2 = 1)
+17:10:33.180 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: I (#21)}' => '{Foo Header 4: K (#22)}' increased to 2 (def1 = 0, def2 = 1)
+17:10:33.180 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 4: K (#22)}' => '{Foo Header 5: M (#23)}' increased to 1 (def1 = 0, def2 = 1)
+17:10:33.180 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 5: M (#23)}' => '{Foo Header 6: Q (#24)}' increased to 1 (def1 = 0, def2 = 1)
+17:10:33.180 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 6: Q (#24)}' => '{Foo Header 7: R (#25)}' increased to 1 (def1 = 0, def2 = -1)
+17:10:33.180 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: A (#18)}' => '{Foo Header 1: C (#19)}' increased to 0 (def1 = 1, def2 = 1)
+17:10:33.180 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: C (#19)}' => '{Foo Header 2: G (#20)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.180 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: G (#20)}' => '{Foo Header 3: I (#21)}' increased to 1 (def1 = 0, def2 = 1)
+17:10:33.181 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: I (#21)}' => '{Foo Header 4: K (#22)}' increased to 1 (def1 = 0, def2 = 1)
+17:10:33.181 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 4: K (#22)}' => '{Foo Header 5: M (#23)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.181 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 5: M (#23)}' => '{Foo Header 6: Q (#24)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.181 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 6: Q (#24)}' => '{Foo Header 7: R (#25)}' increased to 0 (def1 = 0, def2 = 0)
+17:10:33.181 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: A (#18)}' => '{Foo Header 1: D (#26)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.181 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: D (#26)}' => '{Foo Header 2: G (#20)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.181 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: G (#20)}' => '{Foo Header 3: I (#21)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.181 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: I (#21)}' => '{Foo Header 4: K (#22)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.181 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 4: K (#22)}' => '{Foo Header 5: N (#27)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.182 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 5: N (#27)}' => '{Foo Header 6: Q (#24)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.182 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 6: Q (#24)}' => '{Foo Header 7: T (#28)}' increased to 0 (def1 = 0, def2 = 0)
+17:10:33.182 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: B (#29)}' => '{Foo Header 1: E (#30)}' increased to 0 (def1 = 1, def2 = 1)
+17:10:33.182 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: E (#30)}' => '{Foo Header 2: H (#31)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.182 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: H (#31)}' => '{Foo Header 3: I (#21)}' increased to 1 (def1 = 0, def2 = 1)
+17:10:33.182 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: I (#21)}' => '{Foo Header 4: L (#32)}' increased to 1 (def1 = 0, def2 = 1)
+17:10:33.182 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 4: L (#32)}' => '{Foo Header 5: O (#33)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.182 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 5: O (#33)}' => '{Foo Header 6: S (#34)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.183 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 6: S (#34)}' => '{Foo Header 7: U (#35)}' increased to 1 (def1 = 0, def2 = -1)
+17:10:33.183 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 0: B (#29)}' => '{Foo Header 1: F (#36)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.183 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 1: F (#36)}' => '{Foo Header 2: H (#31)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.183 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 2: H (#31)}' => '{Foo Header 3: I (#21)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.183 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 3: I (#21)}' => '{Foo Header 4: L (#32)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.183 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 4: L (#32)}' => '{Foo Header 5: P (#37)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.183 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 5: P (#37)}' => '{Foo Header 6: S (#34)}' increased to 0 (def1 = 0, def2 = 1)
+17:10:33.183 [TRACE] o.i.t.e.g.minflow.FlowManager - Flow in '{Foo Header 6: S (#34)}' => '{Foo Header 7: U (#35)}' increased to 0 (def1 = 0, def2 = 0)
+                  Foo Header 0 |                   Foo Header 1 |                   Foo Header 2 |                   Foo Header 3 |                   Foo Header 4 |                   Foo Header 5 |                   Foo Header 6 |                   Foo Header 7 | 
+                             A |                              C |                              G |                              I |                              K |                              M |                              Q |                              R | 
+                             A |                              D |                              G |                              I |                              K |                              N |                              Q |                              T | 
+                             B |                              E |                              H |                              I |                              L |                              O |                              S |                              U | 
+                             B |                              F |                              H |                              I |                              L |                              P |                              S |                              U | 
+
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.319 sec
+
+Results :
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3.044s
+[INFO] Finished at: Mon Aug 29 17:10:33 BST 2011
+[INFO] Final Memory: 9M/81M
+[INFO] ------------------------------------------------------------------------

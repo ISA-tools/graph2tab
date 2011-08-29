@@ -19,14 +19,13 @@ import uk.ac.ebi.utils.collections.ObjectStore;
  */
 class FlowManager
 {
-	// TODO demote debug messages to trace
 	protected final Logger log = LoggerFactory.getLogger ( this.getClass () );
 	
 	private ObjectStore<Node, Node, Integer> flows = new ObjectStore<Node, Node, Integer> ();
 	private Map<Node, Integer> deficits = new HashMap<Node, Integer> ();
   
 
-	public FlowManager ()
+	FlowManager ()
 	{
 	}
 
@@ -59,7 +58,7 @@ class FlowManager
 		int deficit2New = getDeficit ( n2 ) - delta; deficits.put ( n2, deficit2New );
 				
 		if ( log.isDebugEnabled () )
-			log.debug ( "Flow in '" + n1 + "' => '" + n2 + "' increased to " + newFlow 
+			log.trace ( "Flow in '" + n1 + "' => '" + n2 + "' increased to " + newFlow 
 					+ " (def1 = " + deficit1New + ", def2 = " + deficit2New + ")");
 		
 		return newFlow;
@@ -77,7 +76,7 @@ class FlowManager
 		int deficit2New = getDeficit ( n2 ) - delta; deficits.put ( n2, deficit2New );
 
 		if ( log.isDebugEnabled () )
-			log.debug ( "Flow in '" + n1 + "' => '" + n2 + "' set to " + newFlow 
+			log.trace ( "Flow in '" + n1 + "' => '" + n2 + "' set to " + newFlow 
 				+ " (def1 = " + deficit1New + ", def2 = " + deficit2New + ")" );
 		return delta;
 	}
