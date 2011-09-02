@@ -47,7 +47,6 @@ package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
 
 import org.isatools.tablib.export.graph2tab.Node;
 import org.isatools.tablib.export.graph2tab.TableBuilder;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -198,7 +197,76 @@ public class DummyGraphsTest {
 		assertDoesntContain ( paths, "K", "O" );
 	}
 	
-	/* TODO: G4, G5 (see attached images)
-	*/
+	
+	/**
+	 * <p>Tests This example graph:</p>
+	 * <p/>
+	 * <img src = "exp_graph4.png">
+	 * 
+	 */
+	@Test
+	public void testG4 () {
+		out.println("_______ PATH COVER TEST 4 __________ ");
 
+		Set<Node> nodes = new HashSet<Node>();
+
+		DummyGraph g = DummyGraph.getG4 ();
+		nodes.add ( g.getNode ( 1, "G" ) );
+
+		TableBuilder tb = new TableBuilder ( nodes );
+		out.println ( tb.report() );
+
+		List<List<String>> paths = tb.getTable();
+
+		// Must be 7+headers cause the max cut should be SP, OP, LP, LJ, KI, HI, CD. 
+		assertEquals ( "N. rows Error!", 8, paths.size () );
+		assertEquals ( "N. cols Error!", 5, paths.get(2).size() );
+		
+		for ( DummyNode[] edge: g.getEdges () )
+			assertContains ( paths, edge[ 0 ].getValue (), edge[ 1 ].getValue () );
+		
+		assertDoesntContain ( paths, "M", "N" );
+		assertDoesntContain ( paths, "P", "J" );
+		assertDoesntContain ( paths, "M", "H" );
+		assertDoesntContain ( paths, "N", "K" );
+	}
+	
+	
+	/**
+	 * <p>Tests This example graph:</p>
+	 * <p/>
+	 * <img src = "exp_graph5.png">
+	 * 
+	 */
+	@Test
+	public void testG5 () {
+		out.println("_______ PATH COVER TEST 5 __________ ");
+
+		Set<Node> nodes = new HashSet<Node>();
+
+		DummyGraph g = DummyGraph.getG5 ();
+		nodes.add ( g.getNode ( 0, "A" ) );
+		nodes.add ( g.getNode ( 0, "H" ) );
+		nodes.add ( g.getNode ( 0, "L" ) );
+
+		TableBuilder tb = new TableBuilder ( nodes );
+		out.println ( tb.report() );
+
+		List<List<String>> paths = tb.getTable();
+
+		// Must be 7+headers cause the max cut should be BC, EC, FD, FG, FK, JK, JO, NO. 
+		assertEquals ( "N. rows Error!", 9, paths.size () );
+		assertEquals ( "N. cols Error!", 4, paths.get(2).size() );
+		
+		for ( DummyNode[] edge: g.getEdges () )
+			assertContains ( paths, edge[ 0 ].getValue (), edge[ 1 ].getValue () );
+		
+		assertDoesntContain ( paths, "C", "F" );
+		assertDoesntContain ( paths, "F", "J" );
+		assertDoesntContain ( paths, "A", "A" );
+		assertDoesntContain ( paths, "H", "C" );
+		assertDoesntContain ( paths, "N", "K" );
+		assertDoesntContain ( paths, "N", "K" );
+	}
+	
 }

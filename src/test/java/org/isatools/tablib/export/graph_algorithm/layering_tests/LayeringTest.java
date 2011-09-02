@@ -5,7 +5,6 @@ import static java.lang.System.out;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.isatools.tablib.export.graph2tab.LayersBuilder;
 import org.isatools.tablib.export.graph2tab.TableBuilder;
 import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioExtract;
 import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioSample;
@@ -17,7 +16,7 @@ import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.Pr
 import org.junit.Test;
 
 /**
- * Tests for cases of uneven graphs, which use the {@link LayersBuilder}. 
+ * Tests for cases of uneven graphs, which use the {@link org.isatools.tablib.export.graph2tab.LayersBuilder}. 
  *  
  * TODO: results are inspected manually, we need to write validation. 
  * 

@@ -45,10 +45,11 @@
 
 package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.isatools.tablib.export.graph2tab.Node;
 
@@ -60,9 +61,13 @@ import org.isatools.tablib.export.graph2tab.Node;
  *
  * @author brandizi
  */
-public class DummyGraph {
+public class DummyGraph 
+{
 	private Map<String, DummyNode> nodeMap = new HashMap<String, DummyNode>();
 
+	/**
+	 * The node, where the column is used to build a value like "Foo Header $column": $value   
+	 */
 	public DummyNode getNode(int column, String value) {
 		String key = "" + column + value;
 		DummyNode node = nodeMap.get("" + column + value);
@@ -95,6 +100,27 @@ public class DummyGraph {
 		return result;
 	}
 
+	/**
+	 * All the nodes in the graph
+	 */
+	public Collection<DummyNode> getNodes ()
+	{
+		return nodeMap.values ();
+	}
+
+	/**
+	 * All the edges in the graph, each in a 2-sided array. 
+	 */
+	public Collection<DummyNode[]> getEdges ()
+	{
+		List<DummyNode[]> result = new LinkedList<DummyNode[]> ();
+		for ( DummyNode n: getNodes () )
+			for ( Node nout: n.getOutputs () )
+				result.add ( new DummyNode[] { n, (DummyNode) nout } );
+		
+		return result;
+	}
+	
 	private static DummyGraph g1 = null;
 	
 	/** <p>Example Graph G1.</p>
@@ -132,8 +158,8 @@ public class DummyGraph {
 		return g2 = g;
 	}
 
-	private static DummyGraph g3 = null;
 
+	private static DummyGraph g3 = null;
 	
 	/** <p>Example Graph G3.</p>
 	 * <p><img src = "exp_graph3.png"></p>
@@ -151,5 +177,53 @@ public class DummyGraph {
 		
 		return g3 = g;
 	}
+
+
+	private static DummyGraph g4 = null;
+	
+	/** <p>Example Graph G4.</p>
+	 * <p><img src = "exp_graph4.png"></p>
+	 */
+	public static DummyGraph getG4 ()
+	{
+		if ( g4!= null ) return g4;
+
+		DummyGraph g = new DummyGraph();
+		g.addChain ( 0, "ABCDE" );
+		g.addChain ( 0, "AGHIE" );
+		g.addChain ( 0, "FGKIE" );
+		g.addChain ( 0, "MGKLJ" );
+		g.addChain ( 0, "MGKLP" );
+		g.addChain ( 0, "MGNOP" );
+		g.addChain ( 0, "MQRSP" );
+		
+		return g4 = g;
+	}
+
+	
+	private static DummyGraph g5 = null;
+
+	/** <p>Example Graph G5.</p>
+	 * <p><img src = "exp_graph5.png"></p>
+	 */
+	public static DummyGraph getG5 ()
+	{
+		if ( g5!= null ) return g5;
+
+		DummyGraph g = new DummyGraph();
+		g.addChain ( 0, "ABCD" );
+		g.addChain ( 0, "AEC" );
+		g.addChain ( 1, "ECD" );
+		g.addChain ( 1, "EFD" );
+		g.addChain ( 2, "FG" );
+		g.addChain ( 2, "FK" );
+		g.addChain ( 0, "HE" );
+		g.addChain ( 0, "HIJK" );
+		g.addChain ( 2, "JO" );
+		g.addChain ( 0, "LMNO" );
+
+		return g4 = g;
+	}
+
 
 }

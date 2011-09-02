@@ -63,7 +63,7 @@ public class MinFlowCalculatorTest
 	 * <p>{@link DummyGraph#getG3()}</p>
 	 */
 	@Test
-	public void testInitialFlowG3 () throws Exception
+	public void testG3 () throws Exception
 	{
 		out.println("\n\n_______ MIN FLOW  ON G3 __________ ");
 

@@ -41,32 +41,30 @@ class FlowInitialiser
 		return nodes;
 	}
 
-	SortedSet<Node> getStartNodes ()
+	Set<Node> getEndNodes ()
 	{
 		if ( !isInitialised ) initFlow ();
-		return startNodes;
-	}
-	
-	Set<Node> getEndNodes () 
-	{
-		if ( !isInitialised ) initFlow ();
-		
-		endNodes = new HashSet<Node> ();
-		for ( Node n: nodes ) getEndNodes ( n );
 		return endNodes;
 	}
 	
-	private void getEndNodes ( Node node ) 
+	SortedSet<Node> getStartNodes () 
 	{
-		Set<Node> outs = node.getOutputs ();
+		if ( !isInitialised ) initFlow ();
 		
-		if ( outs.isEmpty () ) {
-			endNodes.add ( node );
+		for ( Node n: nodes ) findStartNodes ( n );
+		return startNodes;
+	}
+	
+	private void findStartNodes ( Node node ) 
+	{
+		Set<Node> ins = node.getInputs ();
+		
+		if ( ins.isEmpty () ) {
+			startNodes.add ( node );
 			return;
 		}
 		
-		for ( Node out: outs ) 
-			getEndNodes ( out );
+		for ( Node in: ins ) findStartNodes ( in );
 		
 		return;
 	}
@@ -84,12 +82,12 @@ class FlowInitialiser
 		isInitialised = true; // tell getEndNode() to go ahead
 		
 		Deque<Node> reviewNodes = new LinkedList<Node> ();
-		for ( Node n: getEndNodes () ) initFlowLeft ( n, reviewNodes );
-		while ( !reviewNodes.isEmpty () ) initFlowRight ( reviewNodes.pop () );		
+		for ( Node n: getStartNodes () ) initFlowRight ( n, reviewNodes );
+		while ( !reviewNodes.isEmpty () ) initFlowLeft ( reviewNodes.pop () );		
 	}
 
 	
-	private void initFlowLeft ( Node node, Deque<Node> reviewNodes )
+	private void initFlowRight ( Node node, Deque<Node> reviewNodes )
 	{
 		SortedSet<Node> ins = node.getInputs (), outs = node.getOutputs ();
 		int nins = ins.size (), nouts = outs.size ();
@@ -97,37 +95,23 @@ class FlowInitialiser
 		// Rare case of isolated node, nothing to do.
 		if ( nins == 0 && nouts == 0 ) return;
 
-		if ( nins == 0 ) {
-			// Source, end of leftward travel
-			startNodes.add ( node );
+		if ( nouts == 0 ) {
+			// End node, end of rightward travel
+			endNodes.add ( node );
 			return;
 		}	
-			
-		if ( nouts == 0 )
-		{
-			// Sink, load all your incoming edges with 1, unless they've already been already loaded by another path 
-			for ( Node nin: ins )
-				if ( flowMgr.getFlow ( nin, node ) == 0 )
-					flowMgr.updateFlow ( nin, node, 1 );
-
-			// Then continue leftward
-			for ( Node nin: ins ) initFlowLeft ( nin, reviewNodes );
-			return;
-		}
-
-		// nins != nouts and it's a middle node, let's work to the flow loading propagation 
 		
-		// First, saturate the incoming edges with the minimum flow, unless this was already done in another path
+		// First, saturate the outgoing edges with the minimum flow, unless this was already done in another visit
 		//
-		if ( log.isDebugEnabled () ) log.trace ( "Loading Inputs for '" + node + "'" );
+		if ( log.isDebugEnabled () ) log.trace ( "Loading Outputs for '" + node + "'" );
 		boolean flowChanged = false;
-		for ( Node nin: ins )
-			if ( flowMgr.getFlow ( nin, node ) == 0 ) {
-				flowMgr.updateFlow ( nin, node, 1 );
+		for ( Node out: outs )
+			if ( flowMgr.getFlow ( node, out ) == 0 ) {
+				flowMgr.updateFlow ( node, out, 1 );
 				flowChanged = true;
 		}
-		
-		// Then, let's see what deficit we have at the node 
+			
+		// Then, let's see what deficit we have at the node now 
 		//
 		int deficit = flowMgr.getDeficit ( node );
 		if ( log.isDebugEnabled () ) log.trace ( "Working deficit of " + deficit + " for '" + node + "'" );
@@ -136,74 +120,75 @@ class FlowInitialiser
 		// won't change anyway
 		if ( !flowChanged && deficit == 0 ) return;
 		
-		if ( deficit < 0 )
+		if ( deficit > 0 && nins != 0 )
 		{
-			// We cannot balance the left graph with the flow coming from the right (there isn't enough, at least so far), 
-			// so let's review this later, in a right-ward walk (via calls to setInitialFlowRight ())
+			// If it's not a source (for which the deficit is always >= 0), then 
+			// we cannot balance the right graph with the flow that have come from the left side so far, so let's review 
+			// this later, in a left-ward walk (via calls to setInitialFlowLeft())
 			reviewNodes.push ( node );
 		}
-		else if ( deficit > 0 )
+		else if ( deficit < 0 )
 		{
-			// Distribute the excess of output over the inputs. Try to do an even distribution, in order to maximise the 
-			// probability that we have a minimum flow as soon as the initialisation is finished.
+			// Distribute the excess of input over the outputs. Try to do an even distribution, in order to maximise the 
+			// likelihood that we have a minimum flow as soon as the initialisation is finished.
 			//
-			if ( log.isDebugEnabled () ) log.trace ( "Distributing excess of output for '" + node + "'" );
-			int dquota = deficit / nins, rquota = deficit % nins;
-			for ( Node nin: ins )
+			if ( log.isDebugEnabled () ) log.trace ( "Distributing excess of input for '" + node + "'" );
+			
+			deficit = -deficit;
+			int dquota = deficit / nouts, rquota = deficit % nouts;
+			for ( Node out: outs )
 			{
-				flowMgr.increaseFlow ( nin, node, dquota );
-				if ( rquota-- > 0 ) flowMgr.increaseFlow ( nin, node, 1 );
+				flowMgr.increaseFlow ( node, out, dquota );
+				if ( rquota-- > 0 ) flowMgr.increaseFlow ( node, out, 1 );
 			}
 		}
-		// else if deficit == 0 after input loading, propagate the right change(s) to the full left graph
 
-		// Propagate the above flow changes to the left
-		for ( Node nin: ins ) initFlowLeft ( nin, reviewNodes );
-		
+		// else deficit became 0 after output loading, propagate the change(s) made on the right of the node to the full 
+		// right graph
+		for ( Node out: outs ) initFlowRight ( out, reviewNodes );
 	}
 
-	private void initFlowRight ( Node node )
+	private void initFlowLeft ( Node node )
 	{
 		int deficit = flowMgr.getDeficit ( node );
 		
-		// 0 means It could't initially be balanced (with the flow accumulated up to the point where it was added to 
-		// reviewNodes), but then it was by some other paths. We don't need to continue toward right from this 
-		// particular node, if there is still some unbalanced node on its right graph, it will be dealt with by a call
-		// that picks up the node from reviewNodes (in initFlow() )
+		// 0 means It couldn't initially be balanced (with the flow accumulated up to the point where it was added to 
+		// reviewNodes), but then it was by some other routes. We don't need to continue toward left from this 
+		// particular node, if there is still some unbalanced node on its left graph, it will be dealt with by a call
+		// that picks up that node from reviewNodes (in initFlow() )
 		if ( deficit == 0 ) return;
 		
-		// We have a formal proof that this doesn't happen at this point, but this is the real world, let's check
-		// to be really sure
-		if ( deficit > 0 )
+		// We have a formal proof that this doesn't happen at this point. If it does, it is hardly due to the algorithm on
+		// itself, can be because of underlining reasons (e.g., bad set of initial nodes, problem with Node implementation).
+		//
+		if ( deficit < 0 )
 			throw new IllegalStateException ( 
-				"Internal error, I found a node with deficit > 0 during the rightward phase of initialisation, this should " +
-				"never happen, likely there is a bug"
+				"Internal error, I found a node with deficit < 0 during the left-ward phase of initialisation, the theory " +
+				"tells us that this never happens, but unfortunately the practice tells us bugs can be everywhere... " +
+				"Check the way you customised graph2tab for your particular use case."
 			);
 		
 		
-		// deficit < 0
-		// Distribute the excess of inputs over the outputs, so that it spreads toward the sinks and the node is balanced
+		// deficit > 0
+		// Distribute the excess of outputs over the inputs, so that it spreads toward the sources and the node is balanced
 		//
+		Set<Node> ins = node.getInputs ();
+		int nins = ins.size ();
+		// Source, we've finished and it's normal that deficit > 0 here 
+		if ( nins == 0 ) return; 
 		
-		Set<Node> outs = node.getOutputs ();
-		int nouts = outs.size ();
-		if ( nouts == 0 )
-			// Sink, we've finished and it's normal that deficit < 0 here 
-			return; 
-		
-		deficit = -deficit;
 		if ( log.isDebugEnabled () ) log.trace ( "Distributing excess of input " + deficit + " for '" + node + "'" );
 
 		// Same approach as above
-		int dquota = deficit / nouts, rquota = deficit % nouts;
-		for ( Node nout: outs )
+		int dquota = deficit / nins, rquota = deficit % nins;
+		for ( Node in: ins )
 		{
-			flowMgr.increaseFlow ( node, nout, dquota );
-			if ( rquota-- > 0 ) flowMgr.increaseFlow ( node, nout, 1 );
+			flowMgr.increaseFlow ( in, node, dquota );
+			if ( rquota-- > 0 ) flowMgr.increaseFlow ( in, node, 1 );
 		}
 
 		// Propagate the above changes to the right
-		for ( Node nout: outs ) initFlowRight ( nout );
+		for ( Node in: ins ) initFlowLeft ( in );
 	}
 
 }
