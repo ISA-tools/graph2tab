@@ -1,4 +1,3 @@
-package org.isatools.tablib.export.graph2tab;
 /*
 
 The ISAconverter, ISAvalidator & BII Management Tool are components of the ISA software suite (http://www.isa-tools.org)
@@ -46,6 +45,7 @@ The ISA Team and the ISA software suite have been funded by the EU Carcinogenomi
 (http://nebc.nerc.ac.uk) and in part by the EU NuGO consortium (http://www.nugo.org/everyone).
 
 */
+package org.isatools.tablib.export.graph2tab;
 
 import java.util.ArrayList;
 import java.util.Collections;
