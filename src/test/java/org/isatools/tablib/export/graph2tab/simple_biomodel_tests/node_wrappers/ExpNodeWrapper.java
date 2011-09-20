@@ -43,15 +43,15 @@
  * EU NuGO [NoE 503630](http://www.nugo.org/everyone) projects and in part by EMBL-EBI.
  */
 
-package org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.node_wrappers;
+package org.isatools.tablib.export.graph2tab.simple_biomodel_tests.node_wrappers;
 
 import org.isatools.tablib.export.graph2tab.DefaultAbstractNode;
 import org.isatools.tablib.export.graph2tab.DefaultTabValueGroup;
 import org.isatools.tablib.export.graph2tab.Node;
 import org.isatools.tablib.export.graph2tab.TabValueGroup;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.Annotation;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.ExperimentNode;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.OntoTerm;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model.Annotation;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model.ExperimentNode;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model.OntoTerm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,9 +61,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * The basic wrapper of the exported object model. Basically we implement {@link #getInputs()} and {@link #getOutputs()}
- * , plus the way the node provides its table cells, ie {@link #getTabValues()}.
- * <p/>
+ * <p>The basic wrapper of the exported object model. Basically we implement {@link #getInputs()} and {@link #getOutputs()}
+ * , plus the way the node provides its table cells, i.e., {@link #getTabValues()}.</p>
+ * 
  * <dl>
  * <dt>date</dt>
  * <dd>Jun 1, 2010</dd>
@@ -111,17 +111,6 @@ public abstract class ExpNodeWrapper extends DefaultAbstractNode
 		this.nodeFactory = nodeFactory;
 	}
 
-	/**
-	 * This is used by the implementation of {@link Node#createIsolatedClone()}. Essentially, copies the wrapped node and
-	 * makes empty input/output sets.
-	 */
-	protected ExpNodeWrapper ( ExpNodeWrapper original )
-	{
-		this.base = original.base;
-		this.nodeFactory = original.nodeFactory;
-		this.inputs = new TreeSet<Node> ();
-		this.outputs = new TreeSet<Node> ();
-	}
 
 	/**
 	 * In this case we're able to write a generic method that is customised by the descendants. The methods shows how to

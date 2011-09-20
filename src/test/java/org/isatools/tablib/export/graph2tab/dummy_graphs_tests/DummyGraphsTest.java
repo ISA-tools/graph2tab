@@ -43,7 +43,7 @@
  * EU NuGO [NoE 503630](http://www.nugo.org/everyone) projects and in part by EMBL-EBI.
  */
 
-package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
+package org.isatools.tablib.export.graph2tab.dummy_graphs_tests;
 
 import org.isatools.tablib.export.graph2tab.Node;
 import org.isatools.tablib.export.graph2tab.TableBuilder;
@@ -58,6 +58,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
+ * Tests on a basic implementation of the {@link Node} interface and rather complex graphs.
+ * 
  * <dl><dt>date</dt><dd>Jun 1, 2010</dd></dl>
  *
  * @author brandizi

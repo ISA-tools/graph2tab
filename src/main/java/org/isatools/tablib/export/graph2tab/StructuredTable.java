@@ -51,17 +51,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.isatools.tablib.export.graph2tab.minflow.MinFlowCalculator;
+
 import uk.ac.ebi.utils.collections.ListUtils;
 
 /**
  * 
  * A Structured table. This is used internally by {@link TableBuilder#getTable()}. Essentially it allows to represent
  * a piece of the final resulting table as a list of nested columns (similarly to what it is done in {@link TabValueGroup})
- * This way it's easy to build the final table by progressively mering the nodes that are found the graph of chains that
- * {@link ChainsBuilder} obtains from the initial input. A structured table is composed of an header, an array of values
- * for that header (ie, the column) and optionally a tail, which represent linked headers and their values. The header
- * columns and the tail columns need to be kept together when new header/values are merged into an existing structured
- * table. A structured table is built by merging multiple {@link TabValueGroup}.
+ * This way it's easy to build the final table by progressively merging the nodes that are found in the set of paths that 
+ * {@link MinFlowCalculator#getMinPathCover()} obtains from the initial input. 
+ * A structured table is composed of an header, an array of values for that header (ie, the column) and optionally 
+ * a tail, which represent linked headers and their values. The header columns and the tail columns need to be kept 
+ * together when new header/values are merged into an existing structured table. A structured table is built by 
+ * merging multiple {@link TabValueGroup}.
  *
  * <dl><dt>date</dt><dd>Jun 21, 2011</dd></dl>
  * @author brandizi
@@ -76,11 +79,12 @@ class StructuredTable
 	private final List<StructuredTable> tail = new ArrayList<StructuredTable> ();
 
 	/**
-	 * Creates a new structured table that contains the same header of {@link TabValueGroup#getHeader()} and adds 
-	 * the value coming from the tab value group ( {@link TabValueGroup#getValue()} ) as last row of the table
-	 * {@link StructuredTable#getRows()}. Moreover, the tail of the table group {@link TabValueGroup#getTail()} becomes
-	 * the tail of the new structured table {@link #getTail()}, by applying the same composition criteria (ie, this 
-	 * cosntructor recursively calls itself over the tails it finds). 
+	 * Creates a new structured table that contains the same header given by {@link TabValueGroup#getHeader() tbg.getHeader} 
+	 * and adds the value ( {@link TabValueGroup#getValue() tbg.getValue} ) as last row 
+	 * of the table, so this will appear in {@link StructuredTable#getRows()}. 
+	 * Moreover, the tail of the table group {@link TabValueGroup#getTail()} becomes
+	 * the tail of the new structured table {@link #getTail()}, by applying the same composition criteria (i.e., this 
+	 * constructor recursively calls itself over the tails it finds). 
 	 * 
 	 * @param tbg
 	 * @param rowsSize
@@ -95,7 +99,7 @@ class StructuredTable
 	}
 	
 	/**
-	 * The table initial column header
+	 * The table's initial column header
 	 */
 	public String getHeader () {
 		return header;
@@ -103,7 +107,7 @@ class StructuredTable
 
 	/**
 	 * Adds a value to the row, given the information on what is the new desired size for the column represented by head of
-	 * this structured table, ie, a new value for this {@link #getHeader() table's header}. This is used by 
+	 * this structured table, i.e., a new value for this {@link #getHeader() table's header}. This is used by 
 	 * {@link TableBuilder#getTable()}, which knows which row (== newSize) it is building. 
 	 *  
 	 */
@@ -121,7 +125,7 @@ class StructuredTable
 
 
 	/**
-	 * The table values for this header (ie, the values for a single column).
+	 * The table values for this header (i.e., the values for the first single column).
 	 */
 	public List<String> getRows () {
 		return Collections.unmodifiableList ( rows );
@@ -129,7 +133,7 @@ class StructuredTable
 
 
 	/**
-	 * The nested tables, ie, the tables that goes together with the top-level column. See {@link TabValueGroup}.
+	 * The nested tables, i.e., the tables that goes together with the top-level column. See {@link TabValueGroup}.
 	 */
 	public List<StructuredTable> getTail ()
 	{
@@ -137,18 +141,19 @@ class StructuredTable
 	}
 	
 	/**
-	 * Merge into exising structured tables a set of {@link TabValueGroup}s, typically the values provided with by 
-	 * {@link Node#getTabValues()}, ie, the contribute that a node gives to the final resulting table.
+	 * Merges into existing structured tables a set of {@link TabValueGroup}s, typically the values provided with by 
+	 * {@link Node#getTabValues()}, i.e., the contribute that a node gives to the final resulting table.
 	 * For instance, if so fare we have built a (structured) table with the headers: 
 	 * Sample Name, Characteristics [ÊOrganism ], Characteristics [ Organ Part ]Ê and a new node
 	 * arrives that contains: Sample Name, ( Characteristics [ Organism ], ( Term Source REF, ( Term Accession ) ) ), 
 	 * Characteristics [ Sex ] the layer is changed so that it contains the new structure: 
 	 * Sample Name, ( Characteristics [ Organism ], ( Term Source REF, ( Term Accession ) ) ), Characteristics [ Organ Part ],  
-	 * Characteristics [ Sex ]. Note the usage of () to mark the nesting of new StructuredTable(s)
+	 * Characteristics [ Sex ]. Note the usage of () to mark the nesting of StructuredTable(s)
 	 * 
-	 * A new row is added to the {@link #getRows() row property} of the corresponding StructuredTable 
-	 * that reflects the values of the new node (so, the row is {@link #getRows() this.getRow()} or some other row that can 
-	 * be found by recursing over the {@link #getTail() tail}). 
+	 * A new row is added to the {@link #getRows() rows property} of the corresponding StructuredTable 
+	 * that reflects the values of the new node (so, the value is in {@link #getRows() this.getRows()} or in some other 
+	 * StructuredTable that can be found by recursing over the {@link #getTail() tail}).
+	 *  
 	 * Existing headers for which the node has no value to provide with are left null in the new row. 
 	 * 
 	 */
@@ -202,7 +207,7 @@ class StructuredTable
 	}
 
 	/**
-	 * Collects all the headers ({@link #getHeader()} and all the objects in {@link #getTail()}) into a plain list).
+	 * Collects the first headers ({@link #getHeader()} and all the headers in {@link #getTail()}) into a plain list).
 	 * Obviously recurses on {@link #getTail()}. 
 	 */
 	public void exportAllHeaders ( List<String> existingHeaders )
@@ -213,8 +218,8 @@ class StructuredTable
 	}
 
 	/**
-	 * Collects all the rows ({@link #getRows()} and all the objects in {@link #getTail()}) into a plain list).
-	 * Obviously recurses on {@link #getTail()}. 
+	 * Collects all the rows for this header ({@link #getRows()} and all the rows in {@link #getTail()}) into a plain list).
+	 * Obviously recurses on {@link #getTail()}.
 	 */
 	public void exportAllRows ( List<String> existingRow, int irow )
 	{

@@ -43,7 +43,7 @@
  * EU NuGO [NoE 503630](http://www.nugo.org/everyone) projects and in part by EMBL-EBI.
  */
 
-package org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model;
+package org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model;
 
 import java.util.List;
 

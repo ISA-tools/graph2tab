@@ -22,18 +22,18 @@ import org.isatools.tablib.export.graph2tab.minflow.MinFlowCalculator;
  * <p>We try to explain below what the layering of an experimental work flow is, if you look at examples, one image
  * tells more than a thousand words. For instance, have a look at {@link LayeringTest#testUnevenGraph1()}</p>
  * 
- * <p>This is optionally used by {@link TableBuilder}. It is needed if you expect an input experimental workflow graph 
- * that may be "uneven", i.e.: it may contain paths from sources to end nodes of different length. This usually happen
- * because some step in the experimental workflow is missing or omitted (e.g.: a data item is achieved directly from a
- * sample, while another has a specified extract material and an extraction protocol). If that is the case, the graph 
- * need to be "layered", in addition to being transformed into a set of chains (by {@link ChainsBuilder}). For any 
- * node, an integer layer index is computed. The layers span from right to left, from sources to end nodes (or sinks).</p>
+ * <p>This class is optionally used by {@link TableBuilder}. It is needed if you expect an input experimental work flow 
+ * graph that may be "uneven", i.e., that may contain paths from sources to end nodes of different length. 
+ * This usually happen because some step in the experimental work flow is missing or omitted (e.g., a data item is 
+ * achieved directly from a sample, while another has a specified extract material and an extraction protocol). 
+ * If that is the case, the graph need to be "layered", in addition to being transformed into a set of source-to-sink
+ * paths (by {@link MinFlowCalculator}). For any node, an integer layer index is computed. The layers span from left 
+ * to right, from sources to end nodes (or sinks).</p>
  *  
- * <p>For every chain from a source to a sink, there is at least one node per each layer and any given layer contain 
- * nodes of the same {@link Node#getType() node type}. In simpler cases there is exactly one node per layer for all 
- * such paths and, in this simple cases, the layer index is the same as the distance of the node from the source it 
- * can be reached from. In the case of uneven graphs, this basic layering is adjusted, so that every layer has always 
- * nodes of the same type.<p>  
+ * <p>For every node, its layer is at least the topological highest distance from its reachable sources, possibly
+ * increased so that, for each layer, all the nodes in it have the same type {@link Node#getType()}. Layers
+ * essentially represent columns in a tabular format that are about homogeneous entity types (e.g., the columns for 
+ * all the samples).</p>  
  * 
  * <p>This basically uses the approach described in section 3.3.2 of the 
  * <a href = "http://annotare.googlecode.com/files/MAGE-TABv1.1.pdf">MAGE-TAB specification</a>, adding several details 

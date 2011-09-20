@@ -53,7 +53,7 @@ import java.util.List;
 import java.util.SortedSet;
 
 /**
- * A default skeleton implementation of {@link Node}. You'll probably want to implement your customized version of the
+ * A default skeleton implementation of {@link Node}. You'll probably want to implement your customised version of the
  * experimental node starting from here, cause we provide a convenient implementation of {@link #equals(Object)} and
  * {@link #hashCode()} that make every new node distinct. For the same reasons, you'll probably want to create nodes via
  * a specific implementation of {@link AbstractNodeFactory}.
@@ -111,7 +111,7 @@ public abstract class DefaultAbstractNode implements Node
 	}
 
 	/**
-	 * This is the deafult implementation that works with {@link #inputs}. You should not need to touch it.
+	 * This is the default implementation that works with {@link #inputs}. You should not need to touch it.
 	 */
 	public boolean addInput ( Node input )
 	{
@@ -128,7 +128,7 @@ public abstract class DefaultAbstractNode implements Node
 	}
 
 	/**
-	 * This is the deafult implementation that works with {@link #inputs}. You should not need to touch it.
+	 * This is the default implementation that works with {@link #inputs}. You should not need to touch it.
 	 */
 	public boolean addOutput ( Node output )
 	{
@@ -145,7 +145,7 @@ public abstract class DefaultAbstractNode implements Node
 	}
 
 	/**
-	 * This is the deafult implementation that works with {@link #inputs}. You should not need to touch it.
+	 * This is the default implementation that works with {@link #inputs}. You should not need to touch it.
 	 */
 	public boolean removeInput ( Node input )
 	{
@@ -162,7 +162,7 @@ public abstract class DefaultAbstractNode implements Node
 	}
 
 	/**
-	 * This is the deafult implementation that works with {@link #inputs}. You should not need to touch it.
+	 * This is the default implementation that works with {@link #inputs}. You should not need to touch it.
 	 */
 	public boolean removeOutput ( Node output )
 	{
@@ -180,8 +180,10 @@ public abstract class DefaultAbstractNode implements Node
 
 	/**
 	 * Compares to another node based on the first header/value pair returned by {@link #getTabValues()}. Note that when
-	 * this returns the same cell value/type, it further checks if o == this, only in that case it returns 0, ie two nodes
-	 * are equivalent only if they're the same. This is needed by the way {@link ChainsBuilder} works.
+	 * this returns the same cell value/type, it further checks if o == this, only in that case it returns 0, i.e., two 
+	 * nodes are equivalent only if they're the same. This is a behaviour consistent with {@link #equals(Object)} and 
+	 * {@link #hashCode()}.
+	 *  
 	 */
 	public int compareTo ( Node o )
 	{
@@ -253,8 +255,8 @@ public abstract class DefaultAbstractNode implements Node
 	}
 
 	/**
-	 * Default is always -1, ie, there is no particular restriction over the node order in an experimental work-flow.
-	 * This is fine if you don't expect uneven graphs, ie, graphs where all the paths from sources (left) to sinks (right)
+	 * Default is always -1, i.e., there is no particular restriction over the node order in an experimental work-flow.
+	 * This is fine if you don't expect uneven graphs, i.e., graphs where all the paths from sources (left) to sinks (right)
 	 * have the same length (which also means the corresponding table has no gap). If that is not the case, you will need
 	 * to override this method and define something for it.
 	 *   

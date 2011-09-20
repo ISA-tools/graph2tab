@@ -43,11 +43,11 @@
  * EU NuGO [NoE 503630](http://www.nugo.org/everyone) projects and in part by EMBL-EBI.
  */
 
-package org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.node_wrappers;
+package org.isatools.tablib.export.graph2tab.simple_biomodel_tests.node_wrappers;
 
 import org.isatools.tablib.export.graph2tab.Node;
 import org.isatools.tablib.export.graph2tab.TableBuilder;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.ExperimentNode;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model.ExperimentNode;
 
 import java.util.HashSet;
 import java.util.Set;

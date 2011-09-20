@@ -43,7 +43,7 @@
  * EU NuGO [NoE 503630](http://www.nugo.org/everyone) projects and in part by EMBL-EBI.
  */
 
-package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
+package org.isatools.tablib.export.graph2tab.dummy_graphs_tests;
 
 import java.util.Collection;
 import java.util.HashMap;

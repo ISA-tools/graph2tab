@@ -8,14 +8,13 @@
 <body>
 <h1>The graph-to-spreadsheet conversion algorithm</h1>
 
-<p>This package is a generic implementation of a method for producing spreadsheets out of pipeline graph.
-    It is based on the node splitting approach: all the nodes in the input pipeline are reduced to "chain nodes", i.e.:
-    nodes that have at most one input and at most one output. This is done by taking those nodes having splittings
-    or pooling, creating copies of them and distributing the excessive inputs or outputs over the copies.
-    See the class {@link ChainsBuilder} for details about such procedure.</p>
+<p>This library is a generic implementation of methods that allow one to convert the graph of an experiment work flow 
+(e.g., MAGE, MAGETAB, BII) into a tabular format (eg, MAGETAB, ISATAB). It is mainly based on the idea of finding a minimum 
+set of paths that cover all the graph nodes and edges. This, in turn, is computed by computing a particular minimum flow 
+on the graph from the source nodes (e.g., bio-sources or samples) to the sinks (e.g., data, derived data nodes).</p>
 
-<p>The package is designed in a way that allows to adapt a particular object model (eg.: ISATAB or MAGETAB) and to
-    reuse classes like {@link TableBuilder} to produce spreadsheets describing a particular experimental pipeline (ie.:
-    CSV/TSV files). This is done by means of the {@link Node} interface.</p>
+<p>The package is designed in a way that allows to adapt a particular object model (e.g., MAGE-OM or AE2) and to
+    reuse classes like {@link TableBuilder} to produce spreadsheets describing a particular experimental pipeline (i.e.,
+    CSV/TSV files) in a particular format (e.g., MAGETAB or ISATAB). See graph2tab_intro.pdf for details.</p>
 </body>
 </html>

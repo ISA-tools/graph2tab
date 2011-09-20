@@ -1,4 +1,4 @@
-package org.isatools.tablib.export.graph_algorithm.layering_tests;
+package org.isatools.tablib.export.graph2tab.layering_tests;
 
 import static java.lang.System.out;
 
@@ -6,13 +6,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.isatools.tablib.export.graph2tab.TableBuilder;
-import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioExtract;
-import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioSample;
-import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioSource;
-import org.isatools.tablib.export.graph_algorithm.layering_tests.wrappers.LayeringModelTableBuilder;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.Data;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.ExperimentNode;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.ProtocolRef;
+import org.isatools.tablib.export.graph2tab.layering_tests.model.BioExtract;
+import org.isatools.tablib.export.graph2tab.layering_tests.model.BioSample;
+import org.isatools.tablib.export.graph2tab.layering_tests.model.BioSource;
+import org.isatools.tablib.export.graph2tab.layering_tests.wrappers.LayeringModelTableBuilder;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model.Data;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model.ExperimentNode;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model.ProtocolRef;
 import org.junit.Test;
 
 /**

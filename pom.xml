@@ -10,9 +10,9 @@
     <name>graph2tab - The graph-to-spreadsheet conversion algorithm</name>
     <description>
         This package is a generic implementation of a method for producing spreadsheets out of pipeline graph.
-        It is based on the node splitting metod: all the nodes in the input pipeline are reduced to *normalized* nodes,
-        i.e.: nodes that have at most one input and at most one output. This is done by taking those nodes having
-        splitting or pooling, creating copies of them and distributing the excessive inputs or outputs over the copies.
+        It is based on calculating a minimum set of paths that covers all the edges and this in turn is computed
+        by solving a minimum flow problem on the graph that goes from all the left-most nodes to the right-most ones 
+        (setting at 1 the minimum flow for each edge).
         
         The project originated in the ISA-Tools project (http://isa-tools.org).
     </description>
@@ -40,7 +40,7 @@
         <dependency>
             <groupId>uk.ac.ebi</groupId>
             <artifactId>jutils</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
         </dependency>
 
         <dependency>

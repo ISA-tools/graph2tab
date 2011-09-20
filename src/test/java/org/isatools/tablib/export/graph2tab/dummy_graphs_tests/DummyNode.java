@@ -43,7 +43,7 @@
  * EU NuGO [NoE 503630](http://www.nugo.org/everyone) projects and in part by EMBL-EBI.
  */
 
-package org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests;
+package org.isatools.tablib.export.graph2tab.dummy_graphs_tests;
 
 import org.isatools.tablib.export.graph2tab.DefaultAbstractNode;
 import org.isatools.tablib.export.graph2tab.DefaultTabValueGroup;
@@ -83,13 +83,6 @@ public class DummyNode extends DefaultAbstractNode {
 	}
 
 	/**
-	 * This is used during cloning
-	 */
-	private DummyNode(DummyNode original) {
-		this(original.column, original.value);
-	}
-
-	/**
 	 * Just verify that it's a {@link DummyNode}, used by addXXX().
 	 */
 	private void checkNodeType(Node node) {
@@ -126,13 +119,6 @@ public class DummyNode extends DefaultAbstractNode {
 	 */
 	public String getValue() {
 		return value;
-	}
-
-	/**
-	 * Will use the constructor an will pass it itself. This is the typical approach to implement this.
-	 */
-	public Node createIsolatedClone() {
-		return new DummyNode(this);
 	}
 
 	/**

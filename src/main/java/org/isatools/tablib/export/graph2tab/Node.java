@@ -161,14 +161,4 @@ public interface Node extends Comparable<Node>
 	 */
 	public int getOrder ();
 
-	/**
-	 * The algorithm implemented in {@link ChainsBuilder} needs to make detached duplicates of nodes, ie: nodes that
-	 * represent the same experimental entity of the source and haven't any of its incident edges (which will be properly
-	 * added by the export logics). This is what this method has to do. The result should return exactly the same result
-	 * for {@link #getTabValues()}. It is <b>very</b> important that the result is <b>distinct</b> from to the origin, ie:
-	 * {@link Object#equals(Object)} and {@link Object#hashCode()} must reflect such diversity.
-	 */
-	public Node createIsolatedClone ();
-
-
 }

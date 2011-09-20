@@ -52,14 +52,13 @@ import java.util.List;
 
 
 /**
- * <p>A group of header/value pairs that are exported for a particular element in the experimental graph. Eg,
- * Characteristic + its value and the fields about the term source and accession are an example of
- * tab value group.</p>
- * <p/>
+ * <p>A group of header/value pairs that are exported for a particular element in the experimental graph. E.g.,
+ * Characteristic + its value and the fields about the term source and accession.</p>
  * 
- * This header/value pairs can be nested, so that it is possible to let the graph2tab library know how the headers 
+ * <p>These header/value pairs can be nested, so that it is possible to let the graph2tab library know how the headers 
  * are to be grouped and need to stay together in the final result. For instance, if you have 
  * "Characteristics[Type]=value1" followed by Term Source REF and Term Accession, a good coding would be:
+ * 
  * <pre>
  *   TabValueGroup ( 
  *     header = "Characteristics [ Type ]" 
@@ -79,8 +78,8 @@ import java.util.List;
  *   )
  * </pre>
  * 
- * <p/>
- * <p/>
+ * </p>
+ * 
  * <dl><dt>date</dt><dd>Jun 27, 2011</dd></dl>
  *
  * @author brandizi

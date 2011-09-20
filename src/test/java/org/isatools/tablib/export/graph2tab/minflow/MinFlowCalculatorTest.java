@@ -9,12 +9,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.isatools.tablib.export.graph2tab.Node;
-import org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests.DummyGraph;
+import org.isatools.tablib.export.graph2tab.dummy_graphs_tests.DummyGraph;
 import org.junit.Test;
 
 /**
  * 
- * TODO: Comment me!
+ * Tests for the minimum flow computed by {@link MinFlowCalculator}. 
  *
  * <dl><dt>date</dt><dd>Aug 29, 2011</dd></dl>
  * @author brandizi

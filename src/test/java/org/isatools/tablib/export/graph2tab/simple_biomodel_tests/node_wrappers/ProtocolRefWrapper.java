@@ -43,11 +43,10 @@
  * EU NuGO [NoE 503630](http://www.nugo.org/everyone) projects and in part by EMBL-EBI.
  */
 
-package org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.node_wrappers;
+package org.isatools.tablib.export.graph2tab.simple_biomodel_tests.node_wrappers;
 
-import org.isatools.tablib.export.graph2tab.Node;
 import org.isatools.tablib.export.graph2tab.TabValueGroup;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.ProtocolRef;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model.ProtocolRef;
 
 import java.util.List;
 
@@ -61,10 +60,6 @@ public class ProtocolRefWrapper extends ExpNodeWrapper {
 		super(base, nodeFactory);
 	}
 
-	private ProtocolRefWrapper(ExpNodeWrapper original) {
-		super(original);
-	}
-
 	/**
 	 * @return getTabValues ( "Protocol REF", "Parameter Value" )
 	 */
@@ -72,7 +67,4 @@ public class ProtocolRefWrapper extends ExpNodeWrapper {
 		return getTabValues ("Protocol REF", "Parameter Value");
 	}
 
-	public Node createIsolatedClone() {
-		return new ProtocolRefWrapper(this);
-	}
 }

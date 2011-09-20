@@ -64,6 +64,7 @@ import uk.ac.ebi.utils.collections.ListUtils;
  * {@link TableBuilder#getTable()} to create the final result table from the layered graph of node chains that was 
  * obtained from the initial input experimental work flow.  
  * <p/>
+ * 
  * <dl>
  * <dt>date</dt>
  * <dd>Jun 27, 2011</dd>
@@ -88,7 +89,7 @@ class TableContents
 	}
 
 	/**
-	 * The the contents of this layer, in the form of a list of nested columns (ie, {@link StructuredTable}). 
+	 * The the contents of this layer, in the form of a list of nested columns (i.e., {@link StructuredTable}). 
 	 * Creates an empty structure if noting exists yet.
 	 *  
 	 */
@@ -105,12 +106,12 @@ class TableContents
 	}
 
 	/**
-	 * This merges a new node into one of the layers that are being built, ie, builds a piece of the final result table. 
+	 * This merges a new node into one of the layers that are being built, i.e., builds a piece of the final result table. 
 	 * See {@link StructuredTable#mergeTabValues(List, int, List)} for details.
 	 * 
-	 * The node is supposed to belong in this layer (ie, is put under it by the {@link LayersBuilder} and therfore it has
-	 * the same {@link Node#getType() type} of the existing added nodes. newRowsSize tells us which row we are filling, this
-	 * is some information that the caller (ie, {@link TableBuilder#getTable()}) knows.
+	 * The node is supposed to belong in this layer (i.e., is put under it by the {@link LayersBuilder} and therefore it has
+	 * the same {@link Node#getType() type} of the nodes added in this same layer. newRowsSize tells us which row we are 
+	 * filling, this is some information that the caller (i.e., {@link TableBuilder#getTable()}) knows.
 	 *  
 	 */
 	public void mergeNode ( int layer, Node node, int newRowsSize )
@@ -187,8 +188,8 @@ class TableContents
 	}
 
 	/**
-	 * Reports all the headers inside the nested structures (ie, list of {@link StructuredTable}) that are associated to 
-	 * the layers. That is, the headers for the final result. The result is computed at every call no caching.
+	 * Reports all the headers inside the nested structures (i.e., list of {@link StructuredTable}) that are associated to 
+	 * the layers. That is, the headers for the final result. The result is computed at every call, there's no caching.
 	 * 
 	 */
 	public List<String> getHeaders ()
@@ -201,10 +202,11 @@ class TableContents
 	}
 
 	/**
-	 * Reports all the row values inside the nested structures (ie, list of {@link StructuredTable}) that are associated to 
-	 * the layers, for a given row index. That is, the row for the final result. 
+	 * Reports all the row values inside the nested structures (i.e., list of {@link StructuredTable}) that are associated to 
+	 * the layers, for a given row index. That is, the row for the final result.
+	 *  
 	 * It does that by going through the recursive structure of {@link StructuredTable}. 
-	 * The result is computed at every call no caching.
+	 * The result is computed at every call, there's no caching.
 	 * 
 	 */
 	private List<String> getRow ( int irow )
@@ -217,10 +219,11 @@ class TableContents
 	}
 	
 	/**
-	 * Reports all the row values inside the nested structures (ie, list of {@link StructuredTable}) that are associated to 
-	 * the layers. That is, the rows for the final result. 
+	 * Reports all the row values inside the nested structures (i.e., list of {@link StructuredTable}) that are 
+	 * associated to the layers. That is, the rows for the final result.
+	 *  
 	 * It does that by going through the recursive structure of {@link StructuredTable}. 
-	 * The result is computed at every call no caching.
+	 * The result is computed at every call, there's no caching.
 	 */
 	public List<List<String>> getRows ()
 	{
@@ -232,11 +235,13 @@ class TableContents
 	
 	
 	/**
-	 * Reports all the row values inside the nested structures (ie, list of {@link StructuredTable}) that are associated to 
-	 * the layers. That is, the rows for the final result. 
+	 * Reports all the row values inside the nested structures (i.e., list of {@link StructuredTable}) that are 
+	 * associated to the layers. That is, the rows for the final result.
+	 *  
 	 * It does that by going through the recursive structure of {@link StructuredTable}. Note that it doesn't call
-	 * {@link #getRows()} but redo a loop over {@link #getRow(int)}, in order to save a bit of memory. 
-	 * The result is computed at every call no caching.
+	 * {@link #getRows()} but re-does a loop over {@link #getRow(int)}, in order to save a bit of memory.
+	 *  
+	 * The result is computed at every call, there's no caching.
 	 */
 	public List<List<String>> getTable ()
 	{

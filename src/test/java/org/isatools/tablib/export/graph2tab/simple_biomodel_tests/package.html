@@ -16,16 +16,11 @@
     As you'll see in the code, this is the typical approach to adapt your model:
 <ol>
     <li>Define node wrappers for your object model (see node_wrappers package). Leave getInputs()/getOutputs()
-        temporarily
-        unimplemented.
-    </li>
+        temporarily unimplemented.</li>
     <li>Define a Node Wrapper Factory (see node_wrappers/NodeFactory). Complete getInputs()/getOutputs() by using your
-        factory
-    </li>
+        factory</li>
     <li>Define a custom implementation of TableBuilder, so that you can instantiate it with the initial nodes that allow
-        to
-        reach of your experimental graph (See SimpleModelTableBuilder).
-    </li>
+        to reach of your experimental graph (See SimpleModelTableBuilder).</li>
     <li>Use the table builder and get the result from getTable() (See SimpleBioModelTest).</li>
 </ol>
 </p>

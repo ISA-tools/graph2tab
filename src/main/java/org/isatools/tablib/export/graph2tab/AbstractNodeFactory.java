@@ -53,17 +53,15 @@ import java.util.Map;
 /**
  * <p>The skeleton node factory. You'll probably want to create nodes from a factory. In fact, the typical
  * implementation goes like this: your nodes are wrappers of experimental entities of your object model
- * (eg.: BioSource or ProtocolApplication). Such wrappers are defined by extending {@link DefaultAbstractNode}.
- * That said, when you need to create a new node, which wraps a particular object from your specific model,
+ * (e.g., BioSource or ProtocolApplication). Such wrappers are defined by extending {@link DefaultAbstractNode}.
+ * 
+ * That said, when you need to create a new wrapping node, which wraps a particular object from your specific model,
  * you will want to check if such a wrapper has already been created. This is is done inside this factory, by
- * maintaining a map between your objects (the generic type B) an the wrapping {@link Node}s.</p>
- * <p/>
- * <p>The reason why you typically need wrappers is that if two wrapped elements are equivalent (eg.: the same biosample),
- * we still must be able to duplicate them and typically your equals() and hashCode() would prevent from doing that.</p>
- * <p/>
+ * maintaining a map between your objects (the generic type B, or base) an the wrapping {@link Node}s.</p>
+ * 
  * <p>For an example of what we're talking about here, see the implementation in
  * org.isatools.isatab.export.isatab.pipeline.wrapper_nodes.</p>
- * <p/>
+ * 
  * <dl><dt>date</dt><dd>May 10, 2010</dd></dl>
  *
  * @author brandizi
@@ -77,7 +75,8 @@ public abstract class AbstractNodeFactory<N extends Node, B> {
      * This is to be used during the initial creation of nodes to be passed to {@link TableBuilder}. The method
      * ensures that the same node is used for the same wrapped element.
      */
-    public synchronized N getNode(B base) {
+    @SuppressWarnings ( "unchecked" )
+		public synchronized N getNode(B base) {
         Node n = bases2Nodes.get(base);
         if (n != null) {
             return (N) n;

@@ -8,13 +8,17 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.isatools.tablib.export.graph2tab.Node;
+import org.isatools.tablib.export.graph2tab.TableBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
- * TODO: Comment me!
  *
+ * A flow initialiser that sets a valid initial flow, needed as a starting point for the minimum flow algorithm 
+ * implemented in {@link MinFlowCalculator}. The initial flow that is computed by the procedures implemented here
+ * is often minimum or near the minimum, so the iterations needed by {@link MinFlowCalculator} are often none or
+ * minimal.
+ * 
  * <dl><dt>date</dt><dd>Aug 25, 2011</dd></dl>
  * @author brandizi
  *
@@ -31,22 +35,46 @@ class FlowInitialiser
 
 	protected final Logger log = LoggerFactory.getLogger ( this.getClass () );
 
+	/**
+	 * You need to pass a set of nodes from which all the graph is reachable, see {@link TableBuilder} for details.
+	 */
 	FlowInitialiser ( Set<Node> nodes ) 
 	{
 		this.nodes = nodes;
 	}
 	
+	/**
+	 * The nodes passed to the constructor.
+	 */
 	Set<Node> getNodes ()
 	{
 		return nodes;
 	}
 
+	/**
+	 * The right-most nodes in the graph (or sinks), i.e., those nodes that have no real outputs attached. These are found
+	 * during the flow initialisation, if you call this method the flow is initialised by means of {@link #initFlow()}.
+	 * 
+	 * Note that a node can be both a start and an end node, this happens when the node is isolated, it has no inputs 
+	 * and no outputs.
+   *
+	 */
 	Set<Node> getEndNodes ()
 	{
 		if ( !isInitialised ) initFlow ();
 		return endNodes;
 	}
-	
+
+	/**
+	 * The left-most nodes in the graph (or sources), i.e. those nodes that are not preceded by any input. These are found
+	 * during the flow initialisation, if you call this method the flow is initialised by means of {@link #initFlow()}.
+	 * 
+	 * The result is sorted, to reflect the order given by the {@link Node} interface (which extends {@link Comparable}).
+	 * 
+	 * Note that a node can be both a start and an end node, this happens when the node is isolated, it has no inputs 
+	 * and no outputs.
+	 *  
+	 */
 	SortedSet<Node> getStartNodes () 
 	{
 		if ( !isInitialised ) initFlow ();
@@ -55,6 +83,10 @@ class FlowInitialiser
 		return startNodes;
 	}
 	
+	/**
+	 * Depth-first walk from a given node toward left and through inputs.
+	 * 
+	 */
 	private void findStartNodes ( Node node ) 
 	{
 		Set<Node> ins = node.getInputs ();
@@ -69,12 +101,22 @@ class FlowInitialiser
 		return;
 	}
 
+	/**
+	 * The flow manager that is used here to store the computed flow.
+	 * 
+	 */
 	FlowManager getFlowManager ()
 	{
 		if ( !isInitialised ) initFlow ();
 		return flowMgr;
 	}
 	
+	/**
+	 * Initialises the flow by first calling {@link #initFlowRight(Node, Deque)} on all the start nodes, and then 
+	 * calling {@link #initFlowLeft(Node)} on all the nodes returned by the fist method in its dequeue parameter (so, these
+	 * nodes are re-visited in LIFO order, that is the right-most ones first).
+	 *  
+	 */
 	private void initFlow ()
 	{
 		if ( isInitialised ) return;
@@ -86,7 +128,20 @@ class FlowInitialiser
 		while ( !reviewNodes.isEmpty () ) initFlowLeft ( reviewNodes.pop () );		
 	}
 
-	
+
+	/**
+	 * Initially it walks the graph from sources to sinks (left-to-right). For every visited node, it loads every incoming 
+	 * arc with the minimum required flow of 1 (if it is still 0) and sets the flows of outgoing edges so that the all the 
+	 * outgoing edges have at least flow level of 1 and the incoming/outgoing flows through the node is balances 
+	 * (i.e., equal). This is not always possible (if the incoming nodes are too few to support all the necessary 
+	 * outgoing flow), so a backward walk may be necessary for certain nodes and will be ran at the end of the 
+	 * right-ward one ({@link #initFlowLeft(Node)}.
+	 * 
+	 * @param node
+	 * @param reviewNodes this is used to mark the nodes that have to be re-visited in right-ward fashion by 
+	 * {@link #initFlowLeft(Node)}.
+	 * 
+	 */
 	private void initFlowRight ( Node node, Deque<Node> reviewNodes )
 	{
 		SortedSet<Node> ins = node.getInputs (), outs = node.getOutputs ();
@@ -148,6 +203,12 @@ class FlowInitialiser
 		for ( Node out: outs ) initFlowRight ( out, reviewNodes );
 	}
 
+	/**
+	 * Does the left-ward visit that may be necessary after the initial left-to-right walk 
+	 * (see {@link #initFlowRight(Node, Deque)}). Here the excess of otuput is redistributed to the inputs (i.e., the 
+	 * incoming flow is increased) and this changes id propagated back to the sources. 
+	 * 
+	 */
 	private void initFlowLeft ( Node node )
 	{
 		int deficit = flowMgr.getDeficit ( node );

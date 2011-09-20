@@ -43,15 +43,15 @@
  * EU NuGO [NoE 503630](http://www.nugo.org/everyone) projects and in part by EMBL-EBI.
  */
 
-package org.isatools.tablib.export.graph_algorithm.layering_tests.wrappers;
+package org.isatools.tablib.export.graph2tab.layering_tests.wrappers;
 
-import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioAssay;
-import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioExtract;
-import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioLabeledExtract;
-import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioSample;
-import org.isatools.tablib.export.graph_algorithm.layering_tests.model.BioSource;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.ExperimentNode;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.node_wrappers.ExpNodeWrapper;
+import org.isatools.tablib.export.graph2tab.layering_tests.model.BioAssay;
+import org.isatools.tablib.export.graph2tab.layering_tests.model.BioExtract;
+import org.isatools.tablib.export.graph2tab.layering_tests.model.BioLabeledExtract;
+import org.isatools.tablib.export.graph2tab.layering_tests.model.BioSample;
+import org.isatools.tablib.export.graph2tab.layering_tests.model.BioSource;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model.ExperimentNode;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.node_wrappers.ExpNodeWrapper;
 
 /**
  * It extends from the simple model node factory and adds the new nodes added to the new model used for testing.
@@ -65,7 +65,7 @@ import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.node_wra
  * 
  */
 public class NodeFactory extends 
-  org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.node_wrappers.NodeFactory
+  org.isatools.tablib.export.graph2tab.simple_biomodel_tests.node_wrappers.NodeFactory
 {
 	private NodeFactory () {
 	}

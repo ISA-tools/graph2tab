@@ -43,13 +43,12 @@
  * EU NuGO [NoE 503630](http://www.nugo.org/everyone) projects and in part by EMBL-EBI.
  */
 
-package org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.node_wrappers;
+package org.isatools.tablib.export.graph2tab.simple_biomodel_tests.node_wrappers;
 
 import java.util.List;
 
-import org.isatools.tablib.export.graph2tab.Node;
 import org.isatools.tablib.export.graph2tab.TabValueGroup;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.Data;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model.Data;
 
 /**
  * <dl><dt>date</dt><dd>Jun 1, 2010</dd></dl>
@@ -62,19 +61,11 @@ public class DataWrapper extends ExpNodeWrapper {
 		super ( base, nodeFactory );
 	}
 
-	private DataWrapper(ExpNodeWrapper original) {
-		super(original);
-	}
-
 	/**
 	 * @return getTabValues ( "Data File Name", "Annotation" )
 	 */
 	public List<TabValueGroup> getTabValues () {
 		return getTabValues ( "Data File Name", "Annotation");
-	}
-
-	public Node createIsolatedClone() {
-		return new DataWrapper(this);
 	}
 
 }

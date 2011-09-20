@@ -43,11 +43,10 @@
  * EU NuGO [NoE 503630](http://www.nugo.org/everyone) projects and in part by EMBL-EBI.
  */
 
-package org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.node_wrappers;
+package org.isatools.tablib.export.graph2tab.simple_biomodel_tests.node_wrappers;
 
-import org.isatools.tablib.export.graph2tab.Node;
 import org.isatools.tablib.export.graph2tab.TabValueGroup;
-import org.isatools.tablib.export.graph_algorithm.simple_biomodel_tests.model.BioMaterial;
+import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.model.BioMaterial;
 
 import java.util.List;
 
@@ -66,22 +65,12 @@ public class BioMaterialWrapper extends ExpNodeWrapper
 		super ( base, nodeFactory );
 	}
 
-	protected BioMaterialWrapper ( ExpNodeWrapper original )
-	{
-		super ( original );
-	}
-
 	/**
 	 * @return getTabValues ( "Biomaterial Name", "Characteristic" );
 	 */
 	public List<TabValueGroup> getTabValues ()
 	{
 		return getTabValues ( "Biomaterial Name", "Characteristic" );
-	}
-
-	public Node createIsolatedClone ()
-	{
-		return new BioMaterialWrapper ( this );
 	}
 
 }

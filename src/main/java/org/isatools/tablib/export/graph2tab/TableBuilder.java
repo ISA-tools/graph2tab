@@ -62,14 +62,13 @@ import org.isatools.tablib.export.graph2tab.minflow.MinFlowCalculator;
 import au.com.bytecode.opencsv.CSVWriter;
 
 /**
- * The table builder. This is the thing to (possibly extend) and invoke to produce the table exported from the
- * experimental graph. This class uses {@link ChainsBuilder} and produce a matrix of strings from the chains that
- * this class creates from the input graph.
- * <p/>
- * Columns belonging in different group types are exported in no particular order. This occasionally screw the grouping 
- * of headers of the same type, eg, a factor value could fall between two characteristics[] column blocks. 
- * We will implement a solution to that in future. For details about that, see inside {@link #addNode(int, Node)}.
- * <p/>
+ * <p>The table builder. This is the thing to (possibly extend) and invoke in order to produce the table exported from 
+ * the experimental graph. This class uses {@link MinFlowCalculator} and produces a matrix of strings from the minimum 
+ * flow that that computed from the input graph.</p>
+ * 
+ * <p>Note: columns belonging in different group types are exported in no particular order. This occasionally messes up 
+ * the grouping of headers of the same type, e.g., a factor value might fall between two characteristics[] column blocks. 
+ * We will implement a solution to that in future.<p/>
  * 
  * <dl>
  * <dt>date</dt>
@@ -85,9 +84,9 @@ public class TableBuilder
 	protected List<List<String>> table = null;
 
 	/**
-	 * This defaults isLayeringRequired to true and keeps the nodes to work with uninitialised, you have to do it in your
-	 * specific constructor. Hence, it is advisable that you setup this.nodes with the sinks after the call to this 
-	 * constructor.
+	 * This defaults to isLayeringRequired to true and keeps the nodes to work with uninitialised, you have to do that 
+	 * in your specific constructor. Hence, it is advisable that you setup this.nodes with the sinks after the call 
+	 * to this constructor.
 	 *  
 	 */
 	protected TableBuilder ()
@@ -104,16 +103,20 @@ public class TableBuilder
 	}
 
 	/**
-	 * Nodes can be all the nodes in the graph or a subset like this:
+	 * The graph is worked out starting from the nodes you pass to this constructor. The sub-graphs that can be reached
+	 * going from these nodes to the left (i.e., exploring the outputs) and from the same nodes to the right (i.e., going
+	 * back through the inputs) is converted into a table. Because of the way the code works internally, 
+	 * the following details apply:
 	 *  
 	 * <ul>
 	 *   <li>in case isLayeringRequired = true, you can pass the sinks only, 
-	 *   ie: all the right-most nodes, which have no output and allow you to reach the rest of the graph</li>
-	 *   <li>in case isLayeringRequired = false, you can pass the sources only, ie those nodes on the left-most side of
+	 *   i.e., all the right-most nodes, which have no output and allow you to reach the rest of the graph</li>
+	 *   <li>in case isLayeringRequired = false, you can pass the sources only, i.e., those nodes on the left-most side of
 	 *   the graph, which don't have inputs and allow you to reach the rest of the graph</li>
 	 * </ul>
 	 * 
-	 * Passing the node subsets described will speed things up a little. 
+	 * Passing the node subsets described will speed things up a little. Any other node sub-set that allows to reach
+	 * all the graph is valid. 
 	 * 
 	 * @parameter isLayeringRequired true means that the graph may be uneven (with missing steps in the path from sources to sinks)
 	 * and therefore it will require that layers are computed via {@link LayersBuilder}. Set this parameter to false
@@ -127,7 +130,8 @@ public class TableBuilder
 
 	
 	/**
-	 * The exported table, as a matrix of strings.
+	 * The exported table, as a matrix of strings. Such result is built by means of {@link MinFlowCalculator#getMinPathCover()}
+	 * and applying the node merging procedures defined in {@link TableContents}. 
 	 */
 	public List<List<String>> getTable ()
 	{

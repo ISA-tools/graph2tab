@@ -6,15 +6,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.isatools.tablib.export.graph2tab.Node;
-import org.isatools.tablib.export.graph_algorithm.dummy_graphs_tests.DummyGraph;
+import org.isatools.tablib.export.graph2tab.dummy_graphs_tests.DummyGraph;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 /**
+ * Basic tests for the {@link FlowInitialiser}.
  * 
- * TODO: Comment me!
- *
  * <dl><dt>date</dt><dd>Aug 19, 2011</dd></dl>
  * @author brandizi
  *

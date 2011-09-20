@@ -1,10 +1,19 @@
-REVISION CHANGE HISTORY
+REVISION HISTORY
 - 2.0 
-    Moved out of the ISA project and made an independent pacakge. Layering added to the 1.0 version, some bug fixes
+	Moved out of the ISA project and made an independent pacakge. Layering added to the 1.0 version, some bug fixes
 
 - 2.0.1
-    exportTSV() methods added to TableBuilder, which exports the table into table-delimited format.
+	exportTSV() methods added to TableBuilder, which exports the table into table-delimited format.
 
 - 2.0.2
-    temporary patch to allow the insertion of Unit[Type](Qualifier). The way header groups are represented will be channged
-    and made simpler.
+	Temporary patch to allow the insertion of Unit[Type](Qualifier). The way header groups are represented will be channged
+	and made simpler.
+
+- 3.0
+	New approach for Node.tabValues, now TabValueGroup(s) can be nested and groups of headers that go together can be taken
+	into account (eg, Characteristics, Term Source REF, Term Accession Number).
+	
+- 4.0
+	New algorithm for computing the minimum path set that covers all the graph, now based on the computation of the
+	minimum flow from the sources to the sinks.
+	
