@@ -47,13 +47,19 @@ The ISA Team and the ISA software suite have been funded by the EU Carcinogenomi
 */
 package org.isatools.tablib.export.graph2tab.minflow;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.isatools.tablib.export.graph2tab.LayersBuilder;
 import org.isatools.tablib.export.graph2tab.Node;
 import org.isatools.tablib.export.graph2tab.TableBuilder;
 import org.slf4j.Logger;
@@ -299,4 +305,101 @@ class FlowInitialiser
 		for ( Node in: ins ) initFlowLeft ( in );
 	}
 
+	
+	/**
+	 * See {@link #outDot(PrintStream, LayersBuilder)}.
+	 *  
+	 */
+	public void outDot ( String filePath, LayersBuilder layersBuilder ) throws FileNotFoundException
+	{
+		outDot ( new PrintStream ( new FileOutputStream ( filePath ) ), layersBuilder );
+	}
+	
+	
+	/**
+	* A facility useful for debugging. Outputs a syntax that can be used by GraphViz to show the graph being built.
+	* The graph will be layered if you pass a LayersBuilder. 
+	* 
+	*/
+	public void outDot ( PrintStream out, LayersBuilder layersBuilder )
+	{
+		Map<Node, Integer> ids = new HashMap<Node, Integer> ();
+		Set<Node> visited = new HashSet<Node> ();
+	
+		out.println ( "strict digraph ExperimentalPipeline {" );
+		out.println ( "  graph [rankdir=LR];" );
+	
+		for ( Node node: getStartNodes () )
+			outDot ( out, ids, visited, node );
+	
+		// Adds up the layers if available
+		if ( layersBuilder != null )
+		{
+			out.println ();
+	
+			int maxLayer = layersBuilder.getMaxLayer ();
+			for ( int layer = 0; layer <= maxLayer; layer++ )
+			{
+				Set<Node> lnodes = layersBuilder.getLayerNodes ( layer );
+				if ( lnodes == null || lnodes.isEmpty () )
+					continue;
+	
+				out.println ( "    // layer " + layer );
+				out.print ( "    { rank = same" );
+				for ( Node node: lnodes ) {
+					int nodeid = ids.get ( node );
+					out.print ( "; " + nodeid );
+				}
+				out.println ( " }\n" );
+			}
+			out.println ();
+		}
+	
+		out.println ( "}" );
+	}
+	
+	/**
+	* @see #outDot(PrintStream, LayersBuilder)
+	*/
+	private void outDot ( PrintStream out, Map<Node, Integer> ids, Set<Node> visited, Node node )
+	{
+		if ( visited.contains ( node ) ) return;
+		
+		visited.add ( node );
+	
+		// The rainbow can help in tracking the graph manually.
+		final String[] colors = { "black", "red", "blue", "magenta", "green", "orange", "purple", "turquoise" };
+	
+		String nodelbl = node.toString ();
+		Integer nodeid = ids.get ( node );
+		if ( nodeid == null )
+		{
+			nodeid = ids.size ();
+			ids.put ( node, nodeid );
+			String color = colors [ nodeid % colors.length ];
+			out.println ( "  " + nodeid + 
+				"[label = \"" + nodelbl + "\", style = filled, color = " + color + ", fillcolor = white ];" );
+		}
+	
+		for ( Node nout: node.getOutputs () )
+		{
+			Integer outid = ids.get ( nout );
+			if ( outid == null )
+			{
+				outid = ids.size ();
+				ids.put ( nout, outid );
+				String outlbl = nout.toString ();
+				String color = colors [ outid % colors.length ];
+				out.println ( "  " + outid + 
+					"[label = \"" + outlbl + "\", style = filled, color = " + color + ", fillcolor = white ];" );
+			}
+	
+			String color = colors[ ( nodeid + outid ) % colors.length];
+
+			int arcFlow = flowMgr.getFlow ( node, nout );
+			out.println ( "  " + nodeid + " -> " + outid + "[label = \""+ arcFlow + "\" color = " + color + "];" );
+			
+			outDot ( out, ids, visited, nout );
+		}
+	}		
 }

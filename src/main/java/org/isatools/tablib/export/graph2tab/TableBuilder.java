@@ -49,8 +49,10 @@
 package org.isatools.tablib.export.graph2tab;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -83,6 +85,10 @@ public class TableBuilder
 	protected final boolean isLayeringRequired; 
 	protected List<List<String>> table = null;
 
+	private LayersBuilder layersBuilder;
+	private MinFlowCalculator minFlowCalc;
+	
+	
 	/**
 	 * This defaults to isLayeringRequired to true and keeps the nodes to work with uninitialised, you have to do that 
 	 * in your specific constructor. Hence, it is advisable that you setup this.nodes with the sinks after the call 
@@ -135,14 +141,10 @@ public class TableBuilder
 	 */
 	public List<List<String>> getTable ()
 	{
-		if ( this.table != null )
-			return this.table;
+		if ( this.table != null ) return this.table;
 
-		LayersBuilder layersBuilder = null;
-		MinFlowCalculator minFlowCalc = new MinFlowCalculator ( this.nodes );
-		
-		if ( isLayeringRequired )
-			layersBuilder = new LayersBuilder ( minFlowCalc.getEndNodes () );
+		minFlowCalc = new MinFlowCalculator ( this.nodes );
+		layersBuilder = isLayeringRequired ? new LayersBuilder ( minFlowCalc.getEndNodes () ) : null;
 
 		TableContents tableContents = new TableContents ();
 		int nrows = 1; 
@@ -264,4 +266,22 @@ public class TableBuilder
 		reportTSV ( new File ( filePath ) );
 	}
 
+	
+	/** 
+	 * A wrapper of {@link FlowInitialiser#outDot(String, LayersBuilder)}.
+	 * WARNING: you have to call getTable() before this method if you call it from outside.  
+	 */
+	public void outDot ( String filePath ) throws FileNotFoundException
+	{
+		minFlowCalc.outDot ( filePath, layersBuilder );
+	}
+	
+	/**
+	 * A wrapper of {@link FlowInitialiser#outDot(PrintStream, LayersBuilder)}.
+	 * WARNING: you have to call getTable() before this method if you call it from outside.  
+	 */
+	public void outDot ( PrintStream out )
+	{
+		minFlowCalc.outDot ( out, layersBuilder );
+	}
 }

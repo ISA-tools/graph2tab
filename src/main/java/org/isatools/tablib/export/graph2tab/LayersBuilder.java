@@ -91,7 +91,7 @@ import org.isatools.tablib.export.graph2tab.minflow.MinFlowCalculator;
  * @author brandizi
  *
  */
-class LayersBuilder
+public class LayersBuilder
 {
 	private boolean isInitialized = false;
 

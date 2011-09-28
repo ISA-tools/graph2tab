@@ -47,6 +47,8 @@ The ISA Team and the ISA software suite have been funded by the EU Carcinogenomi
 */
 package org.isatools.tablib.export.graph2tab.minflow;
 
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -54,6 +56,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
+import org.isatools.tablib.export.graph2tab.LayersBuilder;
 import org.isatools.tablib.export.graph2tab.Node;
 import org.isatools.tablib.export.graph2tab.TableBuilder;
 import org.slf4j.Logger;
@@ -300,4 +303,20 @@ public class MinFlowCalculator
 		return initialiser.getEndNodes ();
 	}
 
+	/** 
+	 * A wrapper of {@link FlowInitialiser#outDot(String, LayersBuilder)}.
+	 */
+	public void outDot ( String filePath, LayersBuilder layersBuilder ) throws FileNotFoundException
+	{
+		initialiser.outDot ( filePath, layersBuilder );
+	}
+	
+	/**
+	 * A wrapper of {@link FlowInitialiser#outDot(PrintStream, LayersBuilder)}.
+	 */
+	public void outDot ( PrintStream out, LayersBuilder layersBuilder )
+	{
+		initialiser.outDot ( out, layersBuilder );
+	}
+	
 }

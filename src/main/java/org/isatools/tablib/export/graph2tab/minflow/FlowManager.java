@@ -47,8 +47,11 @@ The ISA Team and the ISA software suite have been funded by the EU Carcinogenomi
 */
 package org.isatools.tablib.export.graph2tab.minflow;
 
+import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.isatools.tablib.export.graph2tab.Node;
 import org.slf4j.Logger;
@@ -153,91 +156,4 @@ class FlowManager
 		return delta;
 	}
 	
-	
-	// TODO if needed. Requires revision and the addition of flow information.
-	// 
-///**
-//* A facility useful for debugging. Outputs a syntax that can be used by GraphViz to show the graph being built.
-//*/
-//public void outDot ( PrintStream out, Node currentNode )
-//{
-//	Map<Node, Integer> ids = new HashMap<Node, Integer> ();
-//	Set<Node> visited = new HashSet<Node> ();
-//
-//	out.println ( "strict digraph ExperimentalPipeline {" );
-//	out.println ( "  graph [rankdir=LR];" );
-//
-//	for ( Node node: startNodes )
-//		outDot ( out, ids, visited, node, currentNode );
-//
-//	// Adds up the layers if available
-//	if ( layersBuilder != null )
-//	{
-//		out.println ();
-//
-//		int maxLayer = layersBuilder.getMaxLayer ();
-//		for ( int layer = 0; layer <= maxLayer; layer++ )
-//		{
-//			Set<Node> lnodes = layersBuilder.getLayerNodes ( layer );
-//			if ( lnodes == null || lnodes.isEmpty () )
-//				continue;
-//
-//			out.println ( "    // layer " + layer );
-//			out.print ( "    { rank = same" );
-//			for ( Node node: lnodes ) {
-//				int nodeid = ids.get ( node );
-//				out.print ( "; " + nodeid );
-//			}
-//			out.println ( " }\n" );
-//		}
-//		out.println ();
-//	}
-//
-//	out.println ( "}" );
-//}
-//
-///**
-//* @see #outDot(PrintStream).
-//*/
-//private void outDot ( PrintStream out, Map<Node, Integer> ids, Set<Node> visited, Node node, Node currentNode )
-//{
-//	if ( visited.contains ( node ) )
-//		return;
-//	visited.add ( node );
-//
-//	// The rainbow can help in tracking the graph manually.
-//	final String[] colors = { "black", "red", "blue", "magenta", "green", "orange", "purple", "turquoise" };
-//
-//	String nodelbl = node.toString ();
-//	Integer nodeid = ids.get ( node );
-//	if ( nodeid == null )
-//	{
-//		nodeid = ids.size ();
-//		ids.put ( node, nodeid );
-//		String bgcolor = node.equals ( currentNode ) ? "yellow" : "white";
-//		String color = colors[nodeid % colors.length];
-//		out.println ( "  " + nodeid + 
-//			"[label = \"" + nodelbl + "\", style = filled, color = " + color + ", fillcolor = " + bgcolor + "];" );
-//	}
-//
-//	for ( Node nout: node.getOutputs () )
-//	{
-//		Integer outid = ids.get ( nout );
-//		if ( outid == null )
-//		{
-//			outid = ids.size ();
-//			ids.put ( nout, outid );
-//			String outlbl = nout.toString ();
-//			String bgcolor = nout.equals ( currentNode ) ? "yellow" : "white";
-//			String color = colors[outid % colors.length];
-//			out.println ( "  " + outid + 
-//				"[label = \"" + outlbl + "\", style = filled, color = " + color + ", fillcolor = " + bgcolor + "];" );
-//		}
-//
-//		String color = colors[ ( nodeid + outid ) % colors.length];
-//		out.println ( "  " + nodeid + " -> " + outid + "[color = " + color + "];" );
-//		outDot ( out, ids, visited, nout, currentNode );
-//	}
-//}	
-
 }
