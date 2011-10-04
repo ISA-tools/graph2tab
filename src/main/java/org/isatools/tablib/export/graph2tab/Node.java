@@ -81,24 +81,6 @@ public interface Node extends Comparable<Node>
 	public SortedSet<Node> getInputs ();
 
 	/**
-	 * Modifiers <b>must be symmetric</b>, when an input is added/removed, the corresponding output is added removed on
-	 * the other side.
-	 * <p>
-	 * As usually, they should return true if they made actual changes.
-	 * </p>
-	 */
-	public boolean addInput ( Node input );
-
-	/**
-	 * Modifiers <b>must be symmetric</b>, when an input is added/removed, the corresponding output is added/removed on
-	 * the other side.
-	 * <p>
-	 * As usually, they should return true if actual changes was actually made.
-	 * </p>
-	 */
-	public boolean removeInput ( Node input );
-
-	/**
 	 * The outputs of the node. Should not return a modifiable set.
 	 * <p/>
 	 * <p>
@@ -108,24 +90,6 @@ public interface Node extends Comparable<Node>
 	 * </p>
 	 */
 	public SortedSet<Node> getOutputs ();
-
-	/**
-	 * Modifiers <b>must be symmetric</b>, when an input is added/removed, the corresponding output is added/removed on
-	 * the other side.
-	 * <p>
-	 * As usually, they should return true if they made actual changes.
-	 * </p>
-	 */
-	public boolean addOutput ( Node output );
-
-	/**
-	 * Modifiers <b>must be symmetric</b>, when an input is added/removed, the corresponding output is added/removed on
-	 * the other side.
-	 * <p>
-	 * As usually, they should return true if actual changes was actually made.
-	 * </p>
-	 */
-	public boolean removeOutput ( Node output );
 
 	/**
 	 * The pairs of header/value that this node need to report in the exported spreadsheet. Should return an unmodifiable

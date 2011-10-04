@@ -93,22 +93,41 @@ public class DummyNode extends DefaultAbstractNode {
 		}
 	}
 
-	/**
-	 * Just checks that the input is of DummyNode
-	 */
-	public boolean addInput(Node input) {
+	public boolean addInput ( DummyNode input )
+	{
 		checkNodeType(input);
-		return super.addInput(input);
-	}
 
-	/**
-	 * Just checks that the output is of DummyNode
-	 */
-	public boolean addOutput(Node output) {
+		if ( inputs == null )
+		{
+			getInputs ();
+		}
+		if ( !inputs.add ( input ) )
+		{
+			return false;
+		}
+		input.addOutput ( this );
+		return true;
+	}
+	
+	
+	public boolean addOutput ( DummyNode output )
+	{
 		checkNodeType(output);
-		return super.addOutput(output);
-	}
 
+		if ( outputs == null )
+		{
+			getOutputs ();
+		}
+		if ( !outputs.add ( output ) )
+		{
+			return false;
+		}
+		output.addInput ( this );
+		return true;
+	}
+	
+	
+	
 	/**
 	 * See the constructor.
 	 */
