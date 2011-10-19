@@ -225,7 +225,39 @@ public class MinFlowCalculator
 		
 		return minPathCover;
 	}
+
 	
+	/**
+	 * A wrapper of {@link #findMinPath(Node)} that starts from the graph sources and return the first path that is able
+	 * to find (or null if none).
+	 *  
+	 * @param addedIsolatedNodes is used to let the method which isolated nodes (no input, no output) have already been
+	 * added in previous invocations. This is needed to avoid infinite degenerate path additions.
+	 * 
+	 */
+	private List<Node> findMinPath ( Set<Node> addedIsolatedNodes )
+	{
+		for ( Node src: initialiser.getStartNodes () )
+		{
+			if ( addedIsolatedNodes.contains ( src ) ) continue;
+
+			if ( src.getInputs ().isEmpty () && src.getOutputs ().isEmpty () )
+			{
+				// If it's an isolated node, keep track of it and then return the corresponding path.
+				addedIsolatedNodes.add ( src );
+				List<Node> path = new LinkedList<Node> ();
+				path.add ( src );
+				return path;
+			}
+			
+			List<Node> path = findMinPath ( src );
+			if ( path == null ) continue;
+			
+			return path;
+		}
+		return null;
+	}
+
 	/**
 	 * The recursive step of {@link #getMinPathCover()}, see there.
 	 */
@@ -260,37 +292,6 @@ public class MinFlowCalculator
 		return null;
 	}
 	
-	/**
-	 * A wrapper of {@link #findMinPath(Node)} that starts from the graph sources and return the first path that is able
-	 * to find (or null if none).
-	 *  
-	 * @param addedIsolatedNodes is used to let the method which isolated nodes (no input, no output) have already been
-	 * added in previous invocations. This is needed to avoid infinite degenerate path additions.
-	 * 
-	 */
-	private List<Node> findMinPath ( Set<Node> addedIsolatedNodes )
-	{
-		for ( Node src: initialiser.getStartNodes () )
-		{
-			if ( addedIsolatedNodes.contains ( src ) ) continue;
-
-			if ( src.getInputs ().isEmpty () && src.getOutputs ().isEmpty () )
-			{
-				// If it's an isolated node, keep track of it and then return the corresponding path.
-				addedIsolatedNodes.add ( src );
-				List<Node> path = new LinkedList<Node> ();
-				path.add ( src );
-				return path;
-			}
-			
-			List<Node> path = findMinPath ( src );
-			if ( path == null ) continue;
-			
-			return path;
-		}
-		return null;
-	}
-
 	/**
 	 * The nodes initially passed to the constructor of this class. This is actually a wrapper of 
 	 * {@link FlowInitialiser#getNodes()}.

@@ -19,5 +19,5 @@ REVISION HISTORY
 	minimum flow from the sources to the sinks.
 
 - 4.1 
-  A bug about isolated nodes was fixed. Nodes without any input and any output used to cause an infinite loop in MinFlowCalculator. 
-  Now a proper check is added to avoid such a situation. 
+  A bug about isolated nodes was fixed. Nodes without any input and any output used to cause an infinite loop in 
+  MinFlowCalculator.getMinPathCover(). Now a proper check is added to avoid such a situation. 
