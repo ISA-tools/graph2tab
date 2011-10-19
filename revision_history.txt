@@ -1,4 +1,5 @@
 REVISION HISTORY
+
 - 2.0 
 	Moved out of the ISA project and made an independent pacakge. Layering added to the 1.0 version, some bug fixes
 
@@ -16,4 +17,7 @@ REVISION HISTORY
 - 4.0
 	New algorithm for computing the minimum path set that covers all the graph, now based on the computation of the
 	minimum flow from the sources to the sinks.
-	
+
+- 4.1 
+  A bug about isolated nodes was fixed. Nodes without any input and any output used to cause an infinite loop in MinFlowCalculator. 
+  Now a proper check is added to avoid such a situation. 

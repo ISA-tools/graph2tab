@@ -50,12 +50,12 @@ package org.isatools.tablib.export.graph2tab.minflow;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-
 import org.isatools.tablib.export.graph2tab.LayersBuilder;
 import org.isatools.tablib.export.graph2tab.Node;
 import org.isatools.tablib.export.graph2tab.TableBuilder;
@@ -218,7 +218,8 @@ public class MinFlowCalculator
 		
 		minPathCover = new LinkedList<List<Node>> ();
 		// While you have paths, add them up
-		for ( List<Node> path; ( path = findMinPath () ) != null; minPathCover.add ( path ) );
+		Set<Node> addedIsolatedNodes = new HashSet<Node> ();
+		for ( List<Node> path; ( path = findMinPath ( addedIsolatedNodes ) ) != null; minPathCover.add ( path ) );
 		
 		isInitialised = true;
 		
@@ -236,13 +237,14 @@ public class MinFlowCalculator
 		if ( nouts.isEmpty () ) 
 		{
 			List<Node> result = new LinkedList<Node> ();
-			result.add ( 0, n );
+			result.add ( n );
 			return result;
 		}
 
 		for ( Node nout: nouts )
 		{
 			if ( flowMgr.getFlow ( n, nout ) == 0 ) continue;
+			
 			// Go through the first edge still having a positive flow, decrease it so that one more visit is traced.
 			flowMgr.increaseFlow ( n, nout, -1 );
 			
@@ -260,15 +262,30 @@ public class MinFlowCalculator
 	
 	/**
 	 * A wrapper of {@link #findMinPath(Node)} that starts from the graph sources and return the first path that is able
-	 * to find (or null if none). 
+	 * to find (or null if none).
+	 *  
+	 * @param addedIsolatedNodes is used to let the method which isolated nodes (no input, no output) have already been
+	 * added in previous invocations. This is needed to avoid infinite degenerate path additions.
 	 * 
 	 */
-	private List<Node> findMinPath ()
+	private List<Node> findMinPath ( Set<Node> addedIsolatedNodes )
 	{
 		for ( Node src: initialiser.getStartNodes () )
 		{
+			if ( addedIsolatedNodes.contains ( src ) ) continue;
+
+			if ( src.getInputs ().isEmpty () && src.getOutputs ().isEmpty () )
+			{
+				// If it's an isolated node, keep track of it and then return the corresponding path.
+				addedIsolatedNodes.add ( src );
+				List<Node> path = new LinkedList<Node> ();
+				path.add ( src );
+				return path;
+			}
+			
 			List<Node> path = findMinPath ( src );
 			if ( path == null ) continue;
+			
 			return path;
 		}
 		return null;

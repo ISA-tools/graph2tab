@@ -65,7 +65,7 @@ import org.isatools.tablib.export.graph2tab.simple_biomodel_tests.node_wrappers.
  * </dl>
  * 
  * @author brandizi
- * 
+ *  
  */
 public class NodeFactory extends 
   org.isatools.tablib.export.graph2tab.simple_biomodel_tests.node_wrappers.NodeFactory
