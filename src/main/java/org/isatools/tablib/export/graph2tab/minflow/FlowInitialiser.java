@@ -200,11 +200,8 @@ class FlowInitialiser
 		SortedSet<Node> ins = node.getInputs (), outs = node.getOutputs ();
 		int nins = ins.size (), nouts = outs.size ();
 		
-		// Rare case of isolated node, nothing to do.
-		if ( nins == 0 && nouts == 0 ) return;
-
+		// End node, end of rightward travel, this includes the rare case of isolated nodes
 		if ( nouts == 0 ) {
-			// End node, end of rightward travel
 			endNodes.add ( node );
 			return;
 		}	

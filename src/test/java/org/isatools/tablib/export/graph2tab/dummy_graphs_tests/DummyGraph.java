@@ -231,8 +231,9 @@ public class DummyGraph
 	
 	private static DummyGraph g6 = null;
     
-	/** <p>Example Graph G6.</p>
-	 * <p><img src = "exp_graph6.png"></p>
+	/** 
+	 * <p>A simple test graph containing just two isolated nodes.</p>
+	 * 
 	 */
 	public static DummyGraph getG6 ()
 	{

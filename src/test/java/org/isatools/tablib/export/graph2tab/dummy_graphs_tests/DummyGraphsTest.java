@@ -44,7 +44,7 @@ The ISA Team and the ISA software suite have been funded by the EU Carcinogenomi
 (http://www.carcinogenomics.eu), the UK BBSRC (http://www.bbsrc.ac.uk), the UK NERC-NEBC
 (http://nebc.nerc.ac.uk) and in part by the EU NuGO consortium (http://www.nugo.org/everyone).
 
-*/
+ */
 
 package org.isatools.tablib.export.graph2tab.dummy_graphs_tests;
 
@@ -63,130 +63,156 @@ import static org.junit.Assert.fail;
 /**
  * Tests on a basic implementation of the {@link Node} interface and rather complex graphs.
  * 
- * <dl><dt>date</dt><dd>Jun 1, 2010</dd></dl>
- *
+ * <dl>
+ * <dt>date</dt>
+ * <dd>Jun 1, 2010</dd>
+ * </dl>
+ * 
  * @author brandizi
  */
-public class DummyGraphsTest {
-	private void assertContains(List<List<String>> paths, String V1, String V2) {
-		assertContains(paths, V1, V2, true);
+public class DummyGraphsTest
+{
+	private void assertContains ( List<List<String>> paths, String V1, String V2 )
+	{
+		assertContains ( paths, V1, V2, true );
 	}
 
-	private void assertDoesntContain(List<List<String>> paths, String V1, String V2) {
-		assertContains(paths, V1, V2, false);
+	private void assertDoesntContain ( List<List<String>> paths, String V1, String V2 )
+	{
+		assertContains ( paths, V1, V2, false );
 	}
 
 	/**
-	 * Verifies that a matrix returned by {@link TableBuilder#getTable()} (doesn't) contains the edge V1-&gt;V2, ie
-	 * two subsequent cells in the same column, having the parameter values.
-	 * This is used in the tests below.
+	 * Verifies that a matrix returned by {@link TableBuilder#getTable()} does/doesn't contains the edge V1-&gt;V2, ie,
+	 * two subsequent cells in the same column, having the parameter values. V2 == null means you're testing the case
+	 * of isolated nodes. This is used in the tests below.
 	 */
-	private void assertContains(List<List<String>> paths, String V1, String V2, boolean wanted) {
-		int lastColIdx = paths.get(0).size() - 1;
-		for (int i = 0; i < paths.size(); i++) {
-			List<String> path = paths.get(i);
-			assertEquals("Error in table sizes!: " + i + ": " + path, lastColIdx, path.size() - 1);
-			for (int j = 0; j < lastColIdx;) {
-				if (V1.equals(path.get(j++)) && V2.equals(path.get(j))) {
-					if (wanted) {
-						return;
-					}
-					fail("Table Error! should not exist: " + V1 + " -> " + V2);
+	private void assertContains ( List<List<String>> paths, String V1, String V2, boolean wanted )
+	{
+		int lastColIdx = paths.get ( 0 ).size () - 1;
+		for ( int i = 0; i < paths.size (); i++ )
+		{
+			List<String> path = paths.get ( i );
+			assertEquals ( "Error in table sizes!: " + i + ": " + path, lastColIdx, path.size () - 1 );
+
+			if ( lastColIdx == 0 )
+			{
+				// Isolated nodes
+				if ( V1.equals ( path.get ( 0 ) ) && V2 == null )
+				{
+					if ( wanted ) return;
+					fail ( "Table Error! should not exist: " + V1 );
+				}
+			}
+			
+			for ( int j = 0; j < lastColIdx; )
+			{
+				if ( V1.equals ( path.get ( j++ ) ) && V2.equals ( path.get ( j ) ) )
+				{
+					if ( wanted ) return;
+					fail ( "Table Error! should not exist: " + V1 + " -> " + V2 );
 				}
 			}
 		}
-		if (wanted) {
-			fail("Table Error! should exist: " + V1 + " -> " + V2);
-		}
+		if ( wanted )
+			fail ( "Table Error! should exist: " + V1 + " -> " + V2 );
 	}
 
 	/**
-	 * <p> Tests {@link DummyGraph#getG1()}</p>
+	 * <p>
+	 * Tests {@link DummyGraph#getG1()}
+	 * </p>
 	 */
 	@Test
-	public void testG1() {
-		out.println("_______ PATH COVER TEST 1 __________ ");
+	public void testG1 ()
+	{
+		out.println ( "_______ PATH COVER TEST 1 __________ " );
 
-		Set<Node> nodes = new HashSet<Node>();
+		Set<Node> nodes = new HashSet<Node> ();
 		DummyGraph g = DummyGraph.getG1 ();
 		nodes.add ( g.getNode ( 2, "D" ) );
 
 		TableBuilder tb = new TableBuilder ( nodes );
-		out.println(tb.report());
+		out.println ( tb.report () );
 
-		List<List<String>> paths = tb.getTable();
+		List<List<String>> paths = tb.getTable ();
 
-		assertEquals("N. rows Error!", 4, paths.size());
-		assertEquals("N. cols Error!", 5, paths.get(0).size());
+		assertEquals ( "N. rows Error!", 4, paths.size () );
+		assertEquals ( "N. cols Error!", 5, paths.get ( 0 ).size () );
 
-		assertContains(paths, "C", "D");
-		assertContains(paths, "G", "H");
-		assertContains(paths, "B", "C");
-		assertContains(paths, "D", "E");
+		assertContains ( paths, "C", "D" );
+		assertContains ( paths, "G", "H" );
+		assertContains ( paths, "B", "C" );
+		assertContains ( paths, "D", "E" );
 
-		assertDoesntContain(paths, "A", "B");
-		assertDoesntContain(paths, "E", "H");
-		assertDoesntContain(paths, "E", "I");
-		assertDoesntContain(paths, "G", "F");
+		assertDoesntContain ( paths, "A", "B" );
+		assertDoesntContain ( paths, "E", "H" );
+		assertDoesntContain ( paths, "E", "I" );
+		assertDoesntContain ( paths, "G", "F" );
 
 	}
 
-
 	/**
-	 * <p> Tests This example graph:</p>
+	 * <p>
+	 * Tests This example graph:
+	 * </p>
 	 * <p/>
 	 * <img src = "exp_graph2.png">
 	 */
 	@Test
-	public void testG2() {
-		out.println("_______ PATHS COVER TEST 2 __________ ");
+	public void testG2 ()
+	{
+		out.println ( "_______ PATHS COVER TEST 2 __________ " );
 
-		Set<Node> nodes = new HashSet<Node>();
+		Set<Node> nodes = new HashSet<Node> ();
 		DummyGraph g = DummyGraph.getG2 ();
-		nodes.add(g.getNode(2, "D"));
+		nodes.add ( g.getNode ( 2, "D" ) );
 
 		TableBuilder tb = new TableBuilder ( nodes );
-		out.println(tb.report());
+		out.println ( tb.report () );
 
-		List<List<String>> paths = tb.getTable();
+		List<List<String>> paths = tb.getTable ();
 
-		assertEquals("N. rows Error!", 4, paths.size());
-		assertEquals("N. cols Error!", 5, paths.get(2).size());
+		assertEquals ( "N. rows Error!", 4, paths.size () );
+		assertEquals ( "N. cols Error!", 5, paths.get ( 2 ).size () );
 
-		assertContains(paths, "H", "G");
-		assertContains(paths, "I", "G");
-		assertContains(paths, "C", "A");
-		assertContains(paths, "C", "B");
-		assertContains(paths, "D", "C");
-		assertContains(paths, "F", "E");
+		assertContains ( paths, "H", "G" );
+		assertContains ( paths, "I", "G" );
+		assertContains ( paths, "C", "A" );
+		assertContains ( paths, "C", "B" );
+		assertContains ( paths, "D", "C" );
+		assertContains ( paths, "F", "E" );
 
-		assertDoesntContain(paths, "I", "E");
-		assertDoesntContain(paths, "F", "G");
+		assertDoesntContain ( paths, "I", "E" );
+		assertDoesntContain ( paths, "F", "G" );
 
 	}
 
 	/**
-	 * <p>Tests This example graph:</p>
+	 * <p>
+	 * Tests This example graph:
+	 * </p>
 	 * <p/>
 	 * <img src = "exp_graph3.png">
 	 * 
 	 */
 	@Test
-	public void testG3 () {
-		out.println("_______ PATH COVER TEST 3 __________ ");
+	public void testG3 ()
+	{
+		out.println ( "_______ PATH COVER TEST 3 __________ " );
 
-		Set<Node> nodes = new HashSet<Node>();
+		Set<Node> nodes = new HashSet<Node> ();
 		DummyGraph g = DummyGraph.getG3 ();
 		nodes.add ( g.getNode ( 0, "A" ) );
 		nodes.add ( g.getNode ( 0, "B" ) );
 
 		TableBuilder tb = new TableBuilder ( nodes );
-		out.println(tb.report());
+		out.println ( tb.report () );
 
-		List<List<String>> paths = tb.getTable();
+		List<List<String>> paths = tb.getTable ();
 
 		assertEquals ( "N. rows Error!", 5, paths.size () );
-		assertEquals ( "N. cols Error!", 8, paths.get(2).size() );
+		assertEquals ( "N. cols Error!", 8, paths.get ( 2 ).size () );
 
 		assertContains ( paths, "L", "O" );
 		assertContains ( paths, "Q", "T" );
@@ -195,59 +221,63 @@ public class DummyGraphsTest {
 		assertContains ( paths, "A", "D" );
 		assertContains ( paths, "Q", "T" );
 		assertContains ( paths, "N", "Q" );
-		
+
 		assertDoesntContain ( paths, "Q", "U" );
 		assertDoesntContain ( paths, "G", "K" );
 		assertDoesntContain ( paths, "L", "M" );
 		assertDoesntContain ( paths, "K", "O" );
 	}
-	
-	
+
 	/**
-	 * <p>Tests This example graph:</p>
+	 * <p>
+	 * Tests This example graph:
+	 * </p>
 	 * <p/>
 	 * <img src = "exp_graph4.png">
 	 * 
 	 */
 	@Test
-	public void testG4 () {
-		out.println("_______ PATH COVER TEST 4 __________ ");
+	public void testG4 ()
+	{
+		out.println ( "_______ PATH COVER TEST 4 __________ " );
 
-		Set<Node> nodes = new HashSet<Node>();
+		Set<Node> nodes = new HashSet<Node> ();
 
 		DummyGraph g = DummyGraph.getG4 ();
 		nodes.add ( g.getNode ( 1, "G" ) );
 
 		TableBuilder tb = new TableBuilder ( nodes );
-		out.println ( tb.report() );
+		out.println ( tb.report () );
 
-		List<List<String>> paths = tb.getTable();
+		List<List<String>> paths = tb.getTable ();
 
-		// Must be 7+headers cause the max cut should be SP, OP, LP, LJ, KI, HI, CD. 
+		// Must be 7+headers cause the max cut should be SP, OP, LP, LJ, KI, HI, CD.
 		assertEquals ( "N. rows Error!", 8, paths.size () );
-		assertEquals ( "N. cols Error!", 5, paths.get(2).size() );
-		
+		assertEquals ( "N. cols Error!", 5, paths.get ( 2 ).size () );
+
 		for ( DummyNode[] edge: g.getEdges () )
-			assertContains ( paths, edge[ 0 ].getValue (), edge[ 1 ].getValue () );
-		
+			assertContains ( paths, edge[0].getValue (), edge[1].getValue () );
+
 		assertDoesntContain ( paths, "M", "N" );
 		assertDoesntContain ( paths, "P", "J" );
 		assertDoesntContain ( paths, "M", "H" );
 		assertDoesntContain ( paths, "N", "K" );
 	}
-	
-	
+
 	/**
-	 * <p>Tests This example graph:</p>
+	 * <p>
+	 * Tests This example graph:
+	 * </p>
 	 * <p/>
 	 * <img src = "exp_graph5.png">
 	 * 
 	 */
 	@Test
-	public void testG5 () {
-		out.println("_______ PATH COVER TEST 5 __________ ");
+	public void testG5 ()
+	{
+		out.println ( "_______ PATH COVER TEST 5 __________ " );
 
-		Set<Node> nodes = new HashSet<Node>();
+		Set<Node> nodes = new HashSet<Node> ();
 
 		DummyGraph g = DummyGraph.getG5 ();
 		nodes.add ( g.getNode ( 0, "A" ) );
@@ -255,17 +285,17 @@ public class DummyGraphsTest {
 		nodes.add ( g.getNode ( 0, "L" ) );
 
 		TableBuilder tb = new TableBuilder ( nodes );
-		out.println ( tb.report() );
+		out.println ( tb.report () );
 
-		List<List<String>> paths = tb.getTable();
+		List<List<String>> paths = tb.getTable ();
 
-		// Must be 7+headers cause the max cut should be BC, EC, FD, FG, FK, JK, JO, NO. 
+		// Must be 7+headers cause the max cut should be BC, EC, FD, FG, FK, JK, JO, NO.
 		assertEquals ( "N. rows Error!", 9, paths.size () );
-		assertEquals ( "N. cols Error!", 4, paths.get(2).size() );
-		
+		assertEquals ( "N. cols Error!", 4, paths.get ( 2 ).size () );
+
 		for ( DummyNode[] edge: g.getEdges () )
-			assertContains ( paths, edge[ 0 ].getValue (), edge[ 1 ].getValue () );
-		
+			assertContains ( paths, edge[0].getValue (), edge[1].getValue () );
+
 		assertDoesntContain ( paths, "C", "F" );
 		assertDoesntContain ( paths, "F", "J" );
 		assertDoesntContain ( paths, "A", "A" );
@@ -273,27 +303,33 @@ public class DummyGraphsTest {
 		assertDoesntContain ( paths, "N", "K" );
 		assertDoesntContain ( paths, "N", "K" );
 	}
-	
+
 	/**
-	 * <p>Tests This example graph:</p>
-	 * <p/>
-	 * <img src = "exp_graph5.png">
+	 * <p>
+	 * Tests the case of isolated nodes
+	 * </p>
 	 * 
 	 */
 	@Test
-	public void testG6 () {
-		out.println("_______ PATH COVER TEST 6 __________ ");
+	public void testG6 ()
+	{
+		out.println ( "_______ PATH COVER TEST 6 __________ " );
 
-		Set<Node> nodes = new HashSet<Node>();
+		Set<Node> nodes = new HashSet<Node> ();
 
 		DummyGraph g = DummyGraph.getG6 ();
 		nodes.add ( g.getNode ( 0, "A" ) );
 		nodes.add ( g.getNode ( 0, "B" ) );
 
 		TableBuilder tb = new TableBuilder ( nodes );
-		out.println ( tb.report() );
+		out.println ( tb.report () );
 
-		List<List<String>> paths = tb.getTable();
+		List<List<String>> paths = tb.getTable ();
+		
+		assertEquals ( "N. rows Error!", 3, paths.size () );
+		assertEquals ( "N. cols Error!", 1, paths.get ( 1 ).size () );
+		assertContains ( paths, "A", null );
+		assertContains ( paths, "B", null );
 	}
-	
+
 }
