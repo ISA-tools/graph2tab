@@ -225,7 +225,24 @@ public class DummyGraph
 		g.addChain ( 2, "JO" );
 		g.addChain ( 0, "LMNO" );
 
-		return g4 = g;
+		return g5 = g;
+	}
+
+	
+	private static DummyGraph g6 = null;
+    
+	/** <p>Example Graph G6.</p>
+	 * <p><img src = "exp_graph6.png"></p>
+	 */
+	public static DummyGraph getG6 ()
+	{
+		if ( g6!= null ) return g6;
+
+		DummyGraph g = new DummyGraph();
+		g.addChain ( 0, "A" );
+		g.addChain ( 0, "B" );
+
+		return g6 = g;
 	}
 
 

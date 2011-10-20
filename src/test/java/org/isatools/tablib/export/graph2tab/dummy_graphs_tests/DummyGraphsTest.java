@@ -274,4 +274,26 @@ public class DummyGraphsTest {
 		assertDoesntContain ( paths, "N", "K" );
 	}
 	
+	/**
+	 * <p>Tests This example graph:</p>
+	 * <p/>
+	 * <img src = "exp_graph5.png">
+	 * 
+	 */
+	@Test
+	public void testG6 () {
+		out.println("_______ PATH COVER TEST 6 __________ ");
+
+		Set<Node> nodes = new HashSet<Node>();
+
+		DummyGraph g = DummyGraph.getG6 ();
+		nodes.add ( g.getNode ( 0, "A" ) );
+		nodes.add ( g.getNode ( 0, "B" ) );
+
+		TableBuilder tb = new TableBuilder ( nodes );
+		out.println ( tb.report() );
+
+		List<List<String>> paths = tb.getTable();
+	}
+	
 }
