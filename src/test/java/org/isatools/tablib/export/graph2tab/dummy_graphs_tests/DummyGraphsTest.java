@@ -311,9 +311,9 @@ public class DummyGraphsTest
 	 * 
 	 */
 	@Test
-	public void testG6 ()
+	public void testIsolatedNodes ()
 	{
-		out.println ( "_______ PATH COVER TEST 6 __________ " );
+		out.println ( "_______ PATH COVER TEST, ISOLATED NODES __________ " );
 
 		Set<Node> nodes = new HashSet<Node> ();
 
