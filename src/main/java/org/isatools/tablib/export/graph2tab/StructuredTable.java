@@ -51,7 +51,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.isatools.tablib.export.graph2tab.minflow.MinFlowCalculator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import uk.ac.ebi.utils.collections.ListUtils;
 
@@ -78,6 +81,8 @@ class StructuredTable
 	
 	private final List<StructuredTable> tail = new ArrayList<StructuredTable> ();
 
+	protected final static Logger log = LoggerFactory.getLogger ( StructuredTable.class );
+
 	/**
 	 * Creates a new structured table that contains the same header given by {@link TabValueGroup#getHeader() tbg.getHeader} 
 	 * and adds the value ( {@link TabValueGroup#getValue() tbg.getValue} ) as last row 
@@ -91,7 +96,12 @@ class StructuredTable
 	 */
 	public StructuredTable ( TabValueGroup tbg, int rowsSize )
 	{
-		this.header = tbg.getHeader ();
+		this.header = StringUtils.defaultString ( tbg.getHeader () );
+		if ( this.header.isEmpty () ) log.warn ( 
+			"Internal error in the graph2tab library, I've got an empty header from the input graph. This is most likely" +
+			" a bug in the graph2tab client package."
+		);
+			
 		addRowValue ( tbg.getValue (), rowsSize );
 		
 		for ( TabValueGroup tailTbg: tbg.getTail () )
@@ -170,12 +180,17 @@ class StructuredTable
 			
 		for ( TabValueGroup tbg: tbvs )
 		{
-			String rowHeader = tbg.getHeader ();
+			String rowHeader = StringUtils.defaultString ( tbg.getHeader () );
+			if ( rowHeader.isEmpty () ) log.warn ( 
+				"Internal error in the graph2tab library, I've got an empty header from the input graph. This is most" +
+				" likely a bug in the graph2tab client package."
+			);
+			
 			boolean done = false;
 			
 			for ( StructuredTable table: tables )
 			{
-				if ( rowHeader == null || !rowHeader.equals ( table.getHeader () ) ) continue;
+				if ( !rowHeader.equals ( table.getHeader () ) ) continue;
 				if ( table.getRows ().size () < newSize )
 				{
 					// The header is still free for the row being built, so fill it. 

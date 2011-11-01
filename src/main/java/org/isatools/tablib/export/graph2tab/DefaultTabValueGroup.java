@@ -51,6 +51,8 @@ package org.isatools.tablib.export.graph2tab;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 
  * A default implementation for {@link TabValueGroup}. This simply keeps in memory an header, value and tail.
