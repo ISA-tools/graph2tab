@@ -175,7 +175,7 @@ class StructuredTable
 			
 			for ( StructuredTable table: tables )
 			{
-				if ( !rowHeader.equals ( table.getHeader () ) ) continue;
+				if ( rowHeader == null || !rowHeader.equals ( table.getHeader () ) ) continue;
 				if ( table.getRows ().size () < newSize )
 				{
 					// The header is still free for the row being built, so fill it. 
