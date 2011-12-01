@@ -97,7 +97,7 @@ class FlowManager
 	 * Sum ( flow( n -&gt; j ) ) and incoming flow is Sum ( flow( i -&gt; n ). We have chosen this definition according
 	 * to <i><a href = 'http://basilo.kaist.ac.kr/mathnet/kms_tex/981523.pdf'>Ciurea and Ciupal&atilde;, 2004</a></i>.
 	 * 
-	 * In order to have a good performance, the deficits are kept in an internal structure and updated by 
+	 * In order to ensure good performance, the deficits are kept in an internal structure and updated by 
 	 * flow-changing methods. They're never computed.
 	 * 
 	 * The result is an object and not a primitive integer for internal reasons about performance.

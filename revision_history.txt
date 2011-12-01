@@ -20,4 +20,7 @@ REVISION HISTORY
 
 - 4.1 
   A bug about isolated nodes was fixed. Nodes without any input and any output used to cause an infinite loop in 
-  MinFlowCalculator.getMinPathCover(). Now a proper check is added to avoid such a situation. 
+  MinFlowCalculator.getMinPathCover(). Now a proper check is added to avoid such a situation.
+  
+  A potential bug in LayersBuilder.computeTypedLayers() fixed (a sequence of if, instead of if/elseif).
+ 

@@ -263,7 +263,7 @@ class FlowInitialiser
 	{
 		int deficit = flowMgr.getDeficit ( node );
 		
-		// 0 means It couldn't initially be balanced (with the flow accumulated up to the point where it was added to 
+		// 0 means it couldn't initially be balanced (with the flow accumulated up to the point where it was added to 
 		// reviewNodes), but then it was by some other routes. We don't need to continue toward left from this 
 		// particular node, if there is still some unbalanced node on its left graph, it will be dealt with by a call
 		// that picks up that node from reviewNodes (in initFlow() )

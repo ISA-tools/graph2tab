@@ -246,7 +246,7 @@ public class LayersBuilder
 						// likely obtained straight from sample4, without requiring an intermediate node, like the case of sample2). 
 						// Again, this is euristics based on experience with real use cases.
 						//
-						if ( righto - mo <= mo - lefto )
+						else if ( righto - mo <= mo - lefto )
 							shift2Right ( m, layerNodes, j );
 						else {
 							shift2Right ( n );
