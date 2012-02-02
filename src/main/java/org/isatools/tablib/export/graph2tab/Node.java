@@ -103,7 +103,12 @@ public interface Node extends Comparable<Node>
 	 * The typical default for this is getTabValues ().get ( 0 ).getHeaders ().get ( 0 ), i.e.: the first header, 
 	 * something like 'Source Name' or 'Protocol REF'. There might be cases where the type is a different string, 
 	 * e.g.: there might be two nodes both having 'Protocol REF' as first header but having the types 
-	 * 'Sampling Protocol' and 'Extraction Protocol'. In such a case the two nodes would go into different columns. 
+	 * 'Sampling Protocol' and 'Extraction Protocol'. In such a case the two nodes would go into different columns.
+	 * 
+	 * <p><b>WARNING</b>: It is required that: 
+	 * node1.getOrder() = node2.getOrder() &lt;-&gt node1.getType() = node2.getType() 
+	 * for any node pair having getOrder() != -1. 
+	 * </p>
 	 * 
 	 */
 	public String getType (); 
@@ -121,7 +126,13 @@ public interface Node extends Comparable<Node>
 	 * that the node refers to and establish the order on the basis of that, eg, 'Sample Treatment' come before 
 	 * 'Labeled Extract'. 
 	 * 
+	 * <p><b>WARNING</b>: It is required that: 
+	 * node1.getOrder() = node2.getOrder() &lt;-&gt node1.getType() = node2.getType() 
+	 * for any node pair having getOrder() != -1. 
+	 * </p>
+	 * 
 	 * @see {@link LayersBuilder}.
+	 * 
 	 */
 	public int getOrder ();
 

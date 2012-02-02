@@ -111,18 +111,8 @@ public class TableBuilder
 	/**
 	 * The graph is worked out starting from the nodes you pass to this constructor. The sub-graphs that can be reached
 	 * going from these nodes to the left (i.e., exploring the outputs) and from the same nodes to the right (i.e., going
-	 * back through the inputs) is converted into a table. Because of the way the code works internally, 
-	 * the following details apply:
-	 *  
-	 * <ul>
-	 *   <li>in case isLayeringRequired = true, you can pass the sinks only, 
-	 *   i.e., all the right-most nodes, which have no output and allow you to reach the rest of the graph</li>
-	 *   <li>in case isLayeringRequired = false, you can pass the sources only, i.e., those nodes on the left-most side of
-	 *   the graph, which don't have inputs and allow you to reach the rest of the graph</li>
-	 * </ul>
-	 * 
-	 * Passing the node subsets described will speed things up a little. Any other node sub-set that allows to reach
-	 * all the graph is valid. 
+	 * back through the inputs) is converted into a table. Because of the way the code works internally, if you pass the 
+	 * set of source nodes, i.e., those having no input, things will be a bit faster.
 	 * 
 	 * @parameter isLayeringRequired true means that the graph may be uneven (with missing steps in the path from sources to sinks)
 	 * and therefore it will require that layers are computed via {@link LayersBuilder}. Set this parameter to false
@@ -166,7 +156,7 @@ public class TableBuilder
 				
 				tableContents.mergeNode ( layer, node, nrows );
 	
-				// Hopefully a minimum of optimisation
+				// Hopefully some optimisation
 				if ( !isLayeringRequired ) layer++;
 					
 			} // for each node in the path

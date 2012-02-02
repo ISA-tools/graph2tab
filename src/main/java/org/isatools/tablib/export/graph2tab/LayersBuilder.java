@@ -61,6 +61,8 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 import org.isatools.tablib.export.graph2tab.minflow.MinFlowCalculator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -111,7 +113,9 @@ public class LayersBuilder
 	 * The max layer index that was computed.
 	 */
 	private int maxLayer = -1;
-	
+
+	protected final Logger log = LoggerFactory.getLogger ( this.getClass () );
+
 	/**
 	 * It expects the end nodes (sinks) of the graph to be layered. This is computed via inside {@link MinFlowCalculator}.
 	 * 
@@ -130,11 +134,12 @@ public class LayersBuilder
 	{
 		// Remove from the old layer
 		Integer oldLayer = node2Layer.get ( node );
-		if ( oldLayer != null 
-			   && layer2Nodes.get ( oldLayer ).remove ( node )
-			   && layer2Nodes.isEmpty () 
-			   && oldLayer == maxLayer ) 
-			maxLayer--;
+		if ( oldLayer != null )
+		{
+			SortedSet<Node> oldLayerNodes = layer2Nodes.get ( oldLayer );
+			if ( oldLayerNodes.remove ( node ) && oldLayerNodes.isEmpty () && oldLayer == maxLayer )
+				maxLayer--;
+		}
 		
 		// Add to the new layer
 		SortedSet<Node> lnodes = layer2Nodes.get ( layer );
@@ -194,122 +199,83 @@ public class LayersBuilder
 		computeUntypedLayers ();
 		
 		// Go through all the layers.
-		for ( int layer = 0; layer < maxLayer; layer++ ) 
+		for ( int layer = 0; layer <= maxLayer; layer++ ) 
 		{
+			if ( layer > 0 && log.isTraceEnabled () )
+				log.trace ( "layering algo, layer " + ( layer - 1 ) + "/" + maxLayer + " processed" );
+			log.trace ( "layering algo, working on the layer " + layer + "/" + maxLayer );
+			
 			List<Node> layerNodes = new ArrayList<Node> ( layer2Nodes.get ( layer ) );
 			int nn = layerNodes.size ();
 			
-			// All the node pairs in the layer
+			// First, compute the minimum and the min-order on the left and on the right
+			//
+			int minOrder = -1;
+			String firstType = null, minType = null;
+			boolean hasMultipleTypes = false, isFirst = true, hasOrderUndefinedNodes = false;
+
 			for ( int i = 0; i < nn; i++ )
 			{
-				Node n = layerNodes.get ( i );
-				// null means the node has gone to another layer
-				if ( n == null ) continue; 
+				Node node = layerNodes.get ( i );
+				int order = node.getOrder ();
+				String type = StringUtils.trimToNull ( node.getType () );
+
+				if ( !hasOrderUndefinedNodes ) hasOrderUndefinedNodes = order == -1;
 				
-				for ( int j = i + 1; j < nn; j++ )
-				{
-					Node m = layerNodes.get ( j );
-					// null means the node has gone to another layer
-					if ( m == null ) continue;
-					
-					// Same type, they're OK, go ahead
-					if ( StringUtils.trimToEmpty ( n.getType() ).equals ( StringUtils.trimToEmpty ( m.getType () ) ) ) continue;
-					
-					int no = n.getOrder (), mo = m.getOrder ();
+				if ( order != -1 && ( minOrder == -1 || order < minOrder ) ) {
+					minOrder = order;
+					minType = type;
+				}
+				
+				if ( isFirst ) {
+					firstType = type;
+					isFirst = false;
+				}
+				else if ( !hasMultipleTypes && ( type == null && firstType != null || !type.equals ( firstType ) ) )
+					hasMultipleTypes = true;
+				
+			} // for node
 
-					if ( no == -1 && mo == -1 ) 
-					{
-						// Two nodes which of order doesn't matter, do a conventional move
-						shift2Right ( m, layerNodes, j );
-					}
-					else if ( no == -1 ) 
-					{
-						// The minimal order that is on our right and on our left
-						int lefto = minOrderLeft ( n );
-						int righto = minOrderRight ( n );
-						
-						// All the nodes on L or R side (or both) are "doesn't matter" nodes, so let's shift the "good" node, based on
-						// the assumption that it's more usual to specify a protocol's application output and omit the input, rather
-						// than vice versa.
-						// 
-						if ( lefto == -1 || righto == -1 )
-							shift2Right ( m, layerNodes, j );
-						
-						// Shift based on the side m is closer to, with respect to the layers preceding/following n
-						// The rationale is that nodes like "Protocol REF" shift closer to their output side, reflecting the fact
-						// that if one specifies a protocol omitting the input is more likely than omitting the output.
-						// 
-						// Note that when the node m is part of a chain of nodes having the same type (e.g.: sample1->sample2->sample3
-						// in one path and sample4->protocol1->sample5 in the other, where m = sample2 and n = protocol1)
-						// it is that node (sample2), and not the other (protocol1), that is shifted. This is because likely
-						// there are paths that didn't need multiple processing to elements of the same type (sample5 was 
-						// likely obtained straight from sample4, without requiring an intermediate node, like the case of sample2). 
-						// Again, this is euristics based on experience with real use cases.
-						//
-						else if ( righto - mo <= mo - lefto )
-							shift2Right ( m, layerNodes, j );
-						else {
-							shift2Right ( n );
-							break;
-						}
-					}
-					else if ( mo == -1 )
-					{
-						// Do the same as above, but with the role of n and m swapped
-						// 
-						int lefto = minOrderLeft ( m );
-						int righto = minOrderRight ( m );
-
-						if ( lefto == -1 || righto == -1 ) {
-							shift2Right ( n );
-							break;
-						}
-
-						if ( righto - no <= no - lefto )
-						{
-							shift2Right ( n );
-							break;
-						}
-						else
-							shift2Right ( m, layerNodes, j );
-					}
-					else if ( no <= mo )
-						// Move the node with greater order
-						shift2Right ( m, layerNodes, j );
-					else {
-						// At this point we're sure that no > mo and they're != -1 
-						shift2Right ( n );
-						break;
-					}
-				} // for j
-			} // for i
+			// Now go over the nodes again and see which ones need to be shifted on the right
+			//
+			
+			// In this case, we don't need to continue, all the nodes have the same type  
+			if ( !hasMultipleTypes ) continue;
+			
+			int minOrderLeft = minOrderLeft ( layer ), minOrderRight = minOrderRight ( layer );
+			
+			boolean closer2Right = 
+			  // If either side is order-irrelevant let's keep here the node with lowest order and send all others right
+				minOrderRight == -1 || minOrderLeft == -1 
+				// Is the min-order node closer to the right or to the left (according to the order)?
+				|| minOrderRight - minOrder < minOrder - minOrderLeft;
+			
+			for ( int i = 0; i < nn; i++ )
+			{
+				Node node = layerNodes.get ( i );
+				int order = node.getOrder ();
+				String type = StringUtils.trimToNull ( node.getType () );
+				
+				if ( 
+					// All nodes are order-irrelevant, so conventionally move all that have type != minType
+				  minOrder == -1 && !StringUtils.equals ( type, minType )
+				  // All nodes having order > of a defined min-order go to the right
+				  || order > minOrder
+				  // Nodes of undefined order that have a different type go to the right if the min-order nodes are closer 
+				  // to the left, they're kept here otherwise
+				  || minOrder != -1 && !closer2Right && order == -1 && !StringUtils.equals ( type, minType )
+				  // Nodes of minimal order goes to the right if they're closer to that side and there are some order-undefined 
+				  // node, which remain here.
+				  || minOrder != -1 && closer2Right && hasOrderUndefinedNodes && order == minOrder
+				)
+					shift2Right ( node );
+			
+			} // for node
+			
 		} // for layer
 		
 		isInitialized = true;
 	}
-
-//	private void postProcessTypedLayers ()
-//	{
-//		for ( int ilayer = 0; ilayer < maxLayer; ilayer++ ) 
-//		{
-//			Node ni0 = layer2Nodes.get ( ilayer ).first ();
-//			int ni0o = ni0.getOrder ();
-//			
-//			if ( ni0o == -1 ) continue; 
-//			
-//			for ( int jlayer = ilayer + 1; jlayer < maxLayer; jlayer++ ) 
-//			{
-//				Node nj0 = layer2Nodes.get ( jlayer ).first ();
-//				int nj0o = nj0.getOrder ();
-//				if ( nj0o == -1 || ni0o > nj0o ) continue;
-//				
-//				// We have to shift all the nodes in this layer, cause their order (they've all the same order at this point)
-//				// is incorrect (according to what is wanted and expressed by getOrder()
-//				for ( )
-//			}
-//			
-//		}
-//	}
 	
 	
 	/**
@@ -318,15 +284,7 @@ public class LayersBuilder
 	 * 
 	 */
 	private void shift2Right ( Node n ) {
-		shift2Right ( n, null, -1 );
-	}
-
-	/**
-	 * Shifts the node to the right (i.e.: increase its layer index) and starts the propagation of that on the right side,  
-	 * by invoking {@link #shift2Right(Node, int, Set, List, int) shift2Right ( n, -1, new HashSet(), layerNodes, nodeIdx )}.
-	 */
-	private void shift2Right ( Node n, List<Node> layerNodes, int nodeIdx ) {
-		shift2Right ( n, -1, new HashSet<Node> (), layerNodes, nodeIdx );
+		shift2Right ( n, -1, new HashSet<Node> () );
 	}
 
 
@@ -338,12 +296,9 @@ public class LayersBuilder
 	 * @param prevNewLayer is the layer index that was computed by the previous recursive call (initially it is -1). This
 	 * method recurse until the node is moved in a empty layer
 	 * @param visitedNodes allows it to stop the propagation on nodes that were already touched by this recursion
-	 * @param layerNodes is the initial layer where the node is, if it is not null, the node will be removed from there. This
-	 * parameter is sent here, cause {@link #computeTypedLayers()} needs to maintain a cache of the layer nodes being processed.
-	 * @param nodeIdx is the initial layer index the node has i.e., this.layer2Nodes.get(nodeIdx) = n and it is used to
-	 * remove the node from its original layer (if layerNodes != null). 
+	 * 
 	 */
-	private void shift2Right ( Node n, int prevNewLayer, Set<Node> visitedNodes, List<Node> layerNodes, int nodeIdx )
+	private void shift2Right ( Node n, int prevNewLayer, Set<Node> visitedNodes )
 	{
 		// Visited, give up
 		if ( visitedNodes.contains ( n ) ) return;
@@ -357,10 +312,7 @@ public class LayersBuilder
 		visitedNodes.add ( n );
 		
 		for ( Node out: n.getOutputs () )
-			shift2Right ( out, oldlayer, visitedNodes, null, -1 );
-		
-		if ( layerNodes != null )
-			layerNodes.set ( nodeIdx, null );
+			shift2Right ( out, oldlayer, visitedNodes );
 	}
 	
 	/**
@@ -376,13 +328,11 @@ public class LayersBuilder
 	 * such cases, see there).
 	 *   
 	 */
-	private int minOrderLeft ( Node n )
+	private int minOrderLeft ( int layer )
 	{
-		int nl = node2Layer.get ( n );
-
-		while ( --nl >= 0 ) 
+		while ( --layer >= 0 ) 
 		{
-			SortedSet<Node> lNodes = layer2Nodes.get ( nl );
+			SortedSet<Node> lNodes = layer2Nodes.get ( layer );
 			if ( !lNodes.isEmpty () ) 
 			{ 
 				int lno = lNodes.first ().getOrder ();
@@ -398,13 +348,11 @@ public class LayersBuilder
 	 * {@link #minOrderLeft(Node)}. 
 	 * 
 	 */
-	private int minOrderRight ( Node n )
+	private int minOrderRight ( int layer )
 	{
-		int nl = node2Layer.get ( n );
-		
-		while ( ++nl <= maxLayer ) 
+		while ( ++layer <= maxLayer ) 
 		{
-			SortedSet<Node> rNodes = layer2Nodes.get ( nl );
+			SortedSet<Node> rNodes = layer2Nodes.get ( layer );
 			if ( !rNodes.isEmpty () ) 
 			{
 				int result = -1;
