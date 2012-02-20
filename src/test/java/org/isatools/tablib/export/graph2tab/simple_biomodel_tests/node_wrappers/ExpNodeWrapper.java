@@ -121,8 +121,8 @@ public abstract class ExpNodeWrapper extends DefaultAbstractNode
 	 * @param nameHeader
 	 *          eg: "BioMaterial Name", "Protocol REF"
 	 * @param annHeaderPrefix
-	 *          eg: "Characteristic", "Parameter Value", here headers will be built with the schema annHeaderPrefix [Êtype
-	 *          ], eg: Characteristic [ÊOrganism ]
+	 *          eg: "Characteristic", "Parameter Value", here headers will be built with the schema 
+	 *          annHeaderPrefix [ type ], eg: Characteristic [ Organism ]
 	 */
 	protected List<TabValueGroup> getTabValues ( String nameHeader, String annHeaderPrefix )
 	{
@@ -147,30 +147,22 @@ public abstract class ExpNodeWrapper extends DefaultAbstractNode
 	}
 
 	/**
-	 * If it's not a clone produced by {@link Node#createIsolatedClone()}, it uses {@link NodeFactory} to build wrappers
-	 * for the input nodes of the base and to return them.
-	 * <p/>
+	 * It uses {@link NodeFactory} to build wrappers for the input nodes of the base and to return them.
 	 * This is the typical way this method is implemented by.
 	 */
 	@Override
 	public SortedSet<Node> getInputs ()
 	{
 		if ( inputs != null )
-		{
 			return super.getInputs ();
-		}
 		inputs = new TreeSet<Node> ();
 		for ( ExperimentNode in: base.getInputs () )
-		{
 			inputs.add ( nodeFactory.getNode ( in ) );
-		}
 		return super.getInputs ();
 	}
 
 	/**
-	 * If it's not a clone produced by {@link Node#createIsolatedClone()}, it uses {@link NodeFactory} to build wrappers
-	 * for the output nodes of the base and to return them.
-	 * <p/>
+	 * It uses {@link NodeFactory} to build wrappers for the input nodes of the base and to return them.
 	 * This is the typical way this method is implemented by.
 	 */
 	@Override
