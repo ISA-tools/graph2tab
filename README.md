@@ -3,3 +3,5 @@ the computation of the minimum flow from all the sources to all the sink nodes, 
 
 Start from graph2tab_intro.pdf for a detailed description on how to use the package. Have a look at MinFlowCalculator, FlowInitialiser, LayersBuilder, TableBuilder if you are interested in implementation details.
 
+There is also a paper about this library (http://bioinformatics.oxfordjournals.org/content/early/2012/05/02/bioinformatics.bts258.abstract).
+
