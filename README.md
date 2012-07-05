@@ -5,5 +5,5 @@ Start from http://github.com/ISA-tools/graph2tab/blob/master/graph2tab_intro.pdf
 **Links**
 
 * Presentation at the EBI: http://www.ebi.ac.uk/~brandizi/graph2tab_doc/graph2tab_ebi_20120217.pdf
-* Application Note on Bioinformatics: http://bioinformatics.oxfordjournals.org/content/early/2012/05/02/bioinformatics.bts258.abstract
+* Application Note on Bioinformatics: http://bioinformatics.oxfordjournals.org/content/28/12/1665
 * Theoretical analysis on correctness and performance: http://bioinformatics.oxfordjournals.org/content/suppl/2012/04/29/bts258.DC1/supplemental_material_v1_1.pdf (from the same paper).
