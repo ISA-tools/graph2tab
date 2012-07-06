@@ -81,7 +81,7 @@ class FlowInitialiser
 	private final FlowManager flowMgr = new FlowManager ();
 	private final Set<Node> nodes;
 	
-	private SortedSet<Node> startNodes = new TreeSet<Node> ();
+	private SortedSet<Node> startNodes;
 	private Set<Node> endNodes = new HashSet<Node> ();
 
 	private boolean isInitialised = false;
@@ -132,7 +132,10 @@ class FlowInitialiser
 	{
 		if ( !isInitialised ) initFlow ();
 		
-		for ( Node n: nodes ) findStartNodes ( n );
+		if (startNodes == null) {
+			startNodes = new TreeSet<Node> ();
+			for ( Node n: nodes ) findStartNodes ( n );
+		}
 		return startNodes;
 	}
 	
