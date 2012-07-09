@@ -131,8 +131,6 @@ class FlowInitialiser
 	SortedSet<Node> getStartNodes () 
 	{
 		if ( !isInitialised ) initFlow ();
-		
-		for ( Node n: nodes ) findStartNodes ( n );
 		return startNodes;
 	}
 	
@@ -173,12 +171,15 @@ class FlowInitialiser
 	private void initFlow ()
 	{
 		if ( isInitialised ) return;
-		
-		isInitialised = true; // tell getEndNode() to go ahead
-		
+		isInitialised = true;
+
+		// Initialise start-nodes, moved here from getStartNodes(), after Adam Faulconbridge notes about that method's 
+		// performance 
+		for ( Node n: nodes ) findStartNodes ( n );
+
 		Deque<Node> reviewNodes = new LinkedList<Node> ();
-		for ( Node n: getStartNodes () ) initFlowRight ( n, reviewNodes );
-		while ( !reviewNodes.isEmpty () ) initFlowLeft ( reviewNodes.pop () );		
+		for ( Node n: startNodes ) initFlowRight ( n, reviewNodes );
+		while ( !reviewNodes.isEmpty () ) initFlowLeft ( reviewNodes.pop () );
 	}
 
 
