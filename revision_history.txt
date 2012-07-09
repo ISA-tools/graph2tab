@@ -28,8 +28,10 @@ REVISION HISTORY
   Improvement of LayersBuilder.computeTypedLayers(), now it is O(n), instead of O(n^2).  
   A potential bug in LayersBuilder.setLayer(Node, int) fixed (conditions for updated of maxLayer).
   
-- 4.2.1 (Current, not released yet)
-  jutils dependency upgraded to 1.4
+- 4.2.2
+  jutils dependency upgraded to 1.4. Change to FlowInitialiser.getStartNodes() to improve its speed (suggested by
+  Adam Faulconbridge.
+  
 
 
 
