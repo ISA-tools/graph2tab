@@ -1,22 +1,12 @@
 REVISION HISTORY
 
-- 2.0 
-	Moved out of the ISA project and made an independent package. Layering added to the 1.0 version, some bug fixes.
-
-- 2.0.1
-	exportTSV() methods added to TableBuilder, which exports the table into table-delimited format.
-
-- 2.0.2
-	Temporary patch to allow the insertion of Unit[Type](Qualifier). The way header groups are represented will be changed
-	and made simpler.
-
-- 3.0
-	New approach for Node.tabValues, now TabValueGroup(s) can be nested and groups of headers that go together can be taken
-	into account (e.g., Characteristics, Term Source REF, Term Accession Number).
-	
-- 4.0
-	New algorithm for computing the minimum path set that covers all the graph, now based on the computation of the
-	minimum flow from the sources to the sinks.
+- 4.2.2
+  jutils dependency upgraded to 1.4. Change to FlowInitialiser.getStartNodes() to improve its speed (suggested by
+  Adam Faulconbridge.
+  
+- 4.2
+  Improvement of LayersBuilder.computeTypedLayers(), now it is O(n), instead of O(n^2).  
+  A potential bug in LayersBuilder.setLayer(Node, int) fixed (conditions for updating maxLayer).
 
 - 4.1 
   A bug about isolated nodes was fixed. Nodes without any input and any output used to cause an infinite loop in 
@@ -24,14 +14,21 @@ REVISION HISTORY
   
   A potential bug in LayersBuilder.computeTypedLayers() fixed (a sequence of if, instead of if/elseif).
 
-- 4.2
-  Improvement of LayersBuilder.computeTypedLayers(), now it is O(n), instead of O(n^2).  
-  A potential bug in LayersBuilder.setLayer(Node, int) fixed (conditions for updated of maxLayer).
-  
-- 4.2.2
-  jutils dependency upgraded to 1.4. Change to FlowInitialiser.getStartNodes() to improve its speed (suggested by
-  Adam Faulconbridge.
-  
+- 4.0
+	New algorithm for computing the minimum path set that covers all the graph, now based on the computation of the
+	minimum flow from the sources to the sinks.
 
+- 3.0
+	New approach for Node.tabValues, now TabValueGroup(s) can be nested and groups of headers that go together can be taken
+	into account (e.g., Characteristics, Term Source REF, Term Accession Number).
 
+- 2.0.2
+	Temporary patch to allow the insertion of Unit[Type](Qualifier). The way header groups are represented will be changed
+	and made simpler.
 
+- 2.0.1
+	exportTSV() methods added to TableBuilder, which exports the table into table-delimited format.
+
+- 2.0 
+	Moved out of the ISA project and made an independent package. Layering added to the 1.0 version, some bug fixes.
+	
