@@ -1,4 +1,4 @@
-This package is a generic implementation of a method for producing spreadsheets out of pipeline graph. It is based on the computation of the minimum flow from all the sources to all the sink nodes, having set at 1 the lower bound for all the experimental workflow arcs (and no upper bound, i.e. capacity) restrictions.
+This package is a generic implementation of a method for producing spreadsheets out of experimental graphs. It is based on the computation of the minimum flow from all the sources to all the sink nodes, having set at 1 the lower bound for all the experimental workflow arcs (and no upper bound, i.e. capacity) restrictions.
 
 Start from http://github.com/ISA-tools/graph2tab/blob/master/graph2tab_intro.pdf for a detailed description on how to use the package. Have a look at MinFlowCalculator, FlowInitialiser, LayersBuilder, TableBuilder if you are interested in implementation details.
 
