@@ -139,16 +139,24 @@
     <repositories>
 
 			<repository>
+				<id>ebi-repo</id>
+				<name>EBI repo</name>
+				<url>http://www.ebi.ac.uk/~maven/m2repo</url>
+			</repository>
+
+			<!-- See below about repositories -->
+			<!-- repository>
 			    <id>oerc</id>
 			    <name>Oxford e-Research Center</name>
 			    <url>http://frog.oerc.ox.ac.uk:8080/artifactory/repo/</url>
-			</repository>			
+			</repository -->			
 
     </repositories>
     
     <distributionManagement>
 
-	    <repository>
+			<!-- See below about repositories -->
+	    <!-- repository>
 	        <id>oerc</id>
 			    <name>Oxford e-Research Center</name>
 	        <url>http://frog.oerc.ox.ac.uk:8080/artifactory/libs-release-local</url>
@@ -158,10 +166,10 @@
 		    <id>oerc</id>
 		    <name>frog.oerc.ox.ac.uk-snapshots</name>
 		    <url>http://frog.oerc.ox.ac.uk:8080/artifactory/libs-snapshot-local</url>
-	    </snapshotRepository>
+	    </snapshotRepository -->
 
 			<!-- Please do not remove this. Should oerc be down, this is a quick way to back it up -->
-		  <!-- repository>
+		  <repository>
 			  <id>ebi-repo</id>
 			  <name>EBI Repository</name>
 			  <url>scp://parrot.ebi.ac.uk/homes/maven/public_html/m2repo</url>
@@ -172,7 +180,7 @@
 			  <id>ebi-repo-snapshots</id>
 			  <name>EBI Snapshots Repository</name>
 			  <url>scp://parrot.ebi.ac.uk/homes/maven/public_html/m2repo_snapshots</url>
-		  </snapshotRepository -->
+		  </snapshotRepository>
     	
 		</distributionManagement>
     
