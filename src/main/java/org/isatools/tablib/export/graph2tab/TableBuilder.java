@@ -84,7 +84,8 @@ public class TableBuilder
 	protected Set<Node> nodes;
 	protected final boolean isLayeringRequired; 
 	protected List<List<String>> table = null;
-
+	protected TableContents tableContents;
+	
 	private LayersBuilder layersBuilder;
 	private MinFlowCalculator minFlowCalc;
 	
@@ -132,48 +133,7 @@ public class TableBuilder
 	public List<List<String>> getTable ()
 	{
 		if ( this.table != null ) return this.table;
-
-		minFlowCalc = new MinFlowCalculator ( this.nodes );
-		layersBuilder = isLayeringRequired ? new LayersBuilder ( minFlowCalc.getEndNodes () ) : null;
-
-		TableContents tableContents = new TableContents ();
-		int nrows = 1; 
-		
-		for ( List<Node> path: minFlowCalc.getMinPathCover () )
-		{
-			int layer = 0, prevLayer = -1; 
-
-			for ( Node node: path )
-			{
-				if ( isLayeringRequired ) 
-				{
-					layer = layersBuilder.getLayer ( node );
-					// Start from the previous'node layer and fill-in-the-blanks until you reach the current layer
-					for ( int layeri = prevLayer + 1; layeri < layer; layeri++ )
-						tableContents.mergeNode ( layeri, null, nrows ); 
-					prevLayer = layer;
-				}
-				
-				tableContents.mergeNode ( layer, node, nrows );
-	
-				// Hopefully some optimisation
-				if ( !isLayeringRequired ) layer++;
-					
-			} // for each node in the path
-			
-			if ( isLayeringRequired )
-			{
-				// Fill-in-the-blanks until the last layer
-				int maxLayer = layersBuilder.getMaxLayer ();
-				for ( int layeri = prevLayer + 1; layeri <= maxLayer; layeri++ )
-					tableContents.mergeNode ( layeri, null, nrows ); 
-			}
-			
-			nrows++;
-			
-		} // for each path
-		
-		return this.table = tableContents.getTable ();
+		return this.table = getTableContents().getTable ();
 	}
 	
 	/**
@@ -258,7 +218,7 @@ public class TableBuilder
 
 	
 	/** 
-	 * A wrapper of {@link FlowInitialiser#outDot(String, LayersBuilder)}.
+	 * A wrapper of {@link MinFlowCalculator#outDot(String, LayersBuilder)}.
 	 * WARNING: you have to call getTable() before this method if you call it from outside.  
 	 */
 	public void outDot ( String filePath ) throws FileNotFoundException
@@ -267,11 +227,65 @@ public class TableBuilder
 	}
 	
 	/**
-	 * A wrapper of {@link FlowInitialiser#outDot(PrintStream, LayersBuilder)}.
+	 * A wrapper of {@link MinFlowCalculator#outDot(PrintStream, LayersBuilder)}.
 	 * WARNING: you have to call getTable() before this method if you call it from outside.  
 	 */
 	public void outDot ( PrintStream out )
 	{
 		minFlowCalc.outDot ( out, layersBuilder );
+	}
+	
+	/**
+	 * Computes (if not already done) the final table and returns it in the form of a 
+	 * {@link TableContents nested per-column and per-layer structure}. This is invoked by {@link #getTable()}, which use
+	 * {@link TableContents#getTable()}. The table-content building is kept separated here, cause you may want to re-arrange 
+	 * the final result (e.g., certain columns like Factor Values moved to the end).
+	 * 
+	 */
+	protected TableContents getTableContents ()
+	{
+		if ( tableContents != null ) return tableContents;
+		
+		minFlowCalc = new MinFlowCalculator ( this.nodes );
+		layersBuilder = isLayeringRequired ? new LayersBuilder ( minFlowCalc.getEndNodes () ) : null;
+
+		tableContents = new TableContents ();
+		int nrows = 1; 
+		
+		for ( List<Node> path: minFlowCalc.getMinPathCover () )
+		{
+			int layer = 0, prevLayer = -1; 
+
+			for ( Node node: path )
+			{
+				if ( isLayeringRequired ) 
+				{
+					layer = layersBuilder.getLayer ( node );
+					// Start from the previous node layer and fill-in-the-blanks until you reach the current layer
+					for ( int layeri = prevLayer + 1; layeri < layer; layeri++ )
+						tableContents.mergeNode ( layeri, null, nrows ); 
+					prevLayer = layer;
+				}
+				
+				tableContents.mergeNode ( layer, node, nrows );
+	
+				// Hopefully some optimisation
+				if ( !isLayeringRequired ) layer++;
+					
+			} // for each node in the path
+			
+			if ( isLayeringRequired )
+			{
+				// Fill-in-the-blanks until the last layer
+				int maxLayer = layersBuilder.getMaxLayer ();
+				for ( int layeri = prevLayer + 1; layeri <= maxLayer; layeri++ )
+					tableContents.mergeNode ( layeri, null, nrows ); 
+			}
+			
+			nrows++;
+			
+		} // for each path		
+		
+		return tableContents;
 	}
 }

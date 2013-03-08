@@ -73,15 +73,27 @@ import uk.ac.ebi.utils.collections.ListUtils;
  * @author brandizi
  *
  */
-class StructuredTable
+public class StructuredTable
 {
 
-	private final String header;
+	private String header;
 	private final List<String> rows = new ArrayList<String> ();
-	
 	private final List<StructuredTable> tail = new ArrayList<StructuredTable> ();
 
 	protected final static Logger log = LoggerFactory.getLogger ( StructuredTable.class );
+
+	
+	/**
+	 * Clone the original.
+	 * This may be useful for some re-arrangement operations.
+	 */
+	public StructuredTable ( StructuredTable original )
+	{
+		this.header = original.header;
+		this.rows.addAll ( original.rows );
+		for ( StructuredTable stb: original.tail )
+			this.tail.add ( new StructuredTable ( stb ) );
+	}
 
 	/**
 	 * Creates a new structured table that contains the same header given by {@link TabValueGroup#getHeader() tbg.getHeader} 
@@ -114,7 +126,16 @@ class StructuredTable
 	public String getHeader () {
 		return header;
 	}
+	
+	/**
+	 * You may want to change this during some post-processing re-arrangements.
+	 *  
+	 */
+	public void setHeader ( String header ) {
+		this.header = header;
+	}
 
+	
 	/**
 	 * Adds a value to the row, given the information on what is the new desired size for the column represented by head of
 	 * this structured table, i.e., a new value for this {@link #getHeader() table's header}. This is used by 
@@ -136,18 +157,20 @@ class StructuredTable
 
 	/**
 	 * The table values for this header (i.e., the values for the first single column).
+	 * This can be modified for re-arrangement operations, however do it at your own risk!
 	 */
 	public List<String> getRows () {
-		return Collections.unmodifiableList ( rows );
+		return rows;
 	}
 
 
 	/**
 	 * The nested tables, i.e., the tables that goes together with the top-level column. See {@link TabValueGroup}.
+	 * This can be modified for re-arrangement operations, however do it at your own risk!
+	 * 
 	 */
-	public List<StructuredTable> getTail ()
-	{
-		return Collections.unmodifiableList ( tail );
+	public List<StructuredTable> getTail () {
+		return tail;
 	}
 	
 	/**
@@ -242,4 +265,57 @@ class StructuredTable
 		for ( StructuredTable tailTb: tail )
 			tailTb.exportAllRows ( existingRow, irow );
 	}
+
+	/**
+	 * Uses header, rows, tail, i.e. two structured columns are considered identical if they have the same 
+	 * header and row values, including the {@link StructuredTable#getTail()}.
+	 * 
+	 * This may be useful in rearrangement operations, before outputting the final table. 
+	 */
+	@Override
+	public int hashCode ()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ( ( header == null ) ? 0 : header.hashCode () );
+		result = prime * result + ( ( rows == null ) ? 0 : rows.hashCode () );
+		result = prime * result + ( ( tail == null ) ? 0 : tail.hashCode () );
+		return result;
+	}
+
+	/**
+	 * Uses header, rows, tail, i.e. two structured columns are considered identical if they have the same 
+	 * header and row values, including the {@link StructuredTable#getTail()}.
+	 * 
+	 * This may be useful in rearrangement operations, before outputting the final table. 
+	 */
+	@Override
+	public boolean equals ( Object obj )
+	{
+		if ( this == obj ) return true;
+		if ( obj == null ) return false;
+		if ( getClass () != obj.getClass () ) return false;
+		
+		StructuredTable other = (StructuredTable) obj;
+		if ( header == null ) {
+			if ( other.header != null ) return false;
+		} 
+		else if ( !header.equals ( other.header ) )
+			return false;
+		
+		if ( rows == null ) { 
+			if ( other.rows != null ) return false;
+		} 
+		else if ( !rows.equals ( other.rows ) )
+			return false;
+		
+		if ( tail == null ) {
+			if ( other.tail != null ) return false;
+		} 
+		else if ( !tail.equals ( other.tail ) )
+			return false;
+		
+		return true;
+	}
+	
 }

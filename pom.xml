@@ -6,7 +6,7 @@
 
     <groupId>org.isatools</groupId>
     <artifactId>graph2tab</artifactId>
-    <version>4.2.2</version>
+    <version>4.3-SNAPSHOT</version>
     <name>graph2tab - The graph-to-spreadsheet conversion algorithm</name>
     <description>
         This package is a generic implementation of a method for producing spreadsheets out of pipeline graphs.
@@ -139,9 +139,17 @@
     <repositories>
 
 			<repository>
-				<id>ebi-repo</id>
-				<name>EBI repo</name>
+				<id>ebi-repo-old</id>
+				<name>EBI Repo (Old)</name>
 				<url>http://www.ebi.ac.uk/~maven/m2repo</url>
+			</repository>
+	
+			<repository>
+				<id>ebi-repo-old_snapshots</id>
+				<name>EBI Repo (Old) Snapshots</name>
+				<url>http://www.ebi.ac.uk/~maven/m2repo_snapshots</url>
+				<snapshots><enabled>true</enabled></snapshots>
+				<releases><enabled>false</enabled></releases>
 			</repository>
 
 			<!-- See below about repositories -->

@@ -1,5 +1,9 @@
 REVISION HISTORY
 
+- 4.3 (Planned)
+  Bugfix in TableBuilder and LayersBuilder.toString(), getLayers(), which doesn't return layers in layer order, is 
+  replaced with a loop over all the layers.  
+
 - 4.2.2
   jutils dependency upgraded to 1.4. Change to FlowInitialiser.getStartNodes() to improve its speed (suggested by
   Adam Faulconbridge.

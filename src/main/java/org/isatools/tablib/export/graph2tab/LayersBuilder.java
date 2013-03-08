@@ -409,7 +409,7 @@ public class LayersBuilder
 	public String toString ()
 	{
 		String result = ""; 
-		for ( int layer: layer2Nodes.keySet () )
+		for ( int layer: new TreeSet<Integer> ( layer2Nodes.keySet () ) )
 		{
 			result += "LAYER " + layer + ":\n";
 			result += "  ";

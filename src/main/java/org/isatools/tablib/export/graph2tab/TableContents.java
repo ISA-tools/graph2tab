@@ -72,22 +72,22 @@ import uk.ac.ebi.utils.collections.ListUtils;
  * 
  * @author brandizi
  */
-class TableContents
+public class TableContents
 {
 	/**
 	 * All the contents
 	 */
 	private final Map<Integer, List<StructuredTable>> layerContents = new HashMap<Integer, List<StructuredTable>> ();
 	private int nrows = 0;
-	
-	/**
-	 * The list of layers which were set, in no particular order
-	 */
-	public Set<Integer> getLayers ()
-	{
-		return layerContents.keySet ();
-	}
+	private int maxLayer = -1;
 
+	/**
+	 * @return The max layer index stored so far.
+	 */
+	public int getMaxLayer () {
+		return maxLayer;
+	}
+	
 	/**
 	 * The the contents of this layer, in the form of a list of nested columns (i.e., {@link StructuredTable}). 
 	 * Creates an empty structure if noting exists yet.
@@ -96,12 +96,10 @@ class TableContents
 	public List<StructuredTable> getLayerContent ( int layer )
 	{
 		List<StructuredTable> layerCont = layerContents.get ( layer );
-		if ( layerCont != null )
-		{
-			return layerCont;
-		}
-		layerCont = new ArrayList<StructuredTable> ();
-		layerContents.put ( layer, layerCont );
+		if ( layerCont != null ) return layerCont;
+		
+		layerContents.put ( layer, layerCont = new ArrayList<StructuredTable> () );
+		if ( layer > maxLayer ) maxLayer = layer;
 		return layerCont;
 	}
 
@@ -116,9 +114,12 @@ class TableContents
 	 */
 	public void mergeNode ( int layer, Node node, int newRowsSize )
 	{
-		StructuredTable.mergeTabValues ( getLayerContent ( layer ), newRowsSize, node == null ? null : node.getTabValues () );
+		List<StructuredTable> layerCont = getLayerContent ( layer ); 
+		StructuredTable.mergeTabValues ( layerCont, newRowsSize, node == null ? null : node.getTabValues () );
+
 		if ( newRowsSize > nrows ) nrows = newRowsSize;
 	}
+	
 	
 	/**
 	 * @return report of current contents
@@ -129,7 +130,7 @@ class TableContents
 	{
 		StringBuilder sb = new StringBuilder ();
 		sb.append ( "-- ROWS: " + nrows + "\n\n" );
-		for ( int layer: layerContents.keySet () )
+		for ( int layer = 0; layer <= maxLayer; layer++ )
 		{
 			List<StructuredTable> layerCont = layerContents.get ( layer );
 			sb.append ( "---- LAYER: " + layer + "\n" );
@@ -195,7 +196,7 @@ class TableContents
 	public List<String> getHeaders ()
 	{
 		List<String> result = new LinkedList<String> ();
-		for ( int layer: getLayers () )
+		for ( int layer = 0; layer <= maxLayer; layer++ )
 			for ( StructuredTable table: getLayerContent ( layer ) )
 				table.exportAllHeaders ( result );
 		return result;
@@ -212,7 +213,7 @@ class TableContents
 	private List<String> getRow ( int irow )
 	{
 		List<String> result = new LinkedList<String> ();
-		for ( int layer: getLayers () )
+		for ( int layer = 0; layer <= maxLayer; layer++ )
 			for ( StructuredTable table: getLayerContent ( layer ) )
 				table.exportAllRows ( result, irow );
 		return result;

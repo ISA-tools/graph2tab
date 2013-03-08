@@ -105,4 +105,53 @@ public class DefaultTabValueGroup implements TabValueGroup
 		this.tail.add ( tail );
 	}
 
+	/**
+	 * Uses header, value, tail, i.e. two structured columns are considered identical if they have the same 
+	 * header and value, including the {@link #getTail()}.
+	 * 
+	 * This may be useful in rearrangement operations, before outputting the final table. 
+	 */
+	@Override
+	public int hashCode ()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ( ( header == null ) ? 0 : header.hashCode () );
+		result = prime * result + ( ( value == null ) ? 0 : value.hashCode () );
+		result = prime * result + ( ( tail == null ) ? 0 : tail.hashCode () );
+		return result;
+	}
+
+	/**
+	 * Uses header, value, tail, i.e. two structured columns are considered identical if they have the same 
+	 * header and value, including the {@link #getTail()}.
+	 * 
+	 * This may be useful in rearrangement operations, before outputting the final table. 
+	 */
+	@Override
+	public boolean equals ( Object obj )
+	{
+		if ( this == obj ) return true;
+		if ( obj == null ) return false;
+		if ( getClass () != obj.getClass () ) return false;
+		DefaultTabValueGroup other = (DefaultTabValueGroup) obj;
+		
+		if ( header == null ) {
+			if ( other.header != null ) return false;
+		} 
+		else if ( !header.equals ( other.header ) ) return false;
+		
+		if ( value == null ) {
+			if ( other.value != null ) return false;
+		}
+		else if ( !value.equals ( other.value ) ) return false;
+
+		if ( tail == null ) {
+			if ( other.tail != null ) return false;
+		} 
+		else if ( !tail.equals ( other.tail ) ) return false;
+		
+		return true;
+	}
+	
 }
