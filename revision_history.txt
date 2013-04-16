@@ -1,6 +1,7 @@
 REVISION HISTORY
 
-- 4.3 (Planned)
+- 4.3
+  Some features added to ease table post-processing
   Bugfix in TableBuilder and LayersBuilder.toString(), getLayers(), which doesn't return layers in layer order, is 
   replaced with a loop over all the layers.  
 
