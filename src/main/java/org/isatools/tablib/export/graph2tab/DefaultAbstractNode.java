@@ -51,6 +51,7 @@ package org.isatools.tablib.export.graph2tab;
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.UUID;
 
 /**
  * A default skeleton implementation of {@link Node}. You'll probably want to implement your customised version of the
@@ -67,7 +68,6 @@ import java.util.SortedSet;
  */
 public abstract class DefaultAbstractNode implements Node
 {
-	private static long size = 0;
 
 	/**
 	 * Update these for storing this node's links. You should do that only in {@link #getInputs()} and
@@ -78,15 +78,13 @@ public abstract class DefaultAbstractNode implements Node
 	/**
 	 * We use this to assign a unique identifier to each node and apply it to compute {@link #compareTo(LabeledNode)}
 	 */
-	private final long id;
+	private final UUID id;
 
 	protected DefaultAbstractNode ()
 	{
 		synchronized ( DefaultAbstractNode.class )
 		{
-			if ( size == Long.MAX_VALUE )
-				throw new RuntimeException ( "No more integers for generating nodes!" );
-			id = size++;
+			id = UUID.randomUUID ();
 		}
 	}
 
@@ -158,11 +156,11 @@ public abstract class DefaultAbstractNode implements Node
 				return diff;
 			}
 			// We already ruled out 0 (when they're the same)
-			return this.id - ( (DefaultAbstractNode) o ).id > 0 ? 1 : -1;
+			return this.id.compareTo ( ((DefaultAbstractNode) o).id );
 		} else if ( olabel == null )
 		// We already ruled out 0 (when they're the same)
 		{
-			return this.id - ( (DefaultAbstractNode) o ).id > 0 ? 1 : -1;
+			return this.id.compareTo ( ((DefaultAbstractNode) o).id );
 		} else
 		// null labels always before non-nulls
 		{
@@ -199,8 +197,8 @@ public abstract class DefaultAbstractNode implements Node
 	}
 
 	/**
-	 * Two nodes are equivalent only if o == this. This is so because {@link ChainsBuilder} duplicate nodes in order to
-	 * get a graph of chains that correspond to the rows of the final exported spreadsheet.
+	 * Two nodes are equivalent only if o == this. This is so because {@link ChainsBuilder} duplicates nodes in order to
+	 * get a graph of chains that corresponds to the rows of the final exported spreadsheet.
 	 */
 	@Override
 	public boolean equals ( Object o )
@@ -209,14 +207,14 @@ public abstract class DefaultAbstractNode implements Node
 	}
 
 	/**
-	 * Two nodes are equivalent only if o == this. This is so because {@link ChainsBuilder} duplicate nodes in order to
+	 * Two nodes are equivalent only if o == this. This is so because {@link ChainsBuilder} duplicates nodes in order to
 	 * get a graph of chains that correspond to the rows of the final exported spreadsheet. This class has an internal
-	 * static integer identifier, which is used for the hash code and in {@link #compareTo(Node)}.
+	 * {@link UUID} identifier, which is used for the hash code and in {@link #compareTo(Node)}.
 	 */
 	@Override
 	public int hashCode ()
 	{
-		return (int) id;
+		return id.hashCode ();
 	}
 
 	/**
