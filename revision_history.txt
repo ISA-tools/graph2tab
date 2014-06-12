@@ -1,6 +1,7 @@
 REVISION HISTORY
 
 - 4.3.2-SNAPSHOT
+  Minor changes on toString() methods and alike.
 
 - 4.3.1
 	DefaultAbstractNode.id is now based on UUID, since the approach based on static integer might not work with applications

@@ -232,6 +232,6 @@ public abstract class DefaultAbstractNode implements Node
 			TabValueGroup tbvs0 = tbvs.get ( 0 );
 			result += ": " + tbvs0.getValue ();
 		}
-		return "{" + result + " (#" + hashCode () + ")}";
+		return "{" + result + " (#" + id + ")}";
 	}
 }

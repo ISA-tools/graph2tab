@@ -130,7 +130,7 @@ public class LayeringTest
 	/**
 	 * <p>Tests the graph:<br/><br/> <img src = 'ex_uneven_graph_1.gif' />.</p>
 	 *  
-	 * <p>Which yelds this:</p>
+	 * <p>Which yields this:</p>
 	 * <p> 
 	 * <pre>
 	 *  Source Name |                    Sample Name |                    Sample Name |                   Protocol REF |                   Protocol REF |                   Extract Name | 
@@ -204,7 +204,7 @@ public class LayeringTest
 	 *  |  Sample1  |  Proto1   |  Sample4   |
 	 * </pre>
 	 * 
-	 * which should yeld: 
+	 * which should yield: 
 	 * 
 	 * <pre>
 	 *  |  Sample1  |           |  Sample2  |  Extract1  |
