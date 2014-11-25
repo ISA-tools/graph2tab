@@ -4,8 +4,8 @@ REVISION HISTORY
   Minor changes on toString() methods and alike.
 
 - 4.3.1
-	DefaultAbstractNode.id is now based on UUID, since the approach based on static integer might not work with applications
-	(e.g., servers) that load the class once and never reloads it (i.e., we might overflow the max long limit).
+  DefaultAbstractNode.id is now based on UUID, since the approach based on static integer might not work with applications
+  (e.g., servers) that load the class once and never reloads it (i.e., we might overflow the max long limit).
 	
 - 4.3
   Some features added to ease table post-processing
