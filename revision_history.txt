@@ -1,30 +1,30 @@
 REVISION HISTORY
 
 - 4.3.2-SNAPSHOT
-  Minor changes on toString() methods and alike.
+	Minor changes on toString() methods and alike.
 
 - 4.3.1
-  DefaultAbstractNode.id is now based on UUID, since the approach based on static integer might not work with applications
-  (e.g., servers) that load the class once and never reloads it (i.e., we might overflow the max long limit).
+	DefaultAbstractNode.id is now based on UUID, since the approach based on static integer might not work with applications
+	(e.g., servers) that load the class once and never reloads it (i.e., we might overflow the max long limit).
 	
 - 4.3
-  Some features added to ease table post-processing
-  Bugfix in TableBuilder and LayersBuilder.toString(), getLayers(), which doesn't return layers in layer order, is 
-  replaced with a loop over all the layers.  
+	Some features added to ease table post-processing
+	Bugfix in TableBuilder and LayersBuilder.toString(), getLayers(), which doesn't return layers in layer order, is 
+	replaced with a loop over all the layers.	
 
 - 4.2.2
-  jutils dependency upgraded to 1.4. Change to FlowInitialiser.getStartNodes() to improve its speed 
-  (many thanks to Adam Faulconbridge for the suggestion).
-  
+	jutils dependency upgraded to 1.4. Change to FlowInitialiser.getStartNodes() to improve its speed 
+	(many thanks to Adam Faulconbridge for the suggestion).
+	
 - 4.2
-  Improvement of LayersBuilder.computeTypedLayers(), now it is O(n), instead of O(n^2).  
-  A potential bug in LayersBuilder.setLayer(Node, int) fixed (conditions for updating maxLayer).
+	Improvement of LayersBuilder.computeTypedLayers(), now it is O(n), instead of O(n^2).
+	A potential bug in LayersBuilder.setLayer(Node, int) fixed (conditions for updating maxLayer).
 
 - 4.1 
-  A bug about isolated nodes was fixed. Nodes without any input and any output used to cause an infinite loop in 
-  MinFlowCalculator.getMinPathCover(). Now a proper check is added to avoid such a situation.
-  
-  A potential bug in LayersBuilder.computeTypedLayers() fixed (a sequence of if, instead of if/elseif).
+	A bug about isolated nodes was fixed. Nodes without any input and any output used to cause an infinite loop in 
+	MinFlowCalculator.getMinPathCover(). Now a proper check is added to avoid such a situation.
+	
+	A potential bug in LayersBuilder.computeTypedLayers() fixed (a sequence of if, instead of if/elseif).
 
 - 4.0
 	New algorithm for computing the minimum path set that covers all the graph, now based on the computation of the
