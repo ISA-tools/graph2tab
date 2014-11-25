@@ -13,8 +13,8 @@ REVISION HISTORY
   replaced with a loop over all the layers.  
 
 - 4.2.2
-  jutils dependency upgraded to 1.4. Change to FlowInitialiser.getStartNodes() to improve its speed (suggested by
-  Adam Faulconbridge.
+  jutils dependency upgraded to 1.4. Change to FlowInitialiser.getStartNodes() to improve its speed 
+  (many thanks to Adam Faulconbridge for the suggestion).
   
 - 4.2
   Improvement of LayersBuilder.computeTypedLayers(), now it is O(n), instead of O(n^2).  
