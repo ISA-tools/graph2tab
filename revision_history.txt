@@ -1,6 +1,10 @@
 REVISION HISTORY
 
-- 4.3.2-SNAPSHOT
+- 4.4-SNAPSHOT
+  Just started
+
+- 4.4
+  Migrated to JRE/JDK 1.7
 	Minor changes on toString() methods and alike.
 
 - 4.3.1
