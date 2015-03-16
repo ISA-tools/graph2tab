@@ -4,7 +4,7 @@
 
   <groupId>org.isatools</groupId>
   <artifactId>graph2tab</artifactId>
-  <version>4.4</version>
+  <version>4.4.1-SNAPSHOT</version>
   <name>graph2tab - The graph-to-spreadsheet conversion algorithm</name>
   <description>
     This package is a generic implementation of a method for producing spreadsheets out of pipeline graphs.
