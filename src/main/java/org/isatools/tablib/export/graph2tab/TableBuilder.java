@@ -61,7 +61,7 @@ import java.util.Set;
 
 import org.isatools.tablib.export.graph2tab.minflow.MinFlowCalculator;
 
-import au.com.bytecode.opencsv.CSVWriter;
+import com.opencsv.CSVWriter;
 
 /**
  * <p>The table builder. This is the thing to (possibly extend) and invoke in order to produce the table exported from 
@@ -179,7 +179,7 @@ public class TableBuilder
 	 */
 	public void reportTSV ( Writer out ) throws IOException
 	{
-		reportTSV ( new CSVWriter ( out, '\t', '"' ) );
+		reportTSV ( new CSVWriter ( out, '\t', '"', '\\' ) );
 	}
 	
 	/**
@@ -192,7 +192,7 @@ public class TableBuilder
 	public String reportTSV () throws IOException
 	{
 		StringWriter sout = new StringWriter ();
-		reportTSV ( new CSVWriter ( sout, '\t', '"' ) );
+		reportTSV ( new CSVWriter ( sout, '\t', '"', '\\' ) );
 		return sout.toString ();
 	}
 
