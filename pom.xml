@@ -33,12 +33,20 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+	<!-- Contains deployment configuration -->  
+	<parent>
+	  <groupId>uk.ac.ebi.fg.biosd</groupId>
+	  <artifactId>biosd_deploy</artifactId>
+	  <version>1.0-SNAPSHOT</version>
+	</parent>
+  
+
   <dependencies>
 
     <dependency>
       <groupId>uk.ac.ebi</groupId>
       <artifactId>jutils</artifactId>
-      <version>4.3</version>
+      <version>4.5</version>
     </dependency>
 
       <dependency>
@@ -150,24 +158,20 @@
 			<releases><enabled>false</enabled></releases>
 		</repository>
 
-		<repository>
-			<id>ebi-repo-nexus-snapshots</id>
-			<name>EBI repo</name>
-			<url>http://www.ebi.ac.uk/Tools/maven/repos/content/groups/ebi-snapshots</url>
-		</repository>
-
-		<repository>
-			<id>ebi-repo-nexus</id>
-			<name>EBI repo</name>
-			<url>http://www.ebi.ac.uk/Tools/maven/repos/content/groups/ebi-repo</url>
-		</repository>
-
 		<!-- See below about repositories -->
 		<!-- repository>
 		    <id>oerc</id>
 		    <name>Oxford e-Research Center</name>
 		    <url>http://frog.oerc.ox.ac.uk:8080/artifactory/repo/</url>
 		</repository -->			
+
+		<repository>
+	    <id>EBIBioSamples-GH-repo</id>
+	    <url>https://raw.githubusercontent.com/EBIBioSamples/EBIBioSamples.github.io/maven-repo</url>
+	    <snapshots>
+        <enabled>true</enabled>
+	    </snapshots>
+    </repository>		
 
   </repositories>
   
@@ -187,19 +191,6 @@
     </snapshotRepository -->
 
 		<!-- Please do not remove this. Should oerc be down, this is a quick way to back it up -->
-		<repository>
-		  <id>biosd-repo</id>
-		  <uniqueVersion>false</uniqueVersion>
-		  <name>EBI Nexus Repository for BioSD public stuff</name>
-		  <url>http://www.ebi.ac.uk/Tools/maven/repos/content/repositories/biosamples</url>
-		</repository>
- 
-		<snapshotRepository>
-		  <id>biosd-repo-snapshots</id>
-		  <uniqueVersion>false</uniqueVersion>
-		  <name>EBI Nexus Repository for BioSD public stuff, Snapshots</name>
-		  <url>http://www.ebi.ac.uk/Tools/maven/repos/content/repositories/biosamples-snapshots</url>
-		</snapshotRepository>
       	
 	</distributionManagement>
 

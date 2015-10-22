@@ -1,7 +1,7 @@
 REVISION HISTORY
 
 4.5.1-SNAPSHOT
-  - just started
+  - New GitHub-based repository.
 
 4.5
   - Escape character '\' added to reportTSV()
