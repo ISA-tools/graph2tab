@@ -8,4 +8,4 @@ Start from [this guide](http://github.com/ISA-tools/graph2tab/blob/master/graph2
 
 * [Presentation at the EBI](https://www.slideshare.net/mbrandizi/graph2tab-introduction)
 * [Application Note on Bioinformatics](http://bioinformatics.oxfordjournals.org/content/28/12/1665)
-* [Theoretical analysis on correctness and performance] (http://bioinformatics.oxfordjournals.org/content/suppl/2012/04/29/bts258.DC1/supplemental_material_v1_1.pdf) (from the same paper).
+* [Theoretical analysis on correctness and performance](http://bioinformatics.oxfordjournals.org/content/suppl/2012/04/29/bts258.DC1/supplemental_material_v1_1.pdf) (from the same paper).
