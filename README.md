@@ -1,4 +1,4 @@
-# graph2tab, a library to convert experimental workflow graphs into tabular formats
+# graph2tab, a library to convert experimental workflow graphs into tabular formats
 
 This package is a generic implementation of a method for producing spreadsheets out of experimental graphs. It is based on the computation of the minimum flow from all the sources to all the sink nodes, having set at 1 the lower bound for all the experimental workflow arcs (and no upper bound, i.e. no capacity) restrictions.
 
