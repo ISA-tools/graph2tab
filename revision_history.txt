@@ -1,7 +1,7 @@
 REVISION HISTORY
 
-4.5.1-SNAPSHOT
-  - New GitHub-based repository.
+4.6.1-SNAPSHOT
+  - New repo based on MB's personal artifactory.
 
 4.5
   - Escape character '\' added to reportTSV()
