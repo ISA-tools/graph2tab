@@ -2,6 +2,7 @@ REVISION HISTORY
 
 4.6.1-SNAPSHOT
   - New repo based on MB's personal artifactory.
+  - Logback dependency updated, as per security advisory.
 
 4.5
   - Escape character '\' added to reportTSV()
